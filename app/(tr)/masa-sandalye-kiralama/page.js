@@ -525,10 +525,16 @@ function Packages() {
                   {/* HEADER */}
                   <header className="relative p-8 text-white bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900 overflow-hidden">
                     {/* Hafif pattern / overlay */}
-                    <div
-                      className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.6),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(147,51,234,0.6),_transparent_55%)]"
-                      aria-hidden="true"
-                    />
+                  <div
+                    className="absolute inset-0 grid-overlay"
+                    aria-hidden="true"
+                    style={{
+                      "--grid-overlay-top": "rgba(59,130,246,0.6)",
+                      "--grid-overlay-bottom": "rgba(147,51,234,0.6)",
+                      "--grid-overlay-opacity": "0.4",
+                      "--grid-overlay-blur": "28px",
+                    }}
+                  />
                     <div className="relative z-10">
                       {/* Badge */}
                       {pkg.badge && (
