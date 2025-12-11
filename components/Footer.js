@@ -81,7 +81,7 @@ const SocialLink = ({ href, label, title, icon, gradient }) => (
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${label} – yeni sekmede açılır`}
-      title={title}
+      title={title || label}
       className={`
         group relative inline-flex h-11 w-11 items-center justify-center rounded-2xl
         bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10
