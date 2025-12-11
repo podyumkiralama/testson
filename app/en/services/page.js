@@ -58,6 +58,12 @@ function ServicesStructuredData() {
             name: "Stage Rental",
             description: "Professional stage installation and rental services",
           },
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "TRY",
+            minPrice: "10000.00",
+            maxPrice: "200000.00",
+          },
         },
         {
           "@type": "Offer",
@@ -73,6 +79,12 @@ function ServicesStructuredData() {
             "@type": "Service",
             name: "Sound and Lighting Systems",
             description: "Professional sound and lighting system rental services",
+          },
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "TRY",
+            minPrice: "10000.00",
+            maxPrice: "300000.00",
           },
         },
       ],

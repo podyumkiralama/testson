@@ -131,6 +131,12 @@ function StructuredData() {
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "Çadır Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "6000.00",
+              maxPrice: "800000.00",
+            },
             availability: "https://schema.org/InStock",
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
@@ -138,6 +144,12 @@ function StructuredData() {
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "Sandalye Kiralama" },
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: "200.00",
+              priceCurrency: "TRY",
+              unitText: "adet",
+            },
             availability: "https://schema.org/InStock",
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
@@ -145,6 +157,12 @@ function StructuredData() {
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "Masa Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "1000.00",
+              maxPrice: "2000.00",
+            },
             availability: "https://schema.org/InStock",
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
@@ -152,6 +170,12 @@ function StructuredData() {
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "Sahne Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "10000.00",
+              maxPrice: "200000.00",
+            },
             availability: "https://schema.org/InStock",
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
@@ -159,6 +183,12 @@ function StructuredData() {
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "Ses-Işık Sistemleri" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "10000.00",
+              maxPrice: "300000.00",
+            },
             availability: "https://schema.org/InStock",
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
