@@ -183,9 +183,9 @@ function SupportCard({ dictionary }) {
         <a
           href={dictionary.contactWhatsappHref}
           target="_blank"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer"
           className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-green-500/30 transition-all group"
-          aria-label={`${dictionary.supportWhatsappLabel} – WhatsApp (yeni sekmede açılır)`}
+          aria-label={`${dictionary.supportWhatsappLabel} – yeni sekmede açılır`}
         >
           <span className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 group-hover:bg-green-500 group-hover:text-white transition-colors">
             📱
@@ -197,7 +197,6 @@ function SupportCard({ dictionary }) {
             <span className="block text-sm font-bold text-white group-hover:text-green-400 transition-colors">
               Hızlı Mesaj Gönder
             </span>
-            <span className="sr-only">(yeni sekmede açılır)</span>
           </div>
         </a>
 

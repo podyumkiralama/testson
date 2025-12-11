@@ -4,9 +4,9 @@
 import { useEffect } from "react";
 
 const HINTS = {
-  tr: "(yeni sekmede açılır)",
-  en: "(opens in a new tab)",
-  ar: "(تفتح in علامة تبويب جديدة)",
+  tr: "– yeni sekmede açılır",
+  en: "– opens in a new tab",
+  ar: "– يفتح في علامة تبويب جديدة",
 };
 
 function detectLangSafe() {
