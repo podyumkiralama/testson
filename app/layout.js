@@ -222,7 +222,6 @@ export default function RootLayout({ children }) {
 
         <header
           id="_main_header"
-          role="banner"
           aria-label="Sahneva site başlığı ve ana gezinme"
           className="w-full relative z-50"
         >

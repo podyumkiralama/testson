@@ -375,7 +375,6 @@ export default function HomePage() {
       <section
         className="py-10 bg-gradient-to-b from-slate-950 to-slate-900"
         aria-labelledby="hero-supporting-features"
-        role="region"
       >
         <h2 id="hero-supporting-features" className="sr-only">
           Hızlı öne çıkan özellikler ve ücretsiz danışmanlık bağlantısı
@@ -409,8 +408,7 @@ export default function HomePage() {
       <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
 {/* 5) TECH CAPABILITIES */}
-<section
-  aria-labelledby="tech-capabilities-title"
+<div
   className="bg-slate-900 py-16"
   style={BELOW_THE_FOLD_VISIBILITY_STYLE}
 >
@@ -419,32 +417,32 @@ export default function HomePage() {
     techFeatures={SEO_TECH_FEATURES}
     infraFeatures={SEO_INFRA_FEATURES}
   />
-</section>
+</div>
 
 
 
       {/* 6) KURUMSAL ORGANİZASYON (full-width, containersız) */}
-      <section className="bg-slate-50 py-0 m-0 w-full">
+      <div className="bg-slate-50 py-0 m-0 w-full">
         <CorporateEvents />
-      </section>
+      </div>
 
       {/* 7) CORPORATE INTRO */}
       <CorporateIntro />
 
       {/* 8) WHY CHOOSE US */}
-      <section aria-labelledby="neden-biz-title" className="w-full p-0 m-0">
+      <div className="w-full p-0 m-0">
         <WhyChooseUs />
-      </section>
+      </div>
 
       {/* 9) SEO MAKALELERİ */}
-      <section aria-labelledby="seo-articles-title" className="w-full p-0 m-0">
+      <div className="w-full p-0 m-0">
         <SeoArticles />
-      </section>
+      </div>
 
       {/* 10) SSS */}
-      <section className="w-full bg-transparent p-0 m-0">
+      <div className="w-full bg-transparent p-0 m-0">
         <FaqDeferred />
-      </section>
+      </div>
     </div>
   );
 }
