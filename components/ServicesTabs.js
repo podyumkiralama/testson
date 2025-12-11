@@ -386,7 +386,15 @@ function ServicesTabsComponent({
                 className="pointer-events-none absolute inset-0 z-0"
                 aria-hidden="true"
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#0ea5e933,transparent_55%),radial-gradient(circle_at_bottom_right,#22d3ee22,transparent_55%)]" />
+                <div
+                  className="grid-overlay"
+                  style={{
+                    "--grid-overlay-top": "#0ea5e933",
+                    "--grid-overlay-bottom": "#22d3ee22",
+                    "--grid-overlay-opacity": "0.5",
+                    "--grid-overlay-blur": "24px",
+                  }}
+                />
               </div>
 
               {activeService && (

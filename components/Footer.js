@@ -152,7 +152,15 @@ export default function Footer({
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-40">
-          <div className="h-full w-full bg-[radial-gradient(circle_at_top,_#1d4ed833,_transparent_55%),radial-gradient(circle_at_bottom,_#7c3aed33,_transparent_55%)]" />
+          <div
+            className="grid-overlay"
+            style={{
+              "--grid-overlay-top": "#1d4ed833",
+              "--grid-overlay-bottom": "#7c3aed33",
+              "--grid-overlay-opacity": "0.4",
+              "--grid-overlay-blur": "32px",
+            }}
+          />
         </div>
         {/* Glow orbs */}
         <div className="absolute -top-32 -left-16 w-80 h-80 bg-blue-500/20 blur-3xl rounded-full" />
