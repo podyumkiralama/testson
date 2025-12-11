@@ -361,7 +361,7 @@ export default function Footer({
                   >
                     Kağıthane, İstanbul
                   </span>
-                  <span className="block text-gray-400 text-xs mt-0.5">
+                  <span className="block text-gray-100 text-xs mt-0.5">
                     Türkiye geneli hizmet
                   </span>
                 </div>
