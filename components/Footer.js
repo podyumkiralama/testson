@@ -419,6 +419,7 @@ export default function Footer({
                       group inline-flex items-center gap-2 text-xs text-gray-300
                       hover:text-white transition-all duration-300 ${FOCUS_RING_CLASS}
                     `}
+                    title={title || label}
                     aria-label={`${label} – yeni sekmede açılır`}
                   >
                     <span
