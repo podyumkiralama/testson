@@ -15,6 +15,7 @@ const SOCIAL_LINKS = [
     title: "Instagram",
     icon: "📷",
     gradient: "from-blue-500/30 via-purple-500/30 to-pink-500/20",
+    rel: "me",
   },
   {
     href: "https://www.youtube.com/@sahneva",
@@ -22,6 +23,7 @@ const SOCIAL_LINKS = [
     title: "YouTube",
     icon: "▶",
     gradient: "from-red-500/30 via-orange-400/30 to-yellow-400/20",
+    rel: "me",
   },
 ];
 
@@ -74,35 +76,39 @@ const FooterLink = ({
 );
 
 /* --- Yardımcı Bileşen: Sosyal Medya İkonu --- */
-const SocialLink = ({ href, label, title, icon, gradient }) => (
-  <li>
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${label} – yeni sekmede açılır`}
-      title={title || label}
-      className={`
-        group relative inline-flex h-11 w-11 items-center justify-center rounded-2xl
-        bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10
-        hover:border-white/40 transition-all duration-300 hover:scale-110
-        ${FOCUS_RING_CLASS}
-      `}
-      itemProp="sameAs"
-    >
-      <span
+const SocialLink = ({ href, label, title, icon, gradient, rel }) => {
+  const relValue = ["noopener", "noreferrer", rel].filter(Boolean).join(" ");
+
+  return (
+    <li>
+      <a
+        href={href}
+        target="_blank"
+        rel={relValue}
+        aria-label={`${label} – yeni sekmede açılır`}
+        title={title || label}
         className={`
-          absolute inset-0 rounded-2xl bg-gradient-to-tr ${gradient}
-          opacity-0 group-hover:opacity-100 transition-opacity duration-300
+          group relative inline-flex h-11 w-11 items-center justify-center rounded-2xl
+          bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10
+          hover:border-white/40 transition-all duration-300 hover:scale-110
+          ${FOCUS_RING_CLASS}
         `}
-        aria-hidden="true"
-      />
-      <span aria-hidden="true" className="text-xl relative z-10">
-        {icon}
-      </span>
-    </a>
-  </li>
-);
+        itemProp="sameAs"
+      >
+        <span
+          className={`
+            absolute inset-0 rounded-2xl bg-gradient-to-tr ${gradient}
+            opacity-0 group-hover:opacity-100 transition-opacity duration-300
+          `}
+          aria-hidden="true"
+        />
+        <span aria-hidden="true" className="text-xl relative z-10">
+          {icon}
+        </span>
+      </a>
+    </li>
+  );
+};
 
 export default function Footer({
   ariaLabel,

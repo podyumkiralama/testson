@@ -49,6 +49,12 @@ function ServicesStructuredData() {
             '@type': 'Service',
             'name': 'Sahne Kiralama',
             'description': 'Profesyonel sahne kurulumu ve kiralama hizmetleri'
+          },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'minPrice': '10000.00',
+            'maxPrice': '200000.00'
           }
         },
         {
@@ -65,6 +71,12 @@ function ServicesStructuredData() {
             '@type': 'Service',
             'name': 'Ses ve Işık Sistemleri',
             'description': 'Profesyonel ses ve ışık sistemi kiralama hizmetleri'
+          },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'minPrice': '10000.00',
+            'maxPrice': '300000.00'
           }
         }
       ]
