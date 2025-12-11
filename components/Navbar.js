@@ -138,11 +138,11 @@ export default function Navbar({
 
   const mobileWhatsappBtnClass = useMemo(
     () =>
-      `block text-center mt-4 rounded-xl px-5 py-3 text-white text-sm font-bold
+      `inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-white text-sm font-bold
         bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
         transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
-        min-h-[44px] flex items-center justify-center gap-2 border border-green-700/20 ${FOCUS_RING_CLASS}`,
-    []
+        min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
+    [],
   );
 
   /* =============== Hover/Focus Yönetimi (Hizmetler) =============== */
@@ -871,19 +871,32 @@ export default function Navbar({
             </Link>
 
             {/* Mobil WhatsApp CTA */}
-            <a
-              href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mobile_whatsapp`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp Destek – yeni sekmede açılır"
-              className={mobileWhatsappBtnClass}
-              onClick={() => setMobileOpen(false)}
-            >
-              <span aria-hidden="true" className="text-base">
-                💬
-              </span>
-              <span>WhatsApp Destek</span>
-            </a>
+            <div className="mt-4 rounded-2xl border border-green-700/20 bg-gradient-to-r from-emerald-700 to-green-600 p-4 shadow-xl">
+              <div className="flex items-start gap-3">
+                <span aria-hidden="true" className="text-2xl">
+                  💬
+                </span>
+                <div className="space-y-1 text-white">
+                  <h3 className="text-lg font-extrabold">WhatsApp Destek</h3>
+                  <p className="text-sm font-medium text-emerald-50">
+                    WhatsApp üzerinden anında teklif alın ve sorularınızı iletin.
+                  </p>
+                </div>
+              </div>
+              <a
+                href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mobile_whatsapp`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Destek – WhatsApp üzerinden destek alın; yeni sekmede açılır"
+                className={`${mobileWhatsappBtnClass} mt-4`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span aria-hidden="true" className="text-base">
+                  🚀
+                </span>
+                <span>WhatsApp Destek</span>
+              </a>
+            </div>
           </div>
         </nav>
       </div>
