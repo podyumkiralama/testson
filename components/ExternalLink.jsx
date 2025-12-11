@@ -16,6 +16,17 @@ export default function ExternalLink({
 }) {
   const isNewTab = target === "_blank";
 
+  const DEFAULT_BRAND = "Sahneva";
+
+  const getPlatform = (url) => {
+    const host = url.hostname.replace(/^www\./, "");
+
+    if (host.includes("instagram.com")) return "instagram";
+    if (host.includes("youtube.com")) return "youtube";
+    if (host === "wa.me" || host.endsWith("whatsapp.com")) return "whatsapp";
+    return undefined;
+  };
+
   const isWhatsappLink = (url) =>
     url.hostname === "wa.me" || url.hostname.endsWith("whatsapp.com");
 
@@ -27,7 +38,23 @@ export default function ExternalLink({
     /(yeni sekmede açılır|opens in a new tab|علامة تبويب جديدة)/i.test(text);
 
   // 1) ARIA LABEL
-  const baseAriaLabel = ariaLabel?.trim() || (visibleText || undefined);
+  let platform;
+  try {
+    platform = getPlatform(
+      new URL(href, typeof window !== "undefined" ? window.location.href : undefined)
+    );
+  } catch {
+    platform = undefined;
+  }
+
+  const defaultPlatformLabel = {
+    instagram: `${DEFAULT_BRAND} Instagram hesabı`,
+    youtube: `${DEFAULT_BRAND} YouTube kanalı`,
+    whatsapp: `${DEFAULT_BRAND} WhatsApp hattı`,
+  }[platform];
+
+  const baseAriaLabel =
+    ariaLabel?.trim() || visibleText || defaultPlatformLabel || undefined;
   const computedAriaLabel = isNewTab
     ? baseAriaLabel
       ? hasNewTabHint(baseAriaLabel)
@@ -38,13 +65,18 @@ export default function ExternalLink({
 
   // 2) REL güvenliği + nofollow (isteğe bağlı)
   let computedRel = rel || "";
+  const relParts = new Set(
+    computedRel
+      .split(" ")
+      .map((p) => p.trim())
+      .filter(Boolean)
+  );
+
+  if (platform === "instagram") {
+    relParts.add("me");
+  }
+
   if (isNewTab) {
-    const relParts = new Set(
-      computedRel
-        .split(" ")
-        .map((p) => p.trim())
-        .filter(Boolean)
-    );
     relParts.add("noopener");
     relParts.add("noreferrer");
 
@@ -62,9 +94,15 @@ export default function ExternalLink({
     } catch {
       // Hata olursa zorlamadan bırak
     }
-
-    computedRel = Array.from(relParts).join(" ");
   }
+
+  computedRel = Array.from(relParts).join(" ");
+
+  const itemPropValue =
+    rest.itemProp ||
+    (platform === "instagram" || platform === "youtube" || platform === "whatsapp"
+      ? "sameAs"
+      : undefined);
 
   return (
     <a
@@ -74,6 +112,7 @@ export default function ExternalLink({
       title={title}
       aria-label={computedAriaLabel}
       className={className}
+      itemProp={itemPropValue}
       data-external-link="true"
       {...rest}
     >
