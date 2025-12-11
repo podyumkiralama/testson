@@ -46,6 +46,15 @@ export default function NewTabAccessibility() {
       }
     };
 
+    const isWhatsappLink = (href) => {
+      try {
+        const url = new URL(href, window.location.href);
+        return url.hostname === "wa.me" || url.hostname.endsWith("whatsapp.com");
+      } catch {
+        return false;
+      }
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -69,7 +78,9 @@ export default function NewTabAccessibility() {
           );
           rel.add("noopener");
           rel.add("noreferrer");
-          rel.add("nofollow");
+          if (!isWhatsappLink(href)) {
+            rel.add("nofollow");
+          }
           a.setAttribute("rel", [...rel].join(" "));
 
           if (!a.getAttribute("referrerpolicy")) {
