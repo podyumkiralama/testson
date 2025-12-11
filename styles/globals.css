@@ -96,3 +96,15 @@ svg {
   }
 }
 
+@layer components {
+  .grid-overlay {
+    background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .rail-control {
+    @apply px-4 py-2 rounded-lg text-white text-sm transition-colors flex items-center gap-2 font-medium;
+  }
+}
+
