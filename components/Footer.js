@@ -11,14 +11,14 @@ const FOCUS_RING_CLASS =
 const SOCIAL_LINKS = [
   {
     href: "https://www.instagram.com/sahnevaorganizasyon",
-    label: "Instagram: Sahneva Organizasyon",
+    label: "Sahneva Instagram hesabı",
     title: "Instagram",
     icon: "📷",
     gradient: "from-blue-500/30 via-purple-500/30 to-pink-500/20",
   },
   {
     href: "https://www.youtube.com/@sahneva",
-    label: "YouTube: Sahneva",
+    label: "Sahneva YouTube kanalı",
     title: "YouTube",
     icon: "▶",
     gradient: "from-red-500/30 via-orange-400/30 to-yellow-400/20",
@@ -44,13 +44,11 @@ const BUSINESS_LINKS = [
   {
     href: "https://g.page/r/CZhkMzkNOdgnEBI",
     label: "Google Haritalar'da bizi bulun",
-    title: "Google Haritalar",
     icon: "📍",
   },
   {
     href: "https://g.page/r/CZhkMzkNOdgnEBI/review",
     label: "Google'da yorum yazın",
-    title: "Google Yorum",
     icon: "⭐",
   },
 ];
@@ -81,8 +79,8 @@ const SocialLink = ({ href, label, title, icon, gradient }) => (
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer nofollow"
-      aria-label={`${label} (yeni sekmede açılır)`}
+      rel="noopener noreferrer"
+      aria-label={`${label} – yeni sekmede açılır`}
       title={title}
       className={`
         group relative inline-flex h-11 w-11 items-center justify-center rounded-2xl
@@ -101,9 +99,6 @@ const SocialLink = ({ href, label, title, icon, gradient }) => (
       />
       <span aria-hidden="true" className="text-xl relative z-10">
         {icon}
-      </span>
-      <span className="sr-only">
-        {`${title || label} — yeni sekmede açılır`}
       </span>
     </a>
   </li>
@@ -414,7 +409,7 @@ export default function Footer({
 
               {/* İşletme Linkleri (Harita vb) */}
               <div className="pt-2 flex flex-col gap-2">
-                {BUSINESS_LINKS.map(({ href, label, title, icon }) => (
+                {BUSINESS_LINKS.map(({ href, label, icon }) => (
                   <a
                     key={href}
                     href={href}
@@ -424,8 +419,7 @@ export default function Footer({
                       group inline-flex items-center gap-2 text-xs text-gray-300
                       hover:text-white transition-all duration-300 ${FOCUS_RING_CLASS}
                     `}
-                    title={title ? `${title} (yeni sekmede açılır)` : undefined}
-                    aria-label={`${label} (yeni sekmede açılır)`}
+                    aria-label={`${label} – yeni sekmede açılır`}
                   >
                     <span
                       className="group-hover:scale-110 transition-transform duration-300"
@@ -434,7 +428,6 @@ export default function Footer({
                       {icon}
                     </span>
                     {label}
-                    <span className="sr-only">(yeni sekmede açılır)</span>
                   </a>
                 ))}
               </div>
