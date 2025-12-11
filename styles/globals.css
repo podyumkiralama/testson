@@ -27,6 +27,14 @@ html {
 
   /* Yatay taşmayı tamamen engeller */
   overflow-x: hidden;
+  overflow-y: auto;
+
+  /*
+   * Kök elementin yüksekliğini ekranla sınırlandırmak yerine min-height
+   * kullanarak içerik uzadıkça uzamasına izin veriyoruz. Scrollbar artık
+   * yalnızca html seviyesinde oluşuyor ve içerik hero'nun altında da akıyor.
+   */
+  min-height: 100%;
 }
 
 /* 3. Transition ve animation reset çok agresifti; hafifletildi */
@@ -39,7 +47,13 @@ html {
 
 html,
 body {
-  height: auto;
+  /*
+   * Tek bir kök scroll alanı kullanarak iki adet dikey kaydırma çubuğu
+   * oluşmasını önler. Hem html hem body 100% genişlik ve minimum yükseklikte
+   * tutulur; dikey kaydırma sadece body üzerinde çalışır.
+   */
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -52,7 +66,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
   overflow-x: hidden;
+  /*
+   * Scrollbar'ı yalnızca html taşısın diye body'yi taşırmaz durumda bırakıyoruz.
+   * Böylece içeriğin tamamı hero'nun altında da görünür, ikinci scrollbar oluşmaz.
+   */
+  overflow-y: visible;
 }
 
 /* Medya elementleri */
