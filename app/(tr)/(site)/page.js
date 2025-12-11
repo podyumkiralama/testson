@@ -193,6 +193,18 @@ function StructuredData() {
             areaServed: { "@type": "Country", name: "Türkiye" },
             seller: { "@id": ORGANIZATION_ID },
           },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "İstanbul İçi Nakliye" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: "7000.00",
+              priceCurrency: "TRY",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
         ],
       },
       {
