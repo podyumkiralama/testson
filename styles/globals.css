@@ -27,6 +27,14 @@ html {
 
   /* Yatay taşmayı tamamen engeller */
   overflow-x: hidden;
+
+  /*
+   * Kök seviyede scroll'u kilitler, böylece yalnızca body üzerinde tek bir
+   * dikey kaydırma çubuğu kalır. Aksi halde hem html hem body kaydırılabilir
+   * olup iki adet scrollbar çıkabiliyordu.
+   */
+  height: 100%;
+  overflow-y: hidden;
 }
 
 /* 3. Transition ve animation reset çok agresifti; hafifletildi */
@@ -58,6 +66,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
