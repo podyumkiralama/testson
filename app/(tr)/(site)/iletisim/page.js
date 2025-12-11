@@ -248,7 +248,7 @@ export default function ContactPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 bg-gradient-to-r from-blue-700 to-purple-800 hover:from-blue-800 hover:to-purple-900 text-white font-bold py-4 px-6 rounded-xl text-center transition-all duration-300 hover:scale-105 shadow-lg"
-                      aria-label="Google Haritalar'da Sahneva profilini aç"
+                      aria-label="Google Haritalar'da Sahneva profilini aç (yeni sekmede açılır)"
                     >
                       <span className="flex items-center justify-center gap-2">
                         📍 Haritalar'da Aç
@@ -259,7 +259,7 @@ export default function ContactPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-white font-bold py-4 px-6 rounded-xl text-center transition-all duration-300 hover:scale-105 shadow-lg"
-                      aria-label="Google üzerinde Sahneva için yorum yaz"
+                      aria-label="Google üzerinde Sahneva için yorum yaz (yeni sekmede açılır)"
                     >
                       <span className="flex items-center justify-center gap-2">
                         ⭐ Google'da Yorum Yap
@@ -289,6 +289,7 @@ export default function ContactPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-green-600 hover:text-green-700 font-medium"
+                          aria-label="WhatsApp üzerinden hızlı mesaj gönder (yeni sekmede açılır)"
                         >
                           Hızlı Mesaj Gönder
                         </a>
@@ -545,7 +546,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 min-w-[200px] text-center"
-                    aria-label="WhatsApp'tan acil destek iste"
+                    aria-label="WhatsApp'tan acil destek iste (yeni sekmede açılır)"
                   >
                     <span className="flex items-center justify-center gap-2">
                       💬 WhatsApp Destek
@@ -584,7 +585,7 @@ export default function ContactPage() {
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center text-green-600 font-bold text-sm"
-          aria-label="WhatsApp üzerinden Sahneva'ya yaz"
+          aria-label="WhatsApp üzerinden Sahneva'ya yaz (yeni sekmede açılır)"
         >
           <span className="text-lg">💬</span>
           <span>WhatsApp</span>
@@ -632,6 +633,7 @@ function ContactCard({ icon, title, info, description, href, color, buttonText }
         target="_blank"
         rel="noopener noreferrer"
         aria-describedby={`${headingId} ${descriptionId}`}
+        aria-label={`${title} – ${buttonText} (yeni sekmede açılır)`}
         className={`inline-flex items-center justify-center bg-gradient-to-r ${color} hover:shadow-xl text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg`}
       >
         <span className="flex items-center gap-2">{buttonText}</span>

@@ -204,9 +204,11 @@ export default function SiteHeader({ locale, strings }) {
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 text-sm font-bold text-white ${focusRingClass}`}
+              aria-label={`${strings.whatsappLabel} (yeni sekmede açılır)`}
             >
               <span aria-hidden="true">💬</span>
               {strings.whatsappLabel}
+              <span className="sr-only">(yeni sekmede açılır)</span>
             </a>
           </div>
         </nav>
