@@ -28,9 +28,8 @@ const CTA_BUTTONS = [
     icon: "💬",
     target: "_blank",
     rel: "noopener noreferrer nofollow",
-    srHint: "(yeni sekmede açılır)",
     ariaLabel:
-      "WhatsApp Teklif — WhatsApp üzerinden teklif isteyin (bağlantı yeni sekmede açılır)",
+      "WhatsApp Teklif — WhatsApp üzerinden teklif isteyin; yeni sekmede açılır",
     gradient: "from-green-600 to-emerald-700",
   },
 ];
