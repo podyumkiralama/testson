@@ -1,6 +1,6 @@
 /**
  * Erişilebilir dış bağlantı bileşeni
- * - target="_blank" ise: rel güvenliği + “(yeni sekmede açılır)” sr-only uyarısı ekler
+ * - target="_blank" ise: rel güvenliği + “yeni sekmede açılır” uyarısını aria-label üzerine ekler
  * - aria-label yoksa, görünür metni baz alarak erişilebilir adı otomatik üretir
  * - clsx/extra bağımlılık YOK
  */
@@ -20,10 +20,18 @@ export default function ExternalLink({
   const visibleText =
     typeof children === "string" ? children.trim() : "";
 
+  const hasNewTabHint = (text = "") =>
+    /(yeni sekmede açılır|opens in a new tab|علامة تبويب جديدة)/i.test(text);
+
   // 1) ARIA LABEL
-  // - Eğer ariaLabel prop geldiyse: aynen kullan
-  // - Yoksa: sadece görünür metni kullan (uyarıyı sr-only vereceğiz)
-  const computedAriaLabel = ariaLabel || (visibleText || undefined);
+  const baseAriaLabel = ariaLabel?.trim() || (visibleText || undefined);
+  const computedAriaLabel = isNewTab
+    ? baseAriaLabel
+      ? hasNewTabHint(baseAriaLabel)
+        ? baseAriaLabel
+        : `${baseAriaLabel} – yeni sekmede açılır`
+      : "Yeni sekmede açılır"
+    : baseAriaLabel;
 
   // 2) REL güvenliği + nofollow (isteğe bağlı)
   let computedRel = rel || "";
@@ -58,14 +66,11 @@ export default function ExternalLink({
       title={title}
       aria-label={computedAriaLabel}
       className={className}
+      data-external-link="true"
       {...rest}
     >
       {/* Görünür içerik */}
       {children}
-      {/* Erişilebilirlik: yeni sekme uyarısı (ekranda görünmez) */}
-      {isNewTab && (
-        <span className="sr-only"> (yeni sekmede açılır)</span>
-      )}
     </a>
   );
 }

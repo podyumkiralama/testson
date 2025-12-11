@@ -25,42 +25,36 @@ const SERVICE_LINKS = [
   {
     href: "/podyum-kiralama",
     label: "Podyum Kiralama",
-    title: "Modüler podyum kiralama ve kurulum hizmeti - Sahneva",
     icon: "👑",
     description: "Profesyonel modüler podyum sistemleri",
   },
   {
     href: "/led-ekran-kiralama",
     label: "LED Ekran Kiralama",
-    title: "Yüksek çözünürlüklü LED ekran kiralama - Sahneva",
     icon: "🖥️",
     description: "HD LED ekran ve video wall çözümleri",
   },
   {
     href: "/ses-isik-sistemleri",
     label: "Ses & Işık Sistemleri",
-    title: "Profesyonel ses ve ışık sistemi kiralama - Sahneva",
     icon: "🎭",
     description: "Konser kalitesinde ses ve ışık ekipmanları",
   },
   {
     href: "/cadir-kiralama",
     label: "Çadır Kiralama",
-    title: "Etkinlik çadırı kiralama ve kurulum - Sahneva",
     icon: "⛺",
     description: "Her türlü etkinlik için çadır çözümleri",
   },
   {
     href: "/masa-sandalye-kiralama",
     label: "Masa Sandalye Kiralama",
-    title: "Masa sandalye kiralama hizmeti - Sahneva",
     icon: "🪑",
     description: "Toplantı ve davetler için masa sandalye",
   },
   {
     href: "/sahne-kiralama",
     label: "Sahne Kiralama",
-    title: "Profesyonel sahne kiralama ve kurulum - Sahneva",
     icon: "🎪",
     description: "Portatif ve modüler sahne sistemleri",
   },
@@ -84,8 +78,8 @@ export default function Navbar({
   // Lokalizasyon fallback
   const headerStrings = LOCALE_CONTENT?.tr?.header || {
     navLabel: "Ana gezinme menüsü",
-    mobileToggleOpenLabel: "Menüyü aç",
-    mobileToggleCloseLabel: "Menüyü kapat",
+    mobileToggleOpenLabel: "Menüyü Aç",
+    mobileToggleCloseLabel: "Menüyü Kapat",
   };
 
   // State
@@ -428,7 +422,7 @@ export default function Navbar({
   /* =============== Tekrarlı NavLink helper =============== */
   // NavLink, aktif durumu ve odak halkası yönetimi içerir
   const NavLink = useCallback(
-    ({ href, children, title, className = "" }) => (
+    ({ href, children, className = "" }) => (
       <Link
         href={href}
         className={`
@@ -441,7 +435,6 @@ export default function Navbar({
           ${FOCUS_RING_CLASS} ${className}
         `}
         aria-current={active(href) ? "page" : undefined}
-        title={title}
       >
         {children}
       </Link>
@@ -455,7 +448,6 @@ export default function Navbar({
     ({
       href,
       label,
-      title,
       icon,
       description,
       index,
@@ -478,7 +470,6 @@ export default function Navbar({
         }
         // ARIA: Aktif sayfayı belirt
         aria-current={active(href) ? "page" : undefined}
-        title={title}
         // role="menuitem" kullanımı tartışmalı olduğu için (navigasyon bağlantısı yerine menü öğesi),
         // standart <Link> olarak bırakıldı ve klavye yönetimi (ArrowDown/Up) eklendi.
       >
@@ -647,15 +638,14 @@ export default function Navbar({
               <a
                 href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=desktop_whatsapp`}
                 target="_blank"
-                rel="noopener noreferrer nofollow"
-                aria-label="WhatsApp Destek — WhatsApp üzerinden hızlı destek ve teklif alın (yeni sekmede açılır)"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Destek – yeni sekmede açılır"
                 className={whatsappBtnClass}
               >
                 <span aria-hidden="true" className="text-base">
                   💬
                 </span>
                 <span>WhatsApp Destek</span>
-                <span className="sr-only">— yeni sekmede açılır</span>
               </a>
             </div>
 
@@ -831,8 +821,7 @@ export default function Navbar({
 >
 
                 <div className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1">
-                  {SERVICE_LINKS.map(
-                    ({ href, label, title, icon, description }) => (
+                  {SERVICE_LINKS.map(({ href, label, icon, description }) => (
                       <Link
                         key={href}
                         href={href}
@@ -843,7 +832,6 @@ export default function Navbar({
                           transition-all duration-200 w-full transform hover:scale-[1.01]
                           ${FOCUS_RING_CLASS}
                         `}
-                        title={title}
                         aria-current={active(href) ? "page" : undefined}
                       >
                         <span
@@ -888,8 +876,8 @@ export default function Navbar({
             <a
               href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mobile_whatsapp`}
               target="_blank"
-              rel="noopener noreferrer nofollow"
-              aria-label="WhatsApp Destek — Mobil menüden WhatsApp destek hattını açın (yeni sekmede açılır)"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp Destek – yeni sekmede açılır"
               className={mobileWhatsappBtnClass}
               onClick={() => setMobileOpen(false)}
             >
@@ -897,7 +885,6 @@ export default function Navbar({
                 💬
               </span>
               <span>WhatsApp Destek</span>
-              <span className="sr-only">— yeni sekmede açılır</span>
             </a>
           </div>
         </nav>
