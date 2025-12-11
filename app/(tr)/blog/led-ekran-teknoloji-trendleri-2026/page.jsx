@@ -697,6 +697,9 @@ export default function LedTrends2026Page() {
                   <div className="space-y-3">
                     <a
                       href="https://wa.me/905453048671"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WhatsApp ile hızlı teklif isteyin — yeni sekmede açılır"
                       className="flex items-center justify-center gap-2 w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md hover:shadow-emerald-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500"
                     >
                       <span>📱</span> WhatsApp

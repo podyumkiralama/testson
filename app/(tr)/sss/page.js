@@ -373,6 +373,7 @@ export default function FaqPage() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 font-semibold hover:bg-neutral-50"
+              aria-label="WhatsApp’tan Sor — yeni sekmede açılır"
             >
               💬 WhatsApp’tan Sor
             </a>
