@@ -23,7 +23,6 @@ const SOCIAL_LINKS = [
     title: "YouTube",
     icon: "▶",
     gradient: "from-red-500/30 via-orange-400/30 to-yellow-400/20",
-    rel: "me",
   },
 ];
 
