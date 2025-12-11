@@ -94,7 +94,6 @@ export default function SiteHeader({ locale, strings }) {
 
   return (
     <header
-      role="banner"
       tabIndex={-1}
       aria-label={ariaStrings.header}
       className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/70"
@@ -184,7 +183,6 @@ export default function SiteHeader({ locale, strings }) {
       >
         <nav
           id="primary-navigation-mobile"
-          role="navigation"
           aria-label={ariaStrings.nav}
         >
           <div className="container mx-auto px-4 py-4 space-y-2">

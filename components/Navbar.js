@@ -90,15 +90,13 @@ export default function Navbar({
   const computedHeadingId = headingIdProp ?? `navbar-heading-${instanceId}`;
   const computedDescriptionId =
     descriptionIdProp ?? `navbar-description-${instanceId}`;
-  const resolvedAriaLabel = ariaLabel ??
-    (ariaLabelledby ? undefined : headerStrings.navLabel);
+  const resolvedAriaLabel =
+    ariaLabel ?? (ariaLabelledby ? undefined : headerStrings.navLabel);
   const resolvedAriaLabelledby =
-    ariaLabel || ariaLabelledby
-      ? ariaLabelledby
-      : computedHeadingId;
+    ariaLabel || ariaLabelledby ? ariaLabelledby : computedHeadingId;
   const resolvedAriaDescribedby =
     ariaDescribedby ?? computedDescriptionId;
-  const navRole = roleOverride ?? "navigation";
+  const navRole = roleOverride;
   const shouldRenderHeading = !resolvedAriaLabel && !ariaLabelledby;
   const shouldRenderDescription = !ariaDescribedby;
 
