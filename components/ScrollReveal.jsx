@@ -79,22 +79,39 @@ export function ScrollReveal({
     className
   );
 
-  // asChild olsa bile şimdilik her zaman wrapper kullanıyoruz,
-  // böylece API bozulmuyor, sadece DOM'a extra bir div giriyor.
+  const motionProps = {
+    initial,
+    whileInView: animate,
+    viewport: {
+      once: true, // her eleman için sadece bir kez animasyon
+      amount: 0.15, // elemanın %15'i görünce tetiklenir
+      margin: "0px 0px -10% 0px",
+    },
+    transition: {
+      duration,
+      delay: numericDelay,
+      ease: [0.22, 0.61, 0.36, 1], // hoş bir ease-out
+    },
+  };
+
+  if (asChild && isValidElement(children)) {
+    const MotionComponent = motion(children.type);
+
+    return (
+      <MotionComponent
+        {...children.props}
+        {...rest}
+        {...motionProps}
+        className={clsx(children.props.className, combinedClassName)}
+      >
+        {children.props.children}
+      </MotionComponent>
+    );
+  }
+
   return (
     <motion.div
-      initial={initial}
-      whileInView={animate}
-      viewport={{
-        once: true,           // her eleman için sadece bir kez animasyon
-        amount: 0.15,         // elemanın %15'i görünce tetiklenir
-        margin: "0px 0px -10% 0px",
-      }}
-      transition={{
-        duration,
-        delay: numericDelay,
-        ease: [0.22, 0.61, 0.36, 1], // hoş bir ease-out
-      }}
+      {...motionProps}
       className={combinedClassName}
       {...rest}
     >
