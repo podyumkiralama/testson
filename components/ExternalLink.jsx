@@ -41,7 +41,10 @@ export default function ExternalLink({
   let platform;
   try {
     platform = getPlatform(
-      new URL(href, typeof window !== "undefined" ? window.location.href : undefined)
+      new URL(
+        href,
+        typeof window !== "undefined" ? window.location.href : undefined
+      )
     );
   } catch {
     platform = undefined;
@@ -55,6 +58,7 @@ export default function ExternalLink({
 
   const baseAriaLabel =
     ariaLabel?.trim() || visibleText || defaultPlatformLabel || undefined;
+
   const computedAriaLabel = isNewTab
     ? baseAriaLabel
       ? hasNewTabHint(baseAriaLabel)
@@ -72,21 +76,32 @@ export default function ExternalLink({
       .filter(Boolean)
   );
 
+  // Instagram için kimlik bağlantısı
   if (platform === "instagram") {
     relParts.add("me");
   }
 
   if (isNewTab) {
+    // Güvenlik için her zaman ekle
     relParts.add("noopener");
     relParts.add("noreferrer");
 
-    // Harici link ise nofollow ekle
+    // Harici link ise nofollow ekle (Instagram / YouTube / WhatsApp HARİÇ)
     try {
-      const url = new URL(href, typeof window !== "undefined" ? window.location.href : undefined);
-      const shouldAddNofollow =
+      const url = new URL(
+        href,
+        typeof window !== "undefined" ? window.location.href : undefined
+      );
+
+      const isExternal =
         typeof window !== "undefined" &&
-        url.origin !== window.location.origin &&
-        !isWhatsappLink(url);
+        url.origin !== window.location.origin;
+
+      const shouldAddNofollow =
+        isExternal &&
+        !isWhatsappLink(url) &&
+        platform !== "instagram" &&
+        platform !== "youtube";
 
       if (shouldAddNofollow) {
         relParts.add("nofollow");
@@ -98,9 +113,12 @@ export default function ExternalLink({
 
   computedRel = Array.from(relParts).join(" ");
 
+  // 3) sameAs itemProp (schema.org)
   const itemPropValue =
     rest.itemProp ||
-    (platform === "instagram" || platform === "youtube" || platform === "whatsapp"
+    (platform === "instagram" ||
+    platform === "youtube" ||
+    platform === "whatsapp"
       ? "sameAs"
       : undefined);
 
