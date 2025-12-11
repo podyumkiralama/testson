@@ -575,7 +575,13 @@ export default function BlogPostCorporate() {
                     Etkinlik detaylarınızı paylaşın, 2 saat içinde projelendirilmiş teklifinizi sunalım.
                   </p>
                   <div className="space-y-3">
-                    <a href="https://wa.me/905453048671" className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md hover:shadow-green-200">
+                    <a
+                      href="https://wa.me/905453048671"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WhatsApp ile hızlı teklif isteyin — yeni sekmede açılır"
+                      className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md hover:shadow-green-200"
+                    >
                       <span>📱</span> WhatsApp
                     </a>
                     <Link href="/iletisim" className="flex items-center justify-center gap-2 w-full bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold py-3.5 rounded-xl transition-all border border-gray-200">
