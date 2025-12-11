@@ -34,7 +34,7 @@ html {
    * olup iki adet scrollbar çıkabiliyordu.
    */
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 /* 3. Transition ve animation reset çok agresifti; hafifletildi */
