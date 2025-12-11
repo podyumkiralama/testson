@@ -280,7 +280,7 @@ function StickyVideoRailInner({
             <button
               type="button"
               onClick={handleCollapseFromExpanded}
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700 transition-colors flex items-center gap-2 font-medium"
+              className="rail-control bg-blue-600 hover:bg-blue-700"
             >
               <span className="text-lg">↘️</span>
               <span className="hidden sm:inline">Küçült</span>
@@ -288,7 +288,7 @@ function StickyVideoRailInner({
             <button
               type="button"
               onClick={handleToggleMinimize}
-              className="px-4 py-2 rounded-lg bg-gray-600 text-white text-sm hover:bg-gray-700 transition-colors flex items-center gap-2 font-medium"
+              className="rail-control bg-gray-600 hover:bg-gray-700"
             >
               <span className="text-lg">🗕</span>
               <span className="hidden sm:inline">Simge</span>
@@ -296,7 +296,7 @@ function StickyVideoRailInner({
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700 transition-colors flex items-center gap-2 font-medium"
+              className="rail-control bg-red-600 hover:bg-red-700"
             >
               <span className="text-lg">✕</span>
               <span className="hidden sm:inline">Kapat</span>

@@ -210,7 +210,7 @@ export default function CorporateEvents({
     >
       {/* Modern Arka Plan Efektleri (Dark Tech) */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+        <div className="absolute inset-0 grid-overlay"></div>
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-600/10 blur-[120px] rounded-full mix-blend-screen"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full mix-blend-screen"></div>
       </div>

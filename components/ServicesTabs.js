@@ -278,7 +278,7 @@ function ServicesTabsComponent({
     >
       {/* Arka Plan – Faq.jsx ile aynı ton/grid/glow */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="absolute inset-0 grid-overlay" />
         <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full mix-blend-screen" />
       </div>
 
