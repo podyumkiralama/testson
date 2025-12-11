@@ -198,7 +198,7 @@ export default function CorporateEvents({
   const whatsappAriaDescribedBy = whatsappDescription ? whatsappHintId : undefined;
   const computedHeadingId = ariaLabelledby ?? "corporate-events-heading";
   const computedDescribedBy = ariaDescribedby ?? introId;
-  const computedRole = role;
+  const computedRole = role ?? (ariaLabel ? "region" : undefined);
 
   return (
     <section
