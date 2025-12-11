@@ -63,6 +63,12 @@ function ServicesStructuredData() {
             '@type': 'Service',
             'name': 'LED Ekran Kiralama',
             'description': 'Yüksek çözünürlüklü LED ekran kiralama hizmetleri'
+          },
+          'priceSpecification': {
+            '@type': 'UnitPriceSpecification',
+            'price': '1700.00',
+            'priceCurrency': 'TRY',
+            'unitText': 'günlük'
           }
         },
         {
@@ -77,6 +83,59 @@ function ServicesStructuredData() {
             'priceCurrency': 'TRY',
             'minPrice': '10000.00',
             'maxPrice': '300000.00'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Podyum Kiralama',
+            'description': 'Modüler podyum sahne çözümleri'
+          },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'minPrice': '250.00',
+            'maxPrice': '100000.00'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': { '@type': 'Service', 'name': 'Çadır Kiralama' },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'minPrice': '6000.00',
+            'maxPrice': '800000.00'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': { '@type': 'Service', 'name': 'Sandalye Kiralama' },
+          'priceSpecification': {
+            '@type': 'UnitPriceSpecification',
+            'price': '200.00',
+            'priceCurrency': 'TRY',
+            'unitText': 'adet'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': { '@type': 'Service', 'name': 'Masa Kiralama' },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'minPrice': '1000.00',
+            'maxPrice': '2000.00'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': { '@type': 'Service', 'name': 'İstanbul İçi Nakliye' },
+          'priceSpecification': {
+            '@type': 'PriceSpecification',
+            'priceCurrency': 'TRY',
+            'price': '7000.00'
           }
         }
       ]
