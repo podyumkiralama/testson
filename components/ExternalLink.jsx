@@ -16,6 +16,9 @@ export default function ExternalLink({
 }) {
   const isNewTab = target === "_blank";
 
+  const isWhatsappLink = (url) =>
+    url.hostname === "wa.me" || url.hostname.endsWith("whatsapp.com");
+
   // Metni string’e çevir (sadece düz string ise)
   const visibleText =
     typeof children === "string" ? children.trim() : "";
@@ -48,7 +51,12 @@ export default function ExternalLink({
     // Harici link ise nofollow ekle
     try {
       const url = new URL(href, typeof window !== "undefined" ? window.location.href : undefined);
-      if (typeof window !== "undefined" && url.origin !== window.location.origin) {
+      const shouldAddNofollow =
+        typeof window !== "undefined" &&
+        url.origin !== window.location.origin &&
+        !isWhatsappLink(url);
+
+      if (shouldAddNofollow) {
         relParts.add("nofollow");
       }
     } catch {
