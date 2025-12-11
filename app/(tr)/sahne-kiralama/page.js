@@ -573,12 +573,12 @@ function Packages() {
                   {/* Fiyat */}
                   <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200">
                     <div className="text-center mb-4">
-                      <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">
+                      <div className="text-sm text-gray-800 uppercase tracking-wider font-semibold">
                         Günlük Kira (İstanbul)
                       </div>
                       <div className="text-3xl font-black text-gray-900 mt-2">
                         {formatTRY(packagePrices[pkg.id])}
-                        <span className="text-sm text-gray-500 font-normal ml-2">
+                        <span className="text-sm text-gray-800 font-normal ml-2">
                           + KDV
                         </span>
                       </div>

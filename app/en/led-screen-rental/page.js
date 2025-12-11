@@ -198,7 +198,7 @@ function Hero() {
           <Link
             href={WHATSAPP}
             target="_blank"
-            rel="noopener noreferrer nofollow"
+            rel="noopener noreferrer"
             aria-label="Request an LED screen quote on WhatsApp (opens in a new tab)"
             className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:scale-105 transform transition-all duration-300 hover:shadow-xl focus-ring shadow-lg"
             role="button"
@@ -291,7 +291,7 @@ function Services() {
           <Link
             href={WHATSAPP}
             target="_blank"
-            rel="noopener noreferrer nofollow"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:scale-105 transform transition-all duration-300 hover:shadow-xl focus-ring"
             role="button"
             aria-label="Request a detailed proposal on WhatsApp (opens in a new tab)"
@@ -552,7 +552,7 @@ function UseCases() {
           <Link
             href={WHATSAPP}
             target="_blank"
-            rel="noopener noreferrer nofollow"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-2xl bg-white text-blue-700 hover:scale-105 transform transition-all duration-300 hover:shadow-xl focus-ring"
             role="button"
             aria-label="Request a tailored solution for your event on WhatsApp (opens in a new tab)"
@@ -1014,7 +1014,7 @@ function CTA() {
               <a
                 href={WHATSAPP}
                 target="_blank"
-                rel="noopener noreferrer nofollow"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-2xl border-2 border-white text-white bg-transparent hover:bg-white/20 hover:scale-105 transform transition-all duration-300 focus-ring shadow-lg"
                 role="button"
                 aria-label="Message us on WhatsApp (opens in a new tab)"
