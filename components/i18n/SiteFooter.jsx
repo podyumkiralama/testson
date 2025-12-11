@@ -69,12 +69,11 @@ export default function SiteFooter({ strings }) {
                   key={item.href}
                   href={item.href}
                   target="_blank"
-                  rel="noopener noreferrer nofollow"
+                  rel="noopener noreferrer"
                   className={`rounded-full border border-white/15 px-3 py-1 hover:border-emerald-300 hover:text-emerald-300 transition ${focusRingClass}`}
-                  aria-label={`${item.label} (yeni sekmede açılır)`}
+                  aria-label={`${item.label} – yeni sekmede açılır`}
                 >
                   {item.label}
-                  <span className="sr-only">(yeni sekmede açılır)</span>
                 </a>
               ))}
             </div>
