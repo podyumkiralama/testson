@@ -5,6 +5,7 @@ import { readdir } from "fs/promises"; // Promise tabanlı fs kullanımı
 import { existsSync } from "fs";
 import path from "path";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 /* ================== RUNTIME & ISR ================== */
 export const runtime = "nodejs";
@@ -13,6 +14,10 @@ export const revalidate = 1800; // 30 dakikada bir yenile
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN;
+
+function getBaseUrl() {
+  return normalizeBaseUrl(SITE_URL || ORIGIN);
+}
 
 /* ================== META DATA ================== */
 export const metadata = {
@@ -23,7 +28,7 @@ export const metadata = {
     title: "Sahneva Blog | Etkinlik Teknolojileri Rehberi",
     description:
       "Sahneva ekibinden kurumsal organizasyon ve teknik ekipmanlar üzerine güncel blog yazıları.",
-    url: `${BASE_URL}/blog`,
+    url: `${getBaseUrl()}/blog`,
     type: "website",
     images: [
       {
@@ -110,24 +115,24 @@ async function getBlogPosts() {
 }
 
 /* ================== JSON-LD BİLEŞENİ ================== */
-function BlogJsonLd({ posts }) {
+function BlogJsonLd({ posts, baseUrl }) {
   if (!posts?.length) return null;
 
-  const orgId = `${ORIGIN}/#org`;
+  const orgId = `${baseUrl}/#org`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog", // ItemList yerine Blog tipi daha spesifik olabilir ama ItemList de uygundur.
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${BASE_URL}/blog`
+      "@id": `${baseUrl}/blog`
     },
     "headline": metadata.title,
     "description": metadata.description,
     "blogPost": posts.map((post) => ({
       "@type": "BlogPosting",
       "headline": post.title,
-      "image": post.image.startsWith("http") ? post.image : `${BASE_URL}${post.image}`,
+      "image": post.image.startsWith("http") ? post.image : `${baseUrl}${post.image}`,
       "datePublished": post.date,
       "author": {
         "@id": orgId
@@ -135,7 +140,7 @@ function BlogJsonLd({ posts }) {
       "publisher": {
         "@id": orgId
       },
-      "url": `${BASE_URL}/blog/${post.slug}`
+      "url": `${baseUrl}/blog/${post.slug}`
     }))
   };
 
@@ -211,7 +216,7 @@ function BlogCard({ post, isFeatured = false }) {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
   const hasPosts = posts.length > 0;
-  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const baseUrl = getBaseUrl();
   const breadcrumbItems = [
     { name: "Ana Sayfa", url: `${baseUrl}/` },
     { name: "Blog", url: `${baseUrl}/blog` },
@@ -220,7 +225,7 @@ export default async function BlogPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
-      <BlogJsonLd posts={posts} />
+      <BlogJsonLd posts={posts} baseUrl={baseUrl} />
 
       {/* HERO SECTION */}
       <section className="relative bg-[#0f172a] text-white py-24 overflow-hidden">

@@ -408,14 +408,11 @@ function ConsultationCard() {
 
 export default function HomePage() {
   const baseUrl = SITE_URL.replace(/\/$/, "");
-  const breadcrumbItems = [{ name: "Ana Sayfa", url: "/" }];
+  const breadcrumbItems = [{ name: "Ana Sayfa", url: `${baseUrl}/` }];
 
   return (
     <div className="overflow-x-hidden bg-black">
-      {/* BreadcrumbList JSON-LD — tek elemanlı kök */}
       <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
-
-      {/* Diğer schema.org graph (WebPage, OfferCatalog, Service, FAQ vs.) */}
       <StructuredData />
 
       {/* 1) HERO */}
