@@ -23,7 +23,7 @@ export const metadata = {
     title: "Sahneva Blog | Etkinlik Teknolojileri Rehberi",
     description:
       "Sahneva ekibinden kurumsal organizasyon ve teknik ekipmanlar üzerine güncel blog yazıları.",
-    url: `${ORIGIN}/blog`,
+    url: `${BASE_URL}/blog`,
     type: "website",
     images: [
       {
@@ -120,14 +120,14 @@ function BlogJsonLd({ posts }) {
     "@type": "Blog", // ItemList yerine Blog tipi daha spesifik olabilir ama ItemList de uygundur.
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${ORIGIN}/blog`
+      "@id": `${BASE_URL}/blog`
     },
     "headline": metadata.title,
     "description": metadata.description,
     "blogPost": posts.map((post) => ({
       "@type": "BlogPosting",
       "headline": post.title,
-      "image": post.image.startsWith("http") ? post.image : `${ORIGIN}${post.image}`,
+      "image": post.image.startsWith("http") ? post.image : `${BASE_URL}${post.image}`,
       "datePublished": post.date,
       "author": {
         "@id": orgId
@@ -135,7 +135,7 @@ function BlogJsonLd({ posts }) {
       "publisher": {
         "@id": orgId
       },
-      "url": `${ORIGIN}/blog/${post.slug}`
+      "url": `${BASE_URL}/blog/${post.slug}`
     }))
   };
 
