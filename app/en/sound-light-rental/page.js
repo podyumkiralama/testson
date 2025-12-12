@@ -4,6 +4,8 @@ import Link from "next/link";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+
 /* ================== Constants ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
@@ -1073,8 +1075,17 @@ function JsonLd() {
 
 /* ================== Page component ================== */
 export default function Page() {
+  const baseUrl = ORIGIN;
+  const canonical = `${baseUrl}/en/sound-light-rental`;
+  const breadcrumbItems = [
+    { name: "Home", url: `${baseUrl}/en` },
+    { name: "Services", url: `${baseUrl}/en/services` },
+    { name: "Sound & Light Rental", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <JsonLd />
       <Hero />
       <Services />
