@@ -437,36 +437,32 @@ export default function HomePage() {
       {/* anchor */}
       <div id="teklif-al" className="sr-only" />
 
-{/* 3) HİZMETLER TABS */}
-<section
-  aria-labelledby="hizmetler-title"
-  className="relative bg-slate-950 overflow-hidden"
->
-  <h2 id="hizmetler-title" className="sr-only">
-    Hizmetlerimiz
-  </h2>
+      {/* 3) HİZMETLER TABS */}
+      <section
+        aria-labelledby="hizmetler-title"
+        className="relative bg-slate-950 overflow-hidden"
+      >
+        <h2 id="hizmetler-title" className="sr-only">
+          Hizmetlerimiz
+        </h2>
 
-  {/* Tam genişlik: ekstra container ve -mx/px kaldırıldı */}
-  <ServicesTabsDeferred idleTimeout={2800} rootMargin="320px" />
-</section>
-
+        {/* Tam genişlik: ekstra container ve -mx/px kaldırıldı */}
+        <ServicesTabsDeferred idleTimeout={2800} rootMargin="320px" />
+      </section>
 
       {/* 4) PROJELER (ProjectsGallery kendi section'ını çiziyor) */}
       <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
-{/* 5) TECH CAPABILITIES */}
-<div
-  className="bg-slate-900 py-16"
-  style={BELOW_THE_FOLD_VISIBILITY_STYLE}
->
-  {/* Tam genişlik — container tamamen kaldırıldı */}
-  <TechCapabilities
-    techFeatures={SEO_TECH_FEATURES}
-    infraFeatures={SEO_INFRA_FEATURES}
-  />
-</div>
-
-
+      {/* 5) TECH CAPABILITIES */}
+      <div
+        className="bg-slate-900 py-16"
+        style={BELOW_THE_FOLD_VISIBILITY_STYLE}
+      >
+        <TechCapabilities
+          techFeatures={SEO_TECH_FEATURES}
+          infraFeatures={SEO_INFRA_FEATURES}
+        />
+      </div>
 
       {/* 6) KURUMSAL ORGANİZASYON (full-width, containersız) */}
       <div className="bg-slate-50 py-0 m-0 w-full">
