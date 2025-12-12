@@ -7,8 +7,11 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== 1. AYARLAR & SABİTLER ================== */
 export const revalidate = 1800; // 30 Dakika ISR
-const ORIGIN = "https://www.sahneva.com";
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com"
+).replace(/\/$/, "");
+const ORIGIN = SITE_URL;
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
 const WHATSAPP_URL = `https://wa.me/905453048671?text=${encodeURIComponent("Merhaba, podyum kiralama için teklif istiyorum.")}`;
 
 const BLUR_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAADAAQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==";
@@ -165,7 +168,7 @@ function StructuredData() {
     headline: "Profesyonel Podyum Kiralama Rehberi",
     image: [`${ORIGIN}/img/podyum/hero.webp`],
     author: { "@type": "Organization", name: "Sahneva" },
-    publisher: { "@id": `${ORIGIN}#org` },
+    publisher: { "@id": ORGANIZATION_ID },
     datePublished: "2023-01-01",
     dateModified: new Date().toISOString().split('T')[0],
     description: metadata.description
@@ -178,7 +181,7 @@ function StructuredData() {
         "@type": "Service",
         name: "Podyum Kiralama",
         description: metadata.description,
-        provider: { "@id": `${ORIGIN}#org` },
+        provider: { "@id": ORGANIZATION_ID },
         areaServed: { "@type": "State", name: "İstanbul" }
       },
       ...productSchemas,

@@ -38,6 +38,10 @@ const WHATSAPP_URL = `https://wa.me/${PHONE.replace("+", "")}?text=${encodeURICo
 
 const GMB_PROFILE_URL = "https://g.page/r/CZhkMzkNOdgnEBI";
 const GMB_REVIEW_URL = "https://g.page/r/CZhkMzkNOdgnEBI/review";
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com"
+).replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
 
 /* ───── STRUCTURED DATA (Rich Snippet) ───── */
 function ContactStructuredData() {
@@ -50,7 +54,7 @@ function ContactStructuredData() {
     url: "https://www.sahneva.com/en/contact",
     mainEntity: {
       "@type": "Organization",
-      "@id": "https://www.sahneva.com/#org",
+      "@id": ORGANIZATION_ID,
       name: "Sahneva",
       telephone: PHONE,
       email: MAIL,

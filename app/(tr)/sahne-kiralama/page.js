@@ -9,7 +9,10 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
-const ORIGIN = "https://www.sahneva.com";
+const ORIGIN =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://www.sahneva.com";
+const ORGANIZATION_ID = `${ORIGIN}/#org`;
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
 const PHONE = "+905453048671";
 const WA_TEXT =
@@ -1565,7 +1568,7 @@ function JsonLd() {
 
   const provider = {
     "@type": "Organization",
-    "@id": `${ORIGIN}#org`,
+    "@id": ORGANIZATION_ID,
     name: "Sahneva",
     url: ORIGIN,
     telephone: PHONE,

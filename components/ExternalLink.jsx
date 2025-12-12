@@ -11,6 +11,7 @@ export default function ExternalLink({
   title,
   target = "_blank",
   rel,
+  nofollow = false,
   ariaLabel,
   ...rest
 }) {
@@ -86,28 +87,8 @@ export default function ExternalLink({
     relParts.add("noopener");
     relParts.add("noreferrer");
 
-    // Harici link ise nofollow ekle (Instagram / YouTube / WhatsApp HARİÇ)
-    try {
-      const url = new URL(
-        href,
-        typeof window !== "undefined" ? window.location.href : undefined
-      );
-
-      const isExternal =
-        typeof window !== "undefined" &&
-        url.origin !== window.location.origin;
-
-      const shouldAddNofollow =
-        isExternal &&
-        !isWhatsappLink(url) &&
-        platform !== "instagram" &&
-        platform !== "youtube";
-
-      if (shouldAddNofollow) {
-        relParts.add("nofollow");
-      }
-    } catch {
-      // Hata olursa zorlamadan bırak
+    if (nofollow) {
+      relParts.add("nofollow");
     }
   }
 

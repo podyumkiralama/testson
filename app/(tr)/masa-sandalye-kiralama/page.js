@@ -8,7 +8,10 @@ import { buildServiceProductSchema } from "@/lib/structuredData/serviceProducts"
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
-const ORIGIN = "https://www.sahneva.com";
+const ORIGIN =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://www.sahneva.com";
+const ORGANIZATION_ID = `${ORIGIN}/#org`;
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Merhaba%2C+masa+sandalye+kiralama+icin+teklif+istiyorum.+Etkinlik+turu%3A+%5Bdavet%2Fkonferans%2Fkokteyl%5D%2C+Tarih%3A+%5Bgg.aa.yyyy%5D%2C+Kisi+sayisi%3A+%5Bxxx%5D.";
@@ -1607,7 +1610,7 @@ function JsonLd() {
 
   const provider = {
     "@type": "Organization",
-    "@id": `${ORIGIN}#org`,
+    "@id": ORGANIZATION_ID,
     name: "Sahneva",
     url: ORIGIN,
     telephone: "+905453048671",
