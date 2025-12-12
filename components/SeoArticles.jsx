@@ -10,6 +10,8 @@ const SITE =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
   "https://www.sahneva.com";
 
+const ORG_ID = `${SITE}/#org`;
+
 const abs = (p) =>
   /^https?:\/\//i.test(p || "")
     ? p
@@ -117,14 +119,8 @@ function ArticlesJsonLd({ items }) {
         image,
         datePublished: a.datePublished || undefined,
         dateModified: a.dateModified || a.datePublished || undefined,
-        author: {
-          "@type": "Organization",
-          name: a.author || "Sahneva Organizasyon",
-        },
-        publisher: {
-          "@type": "Organization",
-          name: "Sahneva Organizasyon",
-        },
+        author: { "@id": ORG_ID },
+        publisher: { "@id": ORG_ID },
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
       },
     };

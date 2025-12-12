@@ -1,6 +1,7 @@
 // app/(tr)/blog/led-ekran-2026-teknoloji-trendleri/page.jsx
 import Image from "next/image";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 // Statik image import – INVALID_IMAGE_OPTIMIZE_REQUEST hatasını önler
 import heroImg from "@/public/img/blog/led-2026-hero.webp";
@@ -8,8 +9,8 @@ import stageWideImg from "@/public/img/blog/led-2026-sahne-genis.webp";
 import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 
 /* ================== YAPILANDIRMA & SABİTLER ================== */
-const BLOG_URL =
-  "https://www.sahneva.com/blog/led-ekran-2026-teknoloji-trendleri";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
 const PUBLISH_DATE = "2025-12-15";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
@@ -105,45 +106,15 @@ function ArticleSchema() {
         datePublished: PUBLISH_DATE,
         dateModified: new Date().toISOString().split("T")[0],
         author: {
-          "@type": "Organization",
-          name: AUTHOR_NAME,
-          url: "https://www.sahneva.com",
+          "@id": `${SITE_URL}/#org`,
         },
         publisher: {
-          "@type": "Organization",
-          name: "Sahneva",
-          logo: {
-            "@type": "ImageObject",
-            url: "https://www.sahneva.com/img/logo.png",
-          },
+          "@id": `${SITE_URL}/#org`,
         },
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": BLOG_URL,
         },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Anasayfa",
-            item: "https://www.sahneva.com",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Blog",
-            item: "https://www.sahneva.com/blog",
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: "2026 LED Ekran Teknolojisi Trendleri",
-            item: BLOG_URL,
-          },
-        ],
       },
       {
         "@type": "FAQPage",
@@ -223,8 +194,15 @@ const TableOfContents = () => (
 
 /* ================== ANA SAYFA ================== */
 export default function LedTrends2026Page() {
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${SITE_URL}/` },
+    { name: "Blog", url: `${SITE_URL}/blog` },
+    { name: "2026 LED Ekran Teknolojisi Trendleri", url: BLOG_URL },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={SITE_URL} />
       <ArticleSchema />
 
       {/* --- HERO SECTION --- */}

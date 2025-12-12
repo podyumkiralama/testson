@@ -1641,23 +1641,6 @@ function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Anasayfa",
-            item: `${ORIGIN}/`,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Masa Sandalye Kiralama",
-            item: `${ORIGIN}/masa-sandalye-kiralama`,
-          },
-        ],
-      },
       serviceNode,
       {
         "@type": "WebPage",
