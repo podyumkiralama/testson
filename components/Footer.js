@@ -92,7 +92,6 @@ const SocialLink = ({ href, label, title, icon, gradient, rel }) => {
           hover:border-white/40 transition-all duration-300 hover:scale-110
           ${FOCUS_RING_CLASS}
         `}
-        itemProp="sameAs"
       >
         <span
           className={`
@@ -135,7 +134,7 @@ export default function Footer({
   return (
     <footer
       className="
-        relative w-full flex-shrink-0 
+        relative w-full flex-shrink-0
         bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]
         border-t border-white/10
         overflow-hidden
@@ -144,8 +143,6 @@ export default function Footer({
       aria-label={ariaLabel}
       aria-describedby={computedDescriptionId}
       role={computedRole}
-      itemScope
-      itemType="https://schema.org/LocalBusiness"
     >
       {/* Dekoratif arka plan efektleri */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -178,9 +175,6 @@ export default function Footer({
         {/* 1. SÜTUN: Marka & Sosyal */}
         <section
           aria-labelledby="ft-brand"
-          itemProp="brand"
-          itemScope
-          itemType="https://schema.org/Brand"
           className="lg:col-span-1"
         >
           <div
@@ -203,7 +197,6 @@ export default function Footer({
                   width={48}
                   height={48}
                   className="w-12 h-12 object-contain rounded-2xl"
-                  itemProp="logo"
                 />
                 <span
                   className="
@@ -224,7 +217,6 @@ export default function Footer({
             <p
               className="text-sm leading-7 text-gray-300"
               id={computedDescriptionId}
-              itemProp="description"
             >
               <span className="block">
                 Türkiye genelinde{" "}
@@ -349,9 +341,6 @@ export default function Footer({
 
             <address
               className="not-italic space-y-5 text-sm text-gray-300"
-              itemProp="address"
-              itemScope
-              itemType="https://schema.org/PostalAddress"
             >
               {/* Adres */}
               <div className="flex items-start gap-3">
@@ -368,10 +357,7 @@ export default function Footer({
                   <span className="block text-white font-medium mb-0.5">
                     Merkez Ofis
                   </span>
-                  <span
-                    className="block text-gray-200"
-                    itemProp="addressLocality"
-                  >
+                  <span className="block text-gray-200">
                     Kağıthane, İstanbul
                   </span>
                   <span className="block text-gray-100 text-xs mt-0.5">
@@ -394,7 +380,6 @@ export default function Footer({
                 <a
                   href="tel:+905453048671"
                   className={`text-gray-200 hover:text-white font-medium transition-colors ${FOCUS_RING_CLASS}`}
-                  itemProp="telephone"
                 >
                   +90 545 304 8671
                 </a>
@@ -414,7 +399,6 @@ export default function Footer({
                 <a
                   href="mailto:info@sahneva.com"
                   className={`text-gray-200 hover:text-white transition-colors ${FOCUS_RING_CLASS}`}
-                  itemProp="email"
                 >
                   info@sahneva.com
                 </a>
@@ -459,8 +443,8 @@ export default function Footer({
 
           <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2">
             <span>
-              © <span itemProp="copyrightYear">{currentYear}</span>{" "}
-              <span itemProp="name" className="text-white font-medium">
+              © <span>{currentYear}</span>{" "}
+              <span className="text-white font-medium">
                 Sahneva
               </span>{" "}
               — Tüm hakları saklıdır.
