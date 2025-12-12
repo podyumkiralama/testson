@@ -1026,23 +1026,6 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: `${ORIGIN}/en`
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Tent Rental",
-            item: `${ORIGIN}/en/tent-rental`
-          },
-        ],
-      },
-      {
         "@type": "Service",
         name: "Tent Rental Service",
         description: "Professional tent rental covering pagoda, transparent dome and industrial structures with nationwide installation and support.",

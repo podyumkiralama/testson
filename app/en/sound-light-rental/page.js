@@ -1029,23 +1029,6 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: `${ORIGIN}/en`
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Sound & Lighting Rental",
-            item: `${ORIGIN}/en/sound-light-rental`
-          },
-        ],
-      },
-      {
         "@type": "Service",
         name: "Sound & Lighting System Rental",
         description: "Professional sound and lighting rental services with line-array speakers, digital consoles, wireless microphones, moving-head lights, truss systems and live operation across Türkiye.",

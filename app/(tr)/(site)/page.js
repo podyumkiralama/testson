@@ -21,6 +21,7 @@ import {
   SITE_URL,
   getOgImageUrl,
 } from "@/lib/seo/seoConfig";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 // —————————————————————————————————————————
 // SABİT VERİLER
@@ -406,8 +407,12 @@ function ConsultationCard() {
 // —————————————————————————————————————————
 
 export default function HomePage() {
+  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const breadcrumbItems = [{ name: "Ana Sayfa", url: `${baseUrl}/` }];
+
   return (
     <div className="overflow-x-hidden bg-black">
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <StructuredData />
 
       {/* 1) HERO */}

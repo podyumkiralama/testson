@@ -1,6 +1,7 @@
 // app/(site)/hakkimizda/page.js
 import Image from "next/image";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ───── META & ISR ───── */
 export const metadata = {
@@ -28,6 +29,7 @@ export const metadata = {
 };
 
 export const revalidate = 3600;
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 
 /* ───── STRUCTURED DATA ───── */
 function AboutStructuredData() {
@@ -72,6 +74,11 @@ export default function HakkimizdaPage() {
   const PHONE = "+905453048671";
   const WA_TEXT = "Merhaba%2C+hakkınızda+sayfasından+ulaşıyorum.+Daha+fazla+bilgi+almak+istiyorum.";
   const WHATSAPP = `https://wa.me/${PHONE.replace("+", "")}?text=${WA_TEXT}`;
+  const baseUrl = SITE_URL;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hakkımızda", url: `${baseUrl}/hakkimizda` },
+  ];
 
   const TIMELINE = [
     {
@@ -151,6 +158,7 @@ export default function HakkimizdaPage() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <AboutStructuredData />
 
       {/* HERO - LED Ekran Sayfası ile Birebir Aynı (İstatistikler Hero İçinde) */}

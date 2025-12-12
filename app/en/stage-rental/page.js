@@ -1161,23 +1161,6 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: `${ORIGIN}/en`,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Stage Rental",
-            item: `${ORIGIN}/en/stage-rental`,
-          },
-        ],
-      },
-      {
         "@type": "Service",
         name: "Stage Rental Service",
         description:
