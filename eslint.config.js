@@ -25,7 +25,7 @@ export default defineConfig([
 
   // 3) Next + React önerilen kurallar
   // eslint-config-next flat yapı, şu şekilde ekleniyor:
-  ...nextConfig(), // (core + core-web-vitals setini getirir)
+  ...nextConfig, // (core + core-web-vitals setini getirir)
 
   // 4) React plugin (extra)
   pluginReact.configs.flat.recommended,
