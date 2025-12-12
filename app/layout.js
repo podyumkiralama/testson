@@ -35,6 +35,22 @@ const inter = Inter({
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
+const canonicalUrl = buildCanonical("/");
+
+const alternateLinkMarkup = (() => {
+  const languages = buildAlternateLanguages();
+  const pairs = Object.entries(languages ?? {});
+
+  const links = [
+    `<link rel="canonical" href="${canonicalUrl}">`,
+    ...pairs.map(
+      ([lang, href]) =>
+        `<link rel="alternate" hreflang="${lang}" href="${href}">`
+    ),
+  ];
+
+  return links.join("\n");
+})();
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
@@ -53,14 +69,6 @@ export const metadata = {
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
   applicationName: "Sahneva Organizasyon",
-  alternates: {
-    canonical: buildCanonical("/"),
-    languages: {
-      tr: buildCanonical("/"),
-      ...buildAlternateLanguages(),
-      "x-default": buildCanonical("/"),
-    },
-  },
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -167,7 +175,7 @@ export default function RootLayout({ children }) {
       className={`${inter.className} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <head>{/* Ek head hack'i yok; her şeyi Metadata API yönetiyor */}</head>
+      <head dangerouslySetInnerHTML={{ __html: alternateLinkMarkup }} />
       <body className="min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         {/* Erişilebilirlik & i18n */}
         <SkipLinks />
