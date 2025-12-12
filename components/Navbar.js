@@ -106,6 +106,7 @@ export default function Navbar({
   const mobileMenuRef = useRef(null);
   const toggleButtonRef = useRef(null);
   const servicesButtonRef = useRef(null);
+  const firstServiceItemRef = useRef(null);
   const serviceItemRefs = useRef([]);
   const mobileMenuOpenedRef = useRef(false);
 
@@ -252,6 +253,15 @@ export default function Navbar({
     },
     [focusServiceItem]
   );
+
+  /* =============== Menü Açıldığında İlk Öğeye Odakla =============== */
+  useEffect(() => {
+    if (!servicesOpen) return;
+
+    requestAnimationFrame(() => {
+      firstServiceItemRef.current?.focus();
+    });
+  }, [servicesOpen]);
 
   /* =============== ESC ile Global Kapatma ve Odak Geri Taşıma =============== */
   useEffect(() => {
@@ -449,13 +459,16 @@ export default function Navbar({
       icon,
       description,
       index,
+      isOpen,
+      firstItemRef,
     }) => (
-      // Link etrafındaki li öğesi kaldırıldı, çünkü bu bir Link bileşeni.
-      // Dışarıda <li> kullanılıyor.
       <Link
         href={href}
         ref={(node) => {
           serviceItemRefs.current[index] = node;
+          if (index === 0 && firstItemRef) {
+            firstItemRef.current = node;
+          }
         }}
         className={`
           group flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
@@ -466,10 +479,9 @@ export default function Navbar({
         onKeyDown={(event) =>
           handleServiceItemKeyDown(event, index)
         }
-        // ARIA: Aktif sayfayı belirt
         aria-current={active(href) ? "page" : undefined}
-        // role="menuitem" kullanımı tartışmalı olduğu için (navigasyon bağlantısı yerine menü öğesi),
-        // standart <Link> olarak bırakıldı ve klavye yönetimi (ArrowDown/Up) eklendi.
+        role="menuitem"
+        tabIndex={isOpen ? 0 : -1}
       >
         <span
           className="text-lg opacity-80 group-hover:opacity-100 transition-opacity mt-0.5 flex-shrink-0"
@@ -555,7 +567,7 @@ export default function Navbar({
                     }
                     ${FOCUS_RING_CLASS}
                   `}
-                  aria-haspopup="true"
+                  aria-haspopup="menu"
                   aria-expanded={servicesOpen ? "true" : "false"}
                   aria-controls={servicesMenuId}
                   data-open={servicesOpen ? "true" : undefined}
@@ -601,7 +613,10 @@ export default function Navbar({
 
                 <ul
                   id={servicesMenuId}
+                  role="menu"
+                  aria-label="Hizmetler"
                   aria-labelledby={servicesBtnId}
+                  aria-hidden={!servicesOpen}
                   data-open={servicesOpen ? "true" : undefined}
                   className={`
                     absolute left-0 top-full mt-2 w-80 bg-white border border-neutral-200 rounded-xl shadow-xl
@@ -615,18 +630,19 @@ export default function Navbar({
                   onMouseEnter={openNow}
                   onMouseLeave={closeWithDelay}
                 >
-                  <li className="part-category space-y-1">
-                    <span className="part-menu-head text-xs font-semibold text-neutral-500 px-3 uppercase tracking-wider">
-                      Hizmetler
-                    </span>
-                    <ul className="flex flex-col gap-1">
-                      {SERVICE_LINKS.map((service, index) => (
-                        <li key={service.href}>
-                          <ServiceLink index={index} {...service} />
-                        </li>
-                      ))}
-                    </ul>
+                  <li role="none" className="part-menu-head text-xs font-semibold text-neutral-500 px-3 uppercase tracking-wider">
+                    Hizmetler
                   </li>
+                  {SERVICE_LINKS.map((service, index) => (
+                    <li key={service.href} role="none" className="flex flex-col gap-1">
+                      <ServiceLink
+                        index={index}
+                        isOpen={servicesOpen}
+                        firstItemRef={firstServiceItemRef}
+                        {...service}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -831,6 +847,7 @@ export default function Navbar({
                           ${FOCUS_RING_CLASS}
                         `}
                         aria-current={active(href) ? "page" : undefined}
+                        tabIndex={mobileServicesOpen ? 0 : -1}
                       >
                         <span
                           className="text-base opacity-70 mt-0.5 flex-shrink-0"
