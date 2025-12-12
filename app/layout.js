@@ -21,6 +21,12 @@ import {
   buildCanonical,
   getOgImageUrl,
 } from "@/lib/seo/seoConfig";
+import {
+  BASE_SITE_URL,
+  LOCAL_BUSINESS_ID,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+} from "@/lib/seo/schemaIds";
 
 // ✅ next/font: variable + CLS minimize
 const inter = Inter({
@@ -34,10 +40,6 @@ const inter = Inter({
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
-const BASE_SITE_URL = SITE_URL.replace(/\/$/, "");
-const ORGANIZATION_ID = `${BASE_SITE_URL}/#org`;
-const WEBSITE_ID = `${BASE_SITE_URL}/#website`;
-const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
