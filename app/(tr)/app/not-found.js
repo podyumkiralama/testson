@@ -1,5 +1,7 @@
-const NOT_FOUND_URL = "https://www.sahneva.com/404";
-const ORGANIZATION_ID = "https://www.sahneva.com/#org";
+import { SITE_URL } from "@/lib/seo/seoConfig";
+
+const NOT_FOUND_URL = `${SITE_URL}/404`;
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
 const NOT_FOUND_DESCRIPTION = "Aradığınız sayfa bulunamadı veya taşınmış olabilir.";
 
 const buildNotFoundSchema = () => ({
@@ -9,7 +11,7 @@ const buildNotFoundSchema = () => ({
   url: NOT_FOUND_URL,
   name: "Sayfa Bulunamadı",
   description: NOT_FOUND_DESCRIPTION,
-  isPartOf: { "@type": "WebSite", "@id": "https://www.sahneva.com/#website" },
+  isPartOf: { "@type": "WebSite", "@id": `${SITE_URL}/#website` },
   about: { "@id": ORGANIZATION_ID },
   inLanguage: "tr-TR",
 });

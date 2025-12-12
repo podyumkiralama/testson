@@ -34,7 +34,7 @@ export const metadata = {
     siteName: "Sahneva",
     images: [
       {
-        url: "https://www.sahneva.com/img/blog/led-2026-hero.webp",
+        url: `${SITE_URL}/img/blog/led-2026-hero.webp`,
         width: 1200,
         height: 630,
         alt: "Geniş sahnede 2026 LED ekran teknolojilerini temsil eden kurumsal etkinlik",
@@ -46,7 +46,7 @@ export const metadata = {
     title: "2026 LED Ekran Teknolojisi Trendleri",
     description:
       "COB LED, ince piksel aralığı ve HDR içerik ile sahne tasarımında yeni dönem.",
-    images: ["https://www.sahneva.com/img/blog/led-2026-hero.webp"],
+    images: [`${SITE_URL}/img/blog/led-2026-hero.webp`],
   },
   keywords: [
     "LED ekran trendleri 2026",
@@ -102,7 +102,7 @@ function ArticleSchema() {
         headline:
           "2026 LED Ekran Teknolojisi Trendleri: COB Paneller ve Fine-Pitch Sahne Tasarımı",
         description: metadata.description,
-        image: "https://www.sahneva.com/img/blog/led-2026-hero.webp",
+        image: `${SITE_URL}/img/blog/led-2026-hero.webp`,
         datePublished: PUBLISH_DATE,
         dateModified: new Date().toISOString().split("T")[0],
         author: {
