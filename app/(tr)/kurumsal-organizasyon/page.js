@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 import { buildFaqSchema } from "@/lib/structuredData/faq";
 import { buildServiceProductSchema } from "@/lib/structuredData/serviceProducts";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
@@ -1337,14 +1338,7 @@ function JsonLd() {
   const pageUrl = `${ORIGIN}/kurumsal-organizasyon`;
   const pageDescription = metadata.description;
 
-  const provider = {
-    "@type": "Organization",
-    "@id": ORGANIZATION_ID,
-    name: "Sahneva",
-    url: ORIGIN,
-    telephone: "+905453048671",
-    logo: `${ORIGIN}/img/logo.png`,
-  };
+  const provider = { "@id": ORGANIZATION_ID };
 
   const { service: serviceSchema, products } = buildServiceProductSchema({
     slug: "/kurumsal-organizasyon",
@@ -1406,8 +1400,17 @@ function JsonLd() {
 
 /* ================== Sayfa Bileşeni ================== */
 export default function Page() {
+  const baseUrl = ORIGIN;
+  const canonical = `${baseUrl}/kurumsal-organizasyon`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: `${baseUrl}/hizmetler` },
+    { name: "Kurumsal Organizasyon", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <JsonLd />
       <Hero />
       <Services />

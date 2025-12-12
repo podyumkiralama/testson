@@ -34,31 +34,17 @@ const ORGANIZATION_ID = `${SITE_URL}/#org`;
 
 /* ───── STRUCTURED DATA ───── */
 function AboutStructuredData() {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": ORGANIZATION_ID,
-      name: "Sahneva Organizasyon",
-      description:
-        "Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri",
-      url: SITE_URL,
-      foundingDate: "2012",
-      founders: [{ "@type": "Person", name: "Sahneva Ekibi" }],
-      numberOfEmployees: "15-50",
-      slogan: "Türkiye'nin 1 Numaralı Etkinlik Teknoloji Partneri",
-      address: { "@type": "PostalAddress", addressCountry: "TR" },
-      contactPoint: {
-        "@type": "ContactPoint",
-        telephone: "+905453048671",
-        contactType: "customer service",
-        availableLanguage: ["Turkish"],
-      },
-      sameAs: [
-        "https://www.instagram.com/sahneva/",
-        "https://www.facebook.com/sahneva/",
-      ],
-      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "500" },
-    };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/hakkimizda#webpage`,
+    url: `${SITE_URL}/hakkimizda`,
+    name: "Hakkımızda | Sahneva - Profesyonel Etkinlik Teknolojileri",
+    description:
+      "Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri",
+    mainEntity: { "@id": ORGANIZATION_ID },
+    inLanguage: "tr-TR",
+  };
 
   return (
     <script
