@@ -1,8 +1,8 @@
 // app/(site)/iletisim/page.jsx
 import Link from "next/link";
-import { SITE_URL } from "@/lib/seo/seoConfig";
+import { BASE_SITE_URL, ORGANIZATION_ID } from "@/lib/seo/schemaIds";
 
-const PAGE_URL = `${SITE_URL}/iletisim`;
+const PAGE_URL = `${BASE_SITE_URL}/iletisim`;
 
 export const metadata = {
   title: "İletişim | Sahneva - Profesyonel Etkinlik Çözümleri",
@@ -47,7 +47,7 @@ function ContactStructuredData() {
       "Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri iletişim bilgileri",
     url: PAGE_URL,
     mainEntity: {
-      "@id": `${SITE_URL}/#org`,
+      "@id": ORGANIZATION_ID,
     },
   };
 

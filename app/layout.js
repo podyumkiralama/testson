@@ -21,6 +21,7 @@ import {
   buildCanonical,
   getOgImageUrl,
 } from "@/lib/seo/seoConfig";
+import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 // ✅ next/font: variable + CLS minimize
 const inter = Inter({
@@ -34,10 +35,6 @@ const inter = Inter({
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
-const BASE_SITE_URL = SITE_URL.replace(/\/$/, "");
-const ORGANIZATION_ID = `${BASE_SITE_URL}/#org`;
-const WEBSITE_ID = `${BASE_SITE_URL}/#website`;
-const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
@@ -114,13 +111,16 @@ export const metadata = {
 /* ================== JSON-LD: ORGANIZATION ================== */
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "LocalBusiness"],
   "@id": ORGANIZATION_ID,
   name: "Sahneva Organizasyon",
   url: BASE_SITE_URL,
   logo: `${BASE_SITE_URL}/img/logo.png`,
+  image: `${BASE_SITE_URL}/img/logo.png`,
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
+  telephone: "+90-545-304-8671",
+  priceRange: "₺₺₺",
   sameAs: [
     "https://www.instagram.com/sahnevaorganizasyon",
     "https://www.youtube.com/@sahneva",
@@ -134,9 +134,15 @@ const organizationJsonLd = {
   },
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
     addressLocality: "İstanbul",
     addressRegion: "TR34",
+    postalCode: "34400",
     addressCountry: "TR",
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Türkiye",
   },
 };
 
@@ -150,37 +156,6 @@ const websiteJsonLd = {
   description:
     "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
   inLanguage: "tr-TR",
-};
-
-/* ================== JSON-LD: LOCALBUSINESS (YEREL SEO) ================== */
-const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": LOCAL_BUSINESS_ID,
-  name: "Sahneva Organizasyon",
-  url: BASE_SITE_URL,
-  telephone: "+90-545-304-8671",
-  image: `${BASE_SITE_URL}/img/logo.png`,
-  parentOrganization: {
-    "@id": ORGANIZATION_ID,
-  },
-  priceRange: "₺₺₺",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
-    addressLocality: "Kağıthane",
-    addressRegion: "İstanbul",
-    postalCode: "34400",
-    addressCountry: "TR",
-  },
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: "Türkiye",
-  },
-  sameAs: [
-    "https://www.instagram.com/sahnevaorganizasyon",
-    "https://www.youtube.com/@sahneva",
-  ],
 };
 
 /* ================== ROOT LAYOUT ================== */
@@ -215,13 +190,6 @@ export default function RootLayout({ children }) {
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteJsonLd),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessJsonLd),
           }}
         />
 
