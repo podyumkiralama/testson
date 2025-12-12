@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
 const PHONE = "+905453048671";
 const WA_TEXT = "Merhaba%2C+LED+ekran+kiralama+icin+teklif+istiyorum.+Etkinlik+turu%3A+%5Bkonser%2Ffuar%2Flansman%5D%2C+Tarih%3A+%5Bgg.aa.yyyy%5D%2C+Ekran+boyutu%3A+%5Bxxx%5D.";
 const WHATSAPP = `https://wa.me/${PHONE.replace("+", "")}?text=${WA_TEXT}`;
@@ -1303,8 +1305,17 @@ function JsonLd() {
 
 /* ================== Sayfa Bileşeni ================== */
 export default function Page() {
+  const baseUrl = SITE_URL;
+  const canonical = `${baseUrl}/led-ekran-kiralama`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: `${baseUrl}/hizmetler` },
+    { name: "LED Ekran Kiralama", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <JsonLd />
       <Hero />
       <Services />

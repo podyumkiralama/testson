@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { buildFaqSchema } from "@/lib/structuredData/faq";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== 1. AYARLAR & SABİTLER ================== */
 export const revalidate = 1800; // 30 Dakika ISR
 const ORIGIN = "https://www.sahneva.com";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
 const WHATSAPP_URL = `https://wa.me/905453048671?text=${encodeURIComponent("Merhaba, podyum kiralama için teklif istiyorum.")}`;
 
 const BLUR_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAADAAQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==";
@@ -777,8 +779,17 @@ function CTASection() {
 
 /* ================== 7. SAYFA EXPORT ================== */
 export default function Page() {
+  const baseUrl = SITE_URL;
+  const canonical = `${baseUrl}/podyum-kiralama`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: `${baseUrl}/hizmetler` },
+    { name: "Podyum Kiralama", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <StructuredData />
       <HeroSection />
       <ServicesSection />

@@ -2,10 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Merhaba%2C+çadır+kiralama+icin+teklif+istiyorum.+Etkinlik+turu%3A+%5Bdüğün%2Ffuar%2Fkonser%5D%2C+Tarih%3A+%5Bgg.aa.yyyy%5D%2C+Kisi+sayisi%3A+%5Bxxx%5D.";
@@ -1588,8 +1590,17 @@ function JsonLd() {
 
 /* ================== Sayfa Bileşeni ================== */
 export default function Page() {
+  const baseUrl = SITE_URL;
+  const canonical = `${baseUrl}/cadir-kiralama`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: `${baseUrl}/hizmetler` },
+    { name: "Çadır Kiralama", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <JsonLd />
       <Hero />
       <Services />

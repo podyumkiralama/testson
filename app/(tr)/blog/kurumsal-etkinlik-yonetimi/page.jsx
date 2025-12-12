@@ -1,9 +1,11 @@
 // app/blog/kurumsal-etkinlik-yonetimi/page.jsx
 import Image from "next/image";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== YAPILANDIRMA & SABİTLER ================== */
-const BLOG_URL = "https://www.sahneva.com/blog/kurumsal-etkinlik-yonetimi";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const BLOG_URL = `${SITE_URL}/blog/kurumsal-etkinlik-yonetimi`;
 const PUBLISH_DATE = "2025-05-20";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
@@ -182,8 +184,15 @@ const TableOfContents = () => (
 
 /* ================== ANA SAYFA ================== */
 export default function BlogPostCorporate() {
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${SITE_URL}/` },
+    { name: "Blog", url: `${SITE_URL}/blog` },
+    { name: "Kurumsal Etkinlik Yönetimi", url: BLOG_URL },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={SITE_URL} />
       <ArticleSchema />
 
       {/* --- HERO SECTION --- */}
