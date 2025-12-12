@@ -34,6 +34,10 @@ const inter = Inter({
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
+const BASE_SITE_URL = SITE_URL.replace(/\/$/, "");
+const ORGANIZATION_ID = `${BASE_SITE_URL}/#org`;
+const WEBSITE_ID = `${BASE_SITE_URL}/#website`;
+const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
@@ -111,10 +115,10 @@ export const metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": `${SITE_URL}/#org`,
+  "@id": ORGANIZATION_ID,
   name: "Sahneva Organizasyon",
-  url: SITE_URL,
-  logo: `${SITE_URL}/img/logo.png`,
+  url: BASE_SITE_URL,
+  logo: `${BASE_SITE_URL}/img/logo.png`,
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
   sameAs: [
@@ -140,8 +144,8 @@ const organizationJsonLd = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${SITE_URL}/#website`,
-  url: SITE_URL,
+  "@id": WEBSITE_ID,
+  url: BASE_SITE_URL,
   name: "Sahneva Organizasyon",
   description:
     "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
@@ -152,13 +156,13 @@ const websiteJsonLd = {
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": `${SITE_URL}/#local`,
+  "@id": LOCAL_BUSINESS_ID,
   name: "Sahneva Organizasyon",
-  url: SITE_URL,
+  url: BASE_SITE_URL,
   telephone: "+90-545-304-8671",
-  image: `${SITE_URL}/img/logo.png`,
+  image: `${BASE_SITE_URL}/img/logo.png`,
   parentOrganization: {
-    "@id": `${SITE_URL}/#org`,
+    "@id": ORGANIZATION_ID,
   },
   priceRange: "₺₺₺",
   address: {

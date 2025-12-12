@@ -53,19 +53,7 @@ function ContactStructuredData() {
       "Professional stage rental, LED screen and sound-light systems contact information",
     url: "https://www.sahneva.com/en/contact",
     mainEntity: {
-      "@type": "Organization",
       "@id": ORGANIZATION_ID,
-      name: "Sahneva",
-      telephone: PHONE,
-      email: MAIL,
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "TR",
-      },
-      sameAs: [
-        "https://www.instagram.com/sahnevaorganizasyon",
-        "https://www.youtube.com/@sahneva",
-      ],
     },
   };
 

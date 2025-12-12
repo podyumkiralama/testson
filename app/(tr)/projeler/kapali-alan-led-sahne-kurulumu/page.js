@@ -41,6 +41,9 @@ const IMAGES = [
   { src: "/img/projeler/kapali-alan-led/9.webp", alt: "Teknik kurulum sonrası sahne ve oturma düzeninin son kontrollerinin yapıldığı geniş açılı görünüm" },
 ];
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+
 
 export default function CasePage() {
   return (
@@ -244,8 +247,8 @@ export default function CasePage() {
             name: "Kapalı Alan LED ve Sahne Kurulumu (Protokol Seviyesi)",
             description:
               "40’lık çadır içinde 24×8 m sahne/podyum ve 24×6 m P2 LED ekranla scaff ve truss altyapısı kullanılan, 2 günde 60 kişilik ekiple tamamlanan büyük ölçekli kurulum.",
-            image: IMAGES.map((i) => `https://www.sahneva.com${i.src}`),
-            creator: { "@type": "Organization", name: "Sahneva" },
+            image: IMAGES.map((i) => `${SITE_URL}${i.src}`),
+            creator: { "@id": ORGANIZATION_ID },
             additionalProperty: [
               { "@type": "PropertyValue", name: "Sahne/Podyum", value: "24×8 m" },
               { "@type": "PropertyValue", name: "LED Ekran", value: "24×6 m (P2)" },
