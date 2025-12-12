@@ -12,7 +12,6 @@ export const revalidate = 1800; // 30 dakikada bir yenile
 
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
-const ORG_ID = "https://www.sahneva.com/#org";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN;
 
 /* ================== META DATA ================== */
