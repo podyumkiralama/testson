@@ -15,13 +15,7 @@ import Footer from "@/components/Footer";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
-import {
-  HOME_PAGE_TITLE,
-  SITE_URL,
-  buildAlternateLanguages,
-  buildCanonical,
-  getOgImageUrl,
-} from "@/lib/seo/seoConfig";
+import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 // ✅ next/font: variable + CLS minimize
@@ -36,22 +30,6 @@ const inter = Inter({
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
-const canonicalUrl = buildCanonical("/");
-
-const alternateLinkMarkup = (() => {
-  const languages = buildAlternateLanguages();
-  const pairs = Object.entries(languages ?? {});
-
-  const links = [
-    `<link rel="canonical" href="${canonicalUrl}">`,
-    ...pairs.map(
-      ([lang, href]) => `<link rel="alternate" hreflang="${lang}" href="${href}">`
-    ),
-  ];
-
-  return links.join("\n");
-})();
-
 /* ================== VIEWPORT ================== */
 export const viewport = {
   width: "device-width",
@@ -182,7 +160,6 @@ export default function RootLayout({ children }) {
       className={`${inter.className} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <head dangerouslySetInnerHTML={{ __html: alternateLinkMarkup }} />
       <body className="min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         {/* Erişilebilirlik & i18n */}
         <SkipLinks />
