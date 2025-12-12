@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 /* ================== Constants ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const ORGANIZATION_ID = `${ORIGIN}/#org`;
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Hello%2C+I'd+like+to+request+a+quote+for+sound+and+lighting+rental.+Event+type%3A+%5Bconcert%2Fcorporate%5D%2C+Date%3A+%5Bdd.mm.yyyy%5D%2C+Audience+size%3A+%5Bxxx%5D.";
@@ -1032,18 +1033,7 @@ function JsonLd() {
         "@type": "Service",
         name: "Sound & Lighting System Rental",
         description: "Professional sound and lighting rental services with line-array speakers, digital consoles, wireless microphones, moving-head lights, truss systems and live operation across Türkiye.",
-        provider: {
-          "@type": "Organization",
-          name: "Sahneva",
-          telephone: "+905453048671",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Istanbul",
-            addressCountry: "TR"
-          },
-          url: ORIGIN,
-          logo: `${ORIGIN}/logo.png`,
-        },
+          provider: { "@id": ORGANIZATION_ID },
         areaServed: "TR",
         serviceType: "EventProduction",
         offers: {

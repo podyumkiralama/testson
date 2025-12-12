@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 /* ================== Constants ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const ORGANIZATION_ID = `${ORIGIN}/#org`;
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Hello%2C+I'd+like+to+request+a+quote+for+LED+screen+rental.+Event+type%3A+%5Bconcert%2Fexpo%2Flaunch%5D%2C+Date%3A+%5Bdd.mm.yyyy%5D%2C+Screen+size%3A+%5Bxxx%5D.";
@@ -1043,18 +1044,7 @@ function JsonLd() {
         "@type": "Service",
         name: "LED Screen Rental Service",
         description: "Professional LED screen rental with P2–P6 pixel pitch, indoor/outdoor LED walls, video wall processors and nationwide certified installation teams.",
-        provider: {
-          "@type": "Organization",
-          name: "Sahneva",
-          telephone: "+905453048671",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Istanbul",
-            addressCountry: "TR"
-          },
-          url: ORIGIN,
-          logo: `${ORIGIN}/logo.png`,
-        },
+          provider: { "@id": ORGANIZATION_ID },
         areaServed: "TR",
         serviceType: "EventProduction",
         offers: {

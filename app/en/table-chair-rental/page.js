@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 /* ================== Constants ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const ORGANIZATION_ID = `${ORIGIN}/#org`;
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Hello%2C+I'd+like+to+request+a+quote+for+table+and+chair+rental.+Event+type%3A+%5Bbanquet%2Fconference%2Fcocktail%5D%2C+Date%3A+%5Bdd.mm.yyyy%5D%2C+Guest+count%3A+%5Bxxx%5D.";
@@ -1158,18 +1159,7 @@ function JsonLd() {
         name: "Table and Chair Rental Service",
         description:
           "Professional table and chair rental with Napoleon and conference chairs, banquet and cocktail tables, linen styling and layout planning across Türkiye.",
-        provider: {
-          "@type": "Organization",
-          name: "Sahneva",
-          telephone: "+905453048671",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Istanbul",
-            addressCountry: "TR",
-          },
-          url: ORIGIN,
-          logo: `${ORIGIN}/logo.png`,
-        },
+          provider: { "@id": ORGANIZATION_ID },
         areaServed: "TR",
         serviceType: "EventProduction",
         offers: {

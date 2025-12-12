@@ -1073,15 +1073,10 @@ function JsonLd() {
     "@id": ORGANIZATION_ID,
   };
 
-  /* ----------------------------------------
-    LOCAL BUSINESS (layout'taki #local)
-  ---------------------------------------- */
-  const localBusinessNode = {
-    "@type": "LocalBusiness",
-    "@id": LOCAL_BUSINESS_ID,
-    name: "Sahneva",
-    url: ORIGIN,
-  };
+    /* ----------------------------------------
+      LOCAL BUSINESS (layout'taki #local)
+    ---------------------------------------- */
+    const localBusinessRef = { "@id": LOCAL_BUSINESS_ID };
 
   /* ----------------------------------------
     RATING NODE (LocalBusiness'a bağlı)
@@ -1095,9 +1090,7 @@ function JsonLd() {
     bestRating: "5",
     worstRating: "1",
     ratingCount: "2",
-    itemReviewed: {
-    "@id": LOCAL_BUSINESS_ID,
-    },
+      itemReviewed: localBusinessRef,
   };
 
   /* ----------------------------------------
@@ -1265,14 +1258,13 @@ function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      localBusinessNode,   // 1) LocalBusiness (#local)
-      webpageSchema,       // 2) WebPage
-      serviceNode,         // 3) Service
-      productNode,         // 4) Product
-      eventServiceSchema,  // 5) EventService
-      ratingNode,          // 6) Rating
-      ...reviews,          // 7) Reviews
-      faqSchema,           // 8) FAQ
+        webpageSchema,       // 1) WebPage
+        serviceNode,         // 2) Service
+        productNode,         // 3) Product
+        eventServiceSchema,  // 4) EventService
+        ratingNode,          // 5) Rating
+        ...reviews,          // 6) Reviews
+        faqSchema,           // 7) FAQ
     ],
   };
 
