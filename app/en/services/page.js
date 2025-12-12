@@ -34,6 +34,9 @@ export const metadata = {
 
 export const revalidate = 3600;
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+
 /* ───── STRUCTURED DATA ───── */
 function ServicesStructuredData() {
   const schema = {
@@ -42,10 +45,7 @@ function ServicesStructuredData() {
     name: "Sahneva Services",
     description:
       "Professional stage rentals, LED walls, sound-light systems, podium, tent rentals and event production services",
-    provider: {
-      "@type": "Organization",
-      name: "Sahneva",
-    },
+      provider: { "@id": ORGANIZATION_ID },
     areaServed: "TR",
     hasOfferCatalog: {
       "@type": "OfferCatalog",

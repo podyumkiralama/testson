@@ -29,32 +29,36 @@ export const metadata = {
 
 export const revalidate = 3600;
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+
 /* ───── STRUCTURED DATA ───── */
 function AboutStructuredData() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Sahneva",
-    description:
-      "Professional stage rentals, LED screens, sound-light systems and event production services",
-    url: "https://sahneva.com",
-    foundingDate: "2012",
-    founders: [{ "@type": "Person", name: "Sahneva Team" }],
-    numberOfEmployees: "15-50",
-    slogan: "Türkiye's #1 Event Technology Partner",
-    address: { "@type": "PostalAddress", addressCountry: "TR" },
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+905453048671",
-      contactType: "customer service",
-      availableLanguage: ["Turkish", "English"],
-    },
-    sameAs: [
-      "https://www.instagram.com/sahneva/",
-      "https://www.facebook.com/sahneva/",
-    ],
-    aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "500" },
-  };
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: "Sahneva Organizasyon",
+      description:
+        "Professional stage rentals, LED screens, sound-light systems and event production services",
+      url: SITE_URL,
+      foundingDate: "2012",
+      founders: [{ "@type": "Person", name: "Sahneva Team" }],
+      numberOfEmployees: "15-50",
+      slogan: "Türkiye's #1 Event Technology Partner",
+      address: { "@type": "PostalAddress", addressCountry: "TR" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+905453048671",
+        contactType: "customer service",
+        availableLanguage: ["Turkish", "English"],
+      },
+      sameAs: [
+        "https://www.instagram.com/sahneva/",
+        "https://www.facebook.com/sahneva/",
+      ],
+      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "500" },
+    };
 
   return (
     <script
