@@ -2,16 +2,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { BASE_SITE_URL, ORGANIZATION_ID } from "@/lib/seo/schemaIds";
 
 /* ───── META & ISR ───── */
 export const metadata = {
   title: "Hizmetlerimiz | Sahneva - Profesyonel Etkinlik Ekipmanları Kiralama",
   description: "Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri, podyum, çadır kiralama ve etkinlik prodüksiyon hizmetleri. Türkiye geneli hızlı kurulum.",
-  alternates: { canonical: "https://sahneva.com/hizmetler" },
+  alternates: { canonical: `${BASE_SITE_URL}/hizmetler` },
   openGraph: {
     title: "Hizmetlerimiz | Sahneva - Profesyonel Etkinlik Çözümleri",
     description: "Sahne, LED ekran, ses-ışık, podyum, çadır kiralama ve komple etkinlik prodüksiyon hizmetleri. Türkiye genelinde profesyonel çözümler.",
-    url: "https://sahneva.com/hizmetler",
+    url: `${BASE_SITE_URL}/hizmetler`,
     images: [
       {
         url: "/img/og-hizmetler.jpg",
@@ -27,7 +28,7 @@ export const metadata = {
 };
 
 export const revalidate = 3600;
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const SITE_URL = BASE_SITE_URL;
 
 /* ───── STRUCTURED DATA ───── */
 function ServicesStructuredData() {
@@ -36,10 +37,7 @@ function ServicesStructuredData() {
     '@type': 'Service',
     'name': 'Sahneva Hizmetler',
     'description': 'Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri, podyum, çadır kiralama ve etkinlik prodüksiyon hizmetleri',
-    'provider': {
-      '@type': 'Organization',
-      'name': 'Sahneva'
-    },
+    'provider': { '@id': ORGANIZATION_ID },
     'areaServed': 'TR',
     'hasOfferCatalog': {
       '@type': 'OfferCatalog',

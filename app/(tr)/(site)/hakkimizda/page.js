@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { BASE_SITE_URL, ORGANIZATION_ID } from "@/lib/seo/schemaIds";
 
 /* ───── META & ISR ───── */
 export const metadata = {
@@ -29,8 +30,7 @@ export const metadata = {
 };
 
 export const revalidate = 3600;
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
-const ORGANIZATION_ID = `${SITE_URL}/#org`;
+const SITE_URL = BASE_SITE_URL;
 
 /* ───── STRUCTURED DATA ───── */
 function AboutStructuredData() {

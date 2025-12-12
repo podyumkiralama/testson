@@ -22,6 +22,7 @@ import {
   getOgImageUrl,
 } from "@/lib/seo/seoConfig";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 // —————————————————————————————————————————
 // SABİT VERİLER
@@ -63,9 +64,7 @@ export const revalidate = 3600;
 // —————————————————————————————————————————
 
 function StructuredData() {
-  const HOME_URL = SITE_URL;
-  const ORGANIZATION_ID = `${SITE_URL}/#org`;
-  const WEBSITE_ID = `${SITE_URL}/#website`;
+  const HOME_URL = BASE_SITE_URL;
   const WEBPAGE_ID = `${HOME_URL}#webpage`;
   const SERVICE_ID = `${HOME_URL}#primary-service`;
   const CATALOG_ID = `${HOME_URL}#catalog`;
@@ -407,7 +406,7 @@ function ConsultationCard() {
 // —————————————————————————————————————————
 
 export default function HomePage() {
-  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const baseUrl = BASE_SITE_URL;
   const breadcrumbItems = [{ name: "Ana Sayfa", url: `${baseUrl}/` }];
 
   return (
