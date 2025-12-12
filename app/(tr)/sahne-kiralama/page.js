@@ -1566,14 +1566,7 @@ function JsonLd() {
   const pageUrl = `${ORIGIN}/sahne-kiralama`;
   const pageDescription = metadata.description;
 
-  const provider = {
-    "@type": "Organization",
-    "@id": ORGANIZATION_ID,
-    name: "Sahneva",
-    url: ORIGIN,
-    telephone: PHONE,
-    logo: `${ORIGIN}/img/logo.png`,
-  };
+  const provider = { "@id": ORGANIZATION_ID };
 
   const { service: serviceSchema, products } = buildServiceProductSchema({
     slug: "/sahne-kiralama",

@@ -167,7 +167,7 @@ function StructuredData() {
     "@type": "Article",
     headline: "Profesyonel Podyum Kiralama Rehberi",
     image: [`${ORIGIN}/img/podyum/hero.webp`],
-    author: { "@type": "Organization", name: "Sahneva" },
+    author: { "@id": ORGANIZATION_ID },
     publisher: { "@id": ORGANIZATION_ID },
     datePublished: "2023-01-01",
     dateModified: new Date().toISOString().split('T')[0],
