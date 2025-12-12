@@ -4,6 +4,7 @@ import Image from "next/image";
 import { readdir } from "fs/promises"; // Promise tabanlı fs kullanımı
 import { existsSync } from "fs";
 import path from "path";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== RUNTIME & ISR ================== */
 export const runtime = "nodejs";
@@ -11,6 +12,7 @@ export const revalidate = 1800; // 30 dakikada bir yenile
 
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN;
 
 /* ================== META DATA ================== */
 export const metadata = {
@@ -205,9 +207,15 @@ function BlogCard({ post, isFeatured = false }) {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
   const hasPosts = posts.length > 0;
+  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Blog", url: `${baseUrl}/blog` },
+  ];
 
   return (
     <div className="bg-gray-50 min-h-screen">
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <BlogJsonLd posts={posts} />
 
       {/* HERO SECTION */}

@@ -1,4 +1,5 @@
 // app/sss/page.js
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ——— META ——— */
 export const metadata = {
@@ -7,6 +8,8 @@ export const metadata = {
     "Podyum, LED ekran, ses-ışık ve çadır kiralama; kurulum, elektrik, izinler ve fiyatlandırma hakkında detaylı SSS.",
   alternates: { canonical: "https://www.sahneva.com/sss" },
 };
+
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 
 /* ——— VERİ ——— */
 const FAQ_CATEGORIES = [
@@ -334,9 +337,15 @@ export default function FaqPage() {
     inLanguage: "tr-TR",
     mainEntity,
   };
+  const baseUrl = SITE_URL;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "SSS", url: `${baseUrl}/sss` },
+  ];
 
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       {/* JSON-LD – SSR ile direkt HTML içinde */}
       <script
         type="application/ld+json"
