@@ -5,7 +5,6 @@ import { readdir } from "fs/promises"; // Promise tabanlı fs kullanımı
 import { existsSync } from "fs";
 import path from "path";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
-import { normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 /* ================== RUNTIME & ISR ================== */
 export const runtime = "nodejs";
@@ -14,7 +13,6 @@ export const revalidate = 1800; // 30 dakikada bir yenile
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN;
-const BASE_URL = normalizeBaseUrl(SITE_URL || ORIGIN);
 
 /* ================== META DATA ================== */
 export const metadata = {
@@ -115,7 +113,7 @@ async function getBlogPosts() {
 function BlogJsonLd({ posts }) {
   if (!posts?.length) return null;
 
-  const orgId = `${BASE_URL}/#org`;
+  const orgId = `${ORIGIN}/#org`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -213,7 +211,7 @@ function BlogCard({ post, isFeatured = false }) {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
   const hasPosts = posts.length > 0;
-  const baseUrl = BASE_URL;
+  const baseUrl = SITE_URL.replace(/\/$/, "");
   const breadcrumbItems = [
     { name: "Ana Sayfa", url: `${baseUrl}/` },
     { name: "Blog", url: `${baseUrl}/blog` },
