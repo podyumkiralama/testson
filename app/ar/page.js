@@ -37,6 +37,11 @@ const HERO_FEATURES_AR = [
   },
 ];
 
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com"
+).replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+
 const WHY_SAHNEVA_FEATURES_AR = [
   {
     icon: "⭐",
@@ -405,7 +410,7 @@ function StructuredData() {
         url: "https://www.sahneva.com/ar",
         name: "تأجير منصات وشاشات LED وأنظمة صوت وإضاءة | سحنيفا",
         inLanguage: "ar",
-        about: { "@id": "https://www.sahneva.com/#org" },
+        about: { "@id": ORGANIZATION_ID },
       },
       {
         "@type": "OfferCatalog",
@@ -428,7 +433,7 @@ function StructuredData() {
             },
             availability: "https://schema.org/InStock",
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -440,7 +445,7 @@ function StructuredData() {
               unitText: "في اليوم",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -452,7 +457,7 @@ function StructuredData() {
               maxPrice: 300000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -464,7 +469,7 @@ function StructuredData() {
               maxPrice: 800000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -476,7 +481,7 @@ function StructuredData() {
               maxPrice: 100000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -488,7 +493,7 @@ function StructuredData() {
               unitText: "للوحدة",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -500,7 +505,7 @@ function StructuredData() {
               maxPrice: 2000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -511,13 +516,13 @@ function StructuredData() {
               priceCurrency: "TRY",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
             itemOffered: { "@type": "Service", name: "إنتاج الفعاليات المؤسسية" },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
         ],
       },
@@ -529,7 +534,7 @@ function StructuredData() {
           "حلول متكاملة للمنصات، شاشات LED، الصوت، الإضاءة والخيام مع فرق تشغيل محترفة في كل تركيا.",
         url: "https://www.sahneva.com/ar",
         areaServed: { "@type": "Country", name: "TR" },
-        provider: { "@id": "https://www.sahneva.com/#org" },
+        provider: { "@id": ORGANIZATION_ID },
       },
       {
         "@type": "ImageObject",

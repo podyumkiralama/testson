@@ -37,6 +37,11 @@ const HERO_FEATURES = [
   },
 ];
 
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com"
+).replace(/\/$/, "");
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+
 const WHY_SAHNEVA_FEATURES = [
   {
     icon: "⭐",
@@ -405,7 +410,7 @@ function StructuredData() {
         url: "https://www.sahneva.com/en",
         name: "Stage, LED Wall, Sound & Lighting Rentals | Nationwide Türkiye | Sahneva",
         inLanguage: "en-US",
-        about: { "@id": "https://www.sahneva.com/#org" },
+        about: { "@id": ORGANIZATION_ID },
       },
       {
         "@type": "OfferCatalog",
@@ -424,7 +429,7 @@ function StructuredData() {
             },
             availability: "https://schema.org/InStock",
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -436,7 +441,7 @@ function StructuredData() {
               unitText: "per day",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -448,7 +453,7 @@ function StructuredData() {
               maxPrice: 300000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -460,7 +465,7 @@ function StructuredData() {
               maxPrice: 100000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -472,7 +477,7 @@ function StructuredData() {
               maxPrice: 800000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -484,7 +489,7 @@ function StructuredData() {
               unitText: "per unit",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -496,7 +501,7 @@ function StructuredData() {
               maxPrice: 2000,
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
           {
             "@type": "Offer",
@@ -507,9 +512,9 @@ function StructuredData() {
               priceCurrency: "TRY",
             },
             areaServed: "TR",
-            seller: { "@id": "https://www.sahneva.com/#org" },
+            seller: { "@id": ORGANIZATION_ID },
           },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Corporate Event Production" }, areaServed: "TR", seller: { "@id": "https://www.sahneva.com/#org" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Corporate Event Production" }, areaServed: "TR", seller: { "@id": ORGANIZATION_ID } },
         ],
       },
       {
@@ -520,7 +525,7 @@ function StructuredData() {
           "Turnkey stage, LED wall, sound, lighting and tent solutions with expert crew support across Türkiye.",
         url: "https://www.sahneva.com/en",
         areaServed: { "@type": "Country", name: "TR" },
-        provider: { "@id": "https://www.sahneva.com/#org" },
+        provider: { "@id": ORGANIZATION_ID },
       },
       {
         "@type": "ImageObject",

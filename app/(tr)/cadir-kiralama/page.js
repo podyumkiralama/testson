@@ -6,8 +6,12 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
-const ORIGIN = "https://www.sahneva.com";
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com"
+).replace(/\/$/, "");
+const ORIGIN = SITE_URL;
+const ORGANIZATION_ID = `${SITE_URL}/#org`;
+const LOCAL_BUSINESS_ID = `${SITE_URL}/#local`;
 const PHONE = "+905453048671";
 const WA_TEXT =
   "Merhaba%2C+çadır+kiralama+icin+teklif+istiyorum.+Etkinlik+turu%3A+%5Bdüğün%2Ffuar%2Fkonser%5D%2C+Tarih%3A+%5Bgg.aa.yyyy%5D%2C+Kisi+sayisi%3A+%5Bxxx%5D.";
@@ -1352,15 +1356,15 @@ function JsonLd() {
   const pageDescription = metadata.description;
 
   const providerRef = {
-    "@id": `${ORIGIN}#org`,
+    "@id": ORGANIZATION_ID,
   };
 
   /* ----------------------------------------
-    LOCAL BUSINESS (layout'taki #localbiz)
+    LOCAL BUSINESS (layout'taki #local)
   ---------------------------------------- */
   const localBusinessNode = {
     "@type": "LocalBusiness",
-    "@id": `${ORIGIN}#localbiz`,
+    "@id": LOCAL_BUSINESS_ID,
     name: "Sahneva",
     url: ORIGIN,
   };
@@ -1378,7 +1382,7 @@ function JsonLd() {
     worstRating: "1",
     ratingCount: "180",
     itemReviewed: {
-      "@id": `${ORIGIN}#localbiz`,
+      "@id": LOCAL_BUSINESS_ID,
     },
   };
 
