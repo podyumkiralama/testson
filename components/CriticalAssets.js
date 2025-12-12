@@ -3,6 +3,7 @@ const CRITICAL_STYLE = `
     color-scheme: light;
     --font-system-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif;
+    text-size-adjust: 100%;
   }
   *, *::before, *::after {
     box-sizing: border-box;
@@ -18,6 +19,7 @@ const CRITICAL_STYLE = `
     background-color: #ffffff;
     color: #0f172a;
     font-family: var(--font-inter, var(--font-inter-fallback, var(--font-system-stack)));
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -25,9 +27,19 @@ const CRITICAL_STYLE = `
     color: inherit;
     text-decoration: none;
   }
-  img, video, canvas, svg {
+  img, picture, video, canvas, svg {
     max-width: 100%;
     height: auto;
+    display: block;
+  }
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+  ::selection {
+    background-color: rgba(109, 40, 217, 0.18);
   }
   .sr-only {
     position: absolute;
@@ -39,6 +51,14 @@ const CRITICAL_STYLE = `
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 `;
 
@@ -66,7 +86,7 @@ const CRITICAL_SCRIPT = `(() => {
   }
 })();`;
 
-export default function CriticalAssets() {
+function CriticalAssets() {
   return (
     <>
       <style
@@ -82,3 +102,5 @@ export default function CriticalAssets() {
     </>
   );
 }
+
+export default CriticalAssets;
