@@ -106,10 +106,10 @@ function ArticleSchema() {
         datePublished: PUBLISH_DATE,
         dateModified: new Date().toISOString().split("T")[0],
         author: {
-          "@id": `${SITE_URL}/#org`,
+          "@id": "https://www.sahneva.com/#org",
         },
         publisher: {
-          "@id": `${SITE_URL}/#org`,
+          "@id": "https://www.sahneva.com/#org",
         },
         mainEntityOfPage: {
           "@type": "WebPage",
