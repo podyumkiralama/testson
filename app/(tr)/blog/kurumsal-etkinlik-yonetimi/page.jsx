@@ -117,14 +117,6 @@ function ArticleSchema() {
         }
       },
       {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Anasayfa", "item": "https://www.sahneva.com" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.sahneva.com/blog" },
-          { "@type": "ListItem", "position": 3, "name": "Kurumsal Etkinlik Yönetimi", "item": BLOG_URL }
-        ]
-      },
-      {
         "@type": "FAQPage",
         "mainEntity": FAQ_ITEMS.map(item => ({
           "@type": "Question",

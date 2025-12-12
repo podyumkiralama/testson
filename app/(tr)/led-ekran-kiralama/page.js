@@ -1156,27 +1156,6 @@ function JsonLd() {
   };
 
   /* ----------------------------------------
-    BREADCRUMB
-  ---------------------------------------- */
-  const breadcrumbSchema = {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Anasayfa",
-        item: `${ORIGIN}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "LED Ekran Kiralama",
-        item: pageUrl,
-      },
-    ],
-  };
-
-  /* ----------------------------------------
     WEBPAGE
   ---------------------------------------- */
   const webpageSchema = {
@@ -1284,13 +1263,12 @@ function JsonLd() {
     "@graph": [
       localBusinessNode,   // 1) LocalBusiness (#localbiz)
       webpageSchema,       // 2) WebPage
-      breadcrumbSchema,    // 3) Breadcrumb
-      serviceNode,         // 4) Service
-      productNode,         // 5) Product
-      eventServiceSchema,  // 6) EventService
-      ratingNode,          // 7) Rating
-      ...reviews,          // 8) Reviews
-      faqSchema,           // 9) FAQ
+      serviceNode,         // 3) Service
+      productNode,         // 4) Product
+      eventServiceSchema,  // 5) EventService
+      ratingNode,          // 6) Rating
+      ...reviews,          // 7) Reviews
+      faqSchema,           // 8) FAQ
     ],
   };
 

@@ -181,13 +181,6 @@ function StructuredData() {
         provider: { "@id": `${ORIGIN}#org` },
         areaServed: { "@type": "State", name: "İstanbul" }
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Anasayfa", item: `${ORIGIN}/` },
-          { "@type": "ListItem", position: 2, name: "Podyum Kiralama", item: `${ORIGIN}/podyum-kiralama` }
-        ]
-      },
       ...productSchemas,
       articleSchema,
       (buildFaqSchema ? buildFaqSchema(FAQ_ITEMS) : {})

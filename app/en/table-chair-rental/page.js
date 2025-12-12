@@ -1154,23 +1154,6 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: `${ORIGIN}/en`,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Table & Chair Rental",
-            item: `${ORIGIN}/en/table-chair-rental`,
-          },
-        ],
-      },
-      {
         "@type": "Service",
         name: "Table and Chair Rental Service",
         description:
