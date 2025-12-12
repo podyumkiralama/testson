@@ -1040,23 +1040,6 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: `${ORIGIN}/en`
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "LED Screen Rental",
-            item: `${ORIGIN}/en/led-screen-rental`
-          },
-        ],
-      },
-      {
         "@type": "Service",
         name: "LED Screen Rental Service",
         description: "Professional LED screen rental with P2–P6 pixel pitch, indoor/outdoor LED walls, video wall processors and nationwide certified installation teams.",

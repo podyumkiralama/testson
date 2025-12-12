@@ -1,6 +1,7 @@
 // app/hizmetler/page.js
 import Image from "next/image";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ───── META & ISR ───── */
 export const metadata = {
@@ -26,6 +27,7 @@ export const metadata = {
 };
 
 export const revalidate = 3600;
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 
 /* ───── STRUCTURED DATA ───── */
 function ServicesStructuredData() {
@@ -237,6 +239,13 @@ function ServicesTabsFallback() {
 
 /* ───── MAIN COMPONENT ───── */
 export default function ServicesPage() {
+  const baseUrl = SITE_URL;
+  const canonical = `${baseUrl}/hizmetler`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: canonical },
+  ];
+
   const QUICK_ACCESS = [
     {
       href: "/sahne-kiralama",
@@ -317,6 +326,7 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <ServicesStructuredData />
 
       {/* Skip to Main Content */}
