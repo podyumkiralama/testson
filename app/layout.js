@@ -44,8 +44,7 @@ const alternateLinkMarkup = (() => {
   const links = [
     `<link rel="canonical" href="${canonicalUrl}">`,
     ...pairs.map(
-      ([lang, href]) =>
-        `<link rel="alternate" hreflang="${lang}" href="${href}">`
+      ([lang, href]) => `<link rel="alternate" hreflang="${lang}" href="${href}">`
     ),
   ];
 
@@ -74,26 +73,15 @@ export const metadata = {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      {
-        url: "/android-chrome-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        url: "/android-chrome-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title:
-      "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
       "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
     siteName: "Sahneva Organizasyon",
@@ -108,8 +96,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
       "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
     images: [getOgImageUrl()],
@@ -119,16 +106,13 @@ export const metadata = {
 /* ================== JSON-LD: ORGANIZATION ================== */
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["Organization", "LocalBusiness"],
+  "@type": "Organization",
   "@id": ORGANIZATION_ID,
   name: "Sahneva Organizasyon",
   url: BASE_SITE_URL,
   logo: `${BASE_SITE_URL}/img/logo.png`,
-  image: `${BASE_SITE_URL}/img/logo.png`,
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
-  telephone: "+90-545-304-8671",
-  priceRange: "₺₺₺",
   sameAs: [
     "https://www.instagram.com/sahnevaorganizasyon",
     "https://www.youtube.com/@sahneva",
@@ -140,6 +124,21 @@ const organizationJsonLd = {
     areaServed: ["TR"],
     availableLanguage: ["tr", "en", "ar"],
   },
+};
+
+/* ================== JSON-LD: LOCALBUSINESS ================== */
+/** Not: ayrı node, Organization'a @id ile bağlı */
+const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": LOCAL_BUSINESS_ID,
+  name: "Sahneva Organizasyon",
+  url: BASE_SITE_URL,
+  image: `${BASE_SITE_URL}/img/logo.png`,
+  telephone: "+90-545-304-8671",
+  priceRange: "₺₺₺",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
@@ -152,6 +151,13 @@ const organizationJsonLd = {
     "@type": "AdministrativeArea",
     name: "Türkiye",
   },
+  parentOrganization: {
+    "@id": ORGANIZATION_ID,
+  },
+  sameAs: [
+    "https://www.instagram.com/sahnevaorganizasyon",
+    "https://www.youtube.com/@sahneva",
+  ],
 };
 
 /* ================== JSON-LD: WEBSITE ================== */
@@ -189,16 +195,17 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
           type="application/ld+json"
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteJsonLd),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
 
         <header
