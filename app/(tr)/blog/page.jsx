@@ -113,6 +113,8 @@ async function getBlogPosts() {
 function BlogJsonLd({ posts }) {
   if (!posts?.length) return null;
 
+  const orgId = `${ORIGIN}/#org`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog", // ItemList yerine Blog tipi daha spesifik olabilir ama ItemList de uygundur.
@@ -128,8 +130,10 @@ function BlogJsonLd({ posts }) {
       "image": post.image.startsWith("http") ? post.image : `${ORIGIN}${post.image}`,
       "datePublished": post.date,
       "author": {
-        "@type": "Organization",
-        "name": post.author
+        "@id": orgId
+      },
+      "publisher": {
+        "@id": orgId
       },
       "url": `${ORIGIN}/blog/${post.slug}`
     }))
