@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 /* ================== Sabitler ================== */
 export const revalidate = 1800;
 const ORIGIN = "https://www.sahneva.com";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN).replace(/\/$/, "");
 const PHONE = "+905453048671";
 const WA_TEXT = "Merhaba%2C+LED+ekran+kiralama+icin+teklif+istiyorum.+Etkinlik+turu%3A+%5Bkonser%2Ffuar%2Flansman%5D%2C+Tarih%3A+%5Bgg.aa.yyyy%5D%2C+Ekran+boyutu%3A+%5Bxxx%5D.";
 const WHATSAPP = `https://wa.me/${PHONE.replace("+", "")}?text=${WA_TEXT}`;
@@ -1154,27 +1156,6 @@ function JsonLd() {
   };
 
   /* ----------------------------------------
-    BREADCRUMB
-  ---------------------------------------- */
-  const breadcrumbSchema = {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Anasayfa",
-        item: `${ORIGIN}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "LED Ekran Kiralama",
-        item: pageUrl,
-      },
-    ],
-  };
-
-  /* ----------------------------------------
     WEBPAGE
   ---------------------------------------- */
   const webpageSchema = {
@@ -1282,13 +1263,12 @@ function JsonLd() {
     "@graph": [
       localBusinessNode,   // 1) LocalBusiness (#localbiz)
       webpageSchema,       // 2) WebPage
-      breadcrumbSchema,    // 3) Breadcrumb
-      serviceNode,         // 4) Service
-      productNode,         // 5) Product
-      eventServiceSchema,  // 6) EventService
-      ratingNode,          // 7) Rating
-      ...reviews,          // 8) Reviews
-      faqSchema,           // 9) FAQ
+      serviceNode,         // 3) Service
+      productNode,         // 4) Product
+      eventServiceSchema,  // 5) EventService
+      ratingNode,          // 6) Rating
+      ...reviews,          // 7) Reviews
+      faqSchema,           // 8) FAQ
     ],
   };
 
@@ -1303,8 +1283,17 @@ function JsonLd() {
 
 /* ================== Sayfa Bileşeni ================== */
 export default function Page() {
+  const baseUrl = SITE_URL;
+  const canonical = `${baseUrl}/led-ekran-kiralama`;
+  const breadcrumbItems = [
+    { name: "Ana Sayfa", url: `${baseUrl}/` },
+    { name: "Hizmetler", url: `${baseUrl}/hizmetler` },
+    { name: "LED Ekran Kiralama", url: canonical },
+  ];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <JsonLd />
       <Hero />
       <Services />
