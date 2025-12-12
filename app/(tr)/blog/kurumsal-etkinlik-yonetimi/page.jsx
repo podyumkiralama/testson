@@ -10,8 +10,11 @@ const PUBLISH_DATE = "2025-05-20";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
 /* ================== META DATA ================== */
+const PAGE_TITLE = "Kurumsal Etkinlik Yönetimi ve Teknik Kiralama Rehberi | Sahneva";
+const OG_IMAGE = "https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp";
+
 export const metadata = {
-  title: "Kurumsal Etkinlik Yönetimi ve Teknik Kiralama Rehberi | Sahneva",
+  title: PAGE_TITLE,
   description:
     "Kurumsal organizasyonlarınızda kusursuz bir akış için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama rehberi. Lansman ve bayi toplantısı ipuçları.",
   alternates: {
@@ -28,7 +31,7 @@ export const metadata = {
     siteName: "Sahneva",
     images: [
       {
-        url: "https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Kurumsal etkinlik sahne ve LED ekran kurulumu",
@@ -39,7 +42,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Kurumsal Etkinlik Yönetimi Rehberi",
     description: "Etkinlikleriniz için teknik planlama ipuçları.",
-    images: ["https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp"],
+    images: [OG_IMAGE],
   },
   keywords: [
     "kurumsal etkinlik yönetimi",
@@ -49,11 +52,11 @@ export const metadata = {
     "çadır kiralama",
     "organizasyon",
     "bayi toplantısı",
-    "teknik prodüksiyon"
+    "teknik prodüksiyon",
   ],
   authors: [{ name: AUTHOR_NAME }],
   publisher: "Sahneva",
-date: PUBLISH_DATE, 
+  date: PUBLISH_DATE,
 };
 
 /* ================== FAQ VERİLERİ ================== */
