@@ -1,16 +1,19 @@
 // app/(site)/iletisim/page.jsx
 import Link from "next/link";
+import { SITE_URL } from "@/lib/seo/seoConfig";
+
+const PAGE_URL = `${SITE_URL}/iletisim`;
 
 export const metadata = {
   title: "İletişim | Sahneva - Profesyonel Etkinlik Çözümleri",
   description:
     "Sahne kiralama, LED ekran, ses-ışık sistemleri için hemen ulaşın. Türkiye geneli hızlı kurulum ve profesyonel danışmanlık.",
-  alternates: { canonical: "https://www.sahneva.com/iletisim" },
+  alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "İletişim | Sahneva - Profesyonel Etkinlik Çözümleri",
     description:
       "Sahne, LED ekran, ses-ışık sistemleri için hemen teklif alın. Türkiye geneli hızlı kurulum ve profesyonel danışmanlık.",
-    url: "https://www.sahneva.com/iletisim",
+    url: PAGE_URL,
     images: [
       {
         url: "/img/og-iletisim.jpg",
@@ -42,21 +45,9 @@ function ContactStructuredData() {
     name: "Sahneva İletişim",
     description:
       "Profesyonel sahne kiralama, LED ekran, ses-ışık sistemleri iletişim bilgileri",
-    url: "https://www.sahneva.com/iletisim",
+    url: PAGE_URL,
     mainEntity: {
-      "@type": "Organization",
-      "@id": "https://www.sahneva.com/#org",
-      name: "Sahneva",
-      telephone: PHONE,
-      email: MAIL,
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "TR",
-      },
-      sameAs: [
-        "https://www.instagram.com/sahnevaorganizasyon",
-        "https://www.youtube.com/@sahneva",
-      ],
+      "@id": `${SITE_URL}/#org`,
     },
   };
 

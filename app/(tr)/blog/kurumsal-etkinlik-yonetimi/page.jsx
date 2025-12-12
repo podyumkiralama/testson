@@ -28,7 +28,7 @@ export const metadata = {
     siteName: "Sahneva",
     images: [
       {
-        url: "https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp",
+        url: `${SITE_URL}/img/blog/kurumsal-etkinlik-hero.webp`,
         width: 1200,
         height: 630,
         alt: "Kurumsal etkinlik sahne ve LED ekran kurulumu",
@@ -39,7 +39,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Kurumsal Etkinlik Yönetimi Rehberi",
     description: "Etkinlikleriniz için teknik planlama ipuçları.",
-    images: ["https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp"],
+    images: [`${SITE_URL}/img/blog/kurumsal-etkinlik-hero.webp`],
   },
   keywords: [
     "kurumsal etkinlik yönetimi",
@@ -95,7 +95,7 @@ function ArticleSchema() {
         "@id": `${BLOG_URL}#article`,
         "headline": "Kurumsal Etkinlik Yönetimi: Kusursuz Organizasyon İçin Teknik Rehber",
         "description": metadata.description,
-        "image": "https://www.sahneva.com/img/blog/kurumsal-etkinlik-hero.webp",
+        "image": `${SITE_URL}/img/blog/kurumsal-etkinlik-hero.webp`,
         "datePublished": PUBLISH_DATE,
         "dateModified": new Date().toISOString().split("T")[0],
         "author": {
