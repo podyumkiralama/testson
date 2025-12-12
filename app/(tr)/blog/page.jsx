@@ -13,6 +13,7 @@ export const revalidate = 1800; // 30 dakikada bir yenile
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ORIGIN;
+const BASE_URL = SITE_URL.replace(/\/$/, "");
 
 /* ================== META DATA ================== */
 export const metadata = {
@@ -23,7 +24,7 @@ export const metadata = {
     title: "Sahneva Blog | Etkinlik Teknolojileri Rehberi",
     description:
       "Sahneva ekibinden kurumsal organizasyon ve teknik ekipmanlar üzerine güncel blog yazıları.",
-    url: `${ORIGIN}/blog`,
+    url: `${BASE_URL}/blog`,
     type: "website",
     images: [
       {
@@ -113,21 +114,21 @@ async function getBlogPosts() {
 function BlogJsonLd({ posts }) {
   if (!posts?.length) return null;
 
-  const orgId = `${ORIGIN}/#org`;
+  const orgId = `${BASE_URL}/#org`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog", // ItemList yerine Blog tipi daha spesifik olabilir ama ItemList de uygundur.
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${ORIGIN}/blog`
+      "@id": `${BASE_URL}/blog`
     },
     "headline": metadata.title,
     "description": metadata.description,
     "blogPost": posts.map((post) => ({
       "@type": "BlogPosting",
       "headline": post.title,
-      "image": post.image.startsWith("http") ? post.image : `${ORIGIN}${post.image}`,
+      "image": post.image.startsWith("http") ? post.image : `${BASE_URL}${post.image}`,
       "datePublished": post.date,
       "author": {
         "@id": orgId
@@ -135,7 +136,7 @@ function BlogJsonLd({ posts }) {
       "publisher": {
         "@id": orgId
       },
-      "url": `${ORIGIN}/blog/${post.slug}`
+      "url": `${BASE_URL}/blog/${post.slug}`
     }))
   };
 
@@ -211,7 +212,7 @@ function BlogCard({ post, isFeatured = false }) {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
   const hasPosts = posts.length > 0;
-  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const baseUrl = BASE_URL;
   const breadcrumbItems = [
     { name: "Ana Sayfa", url: `${baseUrl}/` },
     { name: "Blog", url: `${baseUrl}/blog` },

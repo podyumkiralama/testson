@@ -117,8 +117,6 @@ const organizationJsonLd = {
   logo: `${SITE_URL}/img/logo.png`,
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
-  // İstersen gerçek vergi / MERSİS numaranla güncelle veya bu satırı silebilirsin
-  vatID: "TR1234567890",
   sameAs: [
     "https://www.instagram.com/sahnevaorganizasyon",
     "https://www.youtube.com/@sahneva",
@@ -159,6 +157,9 @@ const localBusinessJsonLd = {
   url: SITE_URL,
   telephone: "+90-545-304-8671",
   image: `${SITE_URL}/img/logo.png`,
+  parentOrganization: {
+    "@id": `${SITE_URL}/#org`,
+  },
   priceRange: "₺₺₺",
   address: {
     "@type": "PostalAddress",
