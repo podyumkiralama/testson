@@ -128,8 +128,10 @@ function BlogJsonLd({ posts }) {
       "image": post.image.startsWith("http") ? post.image : `${ORIGIN}${post.image}`,
       "datePublished": post.date,
       "author": {
-        "@type": "Organization",
-        "name": post.author
+        "@id": ORG_ID
+      },
+      "publisher": {
+        "@id": ORG_ID
       },
       "url": `${ORIGIN}/blog/${post.slug}`
     }))
