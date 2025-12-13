@@ -1,6 +1,5 @@
 // app/(tr)/(site)/page.js
 
-// Statik bileşenler
 import HeroSection from "@/components/HeroSection";
 import {
   ServicesTabsDeferred,
@@ -11,6 +10,7 @@ import {
   WhyChooseUsDeferred,
   FaqDeferred,
 } from "@/components/DeferredSections.client";
+
 import { Suspense } from "react";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -19,9 +19,7 @@ import { HOME_PAGE_TITLE, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
-// —————————————————————————————————————————
-// SABİT VERİLER
-// —————————————————————————————————————————
+/* -------------------- SABİT VERİLER -------------------- */
 
 const SEO_TECH_FEATURES = [
   "IP65 dış mekân LED paneller, 4500+ nit parlaklık",
@@ -40,6 +38,10 @@ const SEO_INFRA_FEATURES = [
 const BELOW_THE_FOLD_VISIBILITY_STYLE = Object.freeze({
   contentVisibility: "auto",
 });
+
+export const revalidate = 3600;
+
+/* -------------------- SEO ARTICLES (SUSPENSE) -------------------- */
 
 function SeoArticlesSkeleton() {
   return (
@@ -76,11 +78,7 @@ async function SeoArticlesSection() {
   return <SeoArticles />;
 }
 
-export const revalidate = 3600;
-
-// —————————————————————————————————————————
-// JSON-LD (Schema.org)
-// —————————————————————————————————————————
+/* -------------------- JSON-LD (Schema.org) -------------------- */
 
 function StructuredData() {
   const HOME_URL = BASE_SITE_URL;
@@ -317,6 +315,8 @@ function StructuredData() {
   );
 }
 
+/* -------------------- HERO ALT BİLEŞENLER -------------------- */
+
 function HeroFeatureGrid() {
   return (
     <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 list-none p-0 m-0">
@@ -357,11 +357,9 @@ function ConsultationCard() {
           </h2>
           <p className="text-slate-100 text-base leading-relaxed">
             Etkinliğiniz için <strong>en uygun sahne çözümleri</strong>, LED
-            ekran seçenekleri ve ses-ışık sistemlerini ücretsiz teknik
-            danışmanlık ile planlayalım.{" "}
-            <strong className="text-yellow-200">
-              2 saat içinde detaylı teklif
-            </strong>{" "}
+            ekran seçenekleri ve ses-ışık sistemlerini ücretsiz teknik danışmanlık
+            ile planlayalım.{" "}
+            <strong className="text-yellow-200">2 saat içinde detaylı teklif</strong>{" "}
             sunuyoruz.
           </p>
         </div>
@@ -379,9 +377,7 @@ function ConsultationCard() {
   );
 }
 
-// —————————————————————————————————————————
-// ANA SAYFA
-// —————————————————————————————————————————
+/* -------------------- ANA SAYFA -------------------- */
 
 export default function HomePage() {
   const baseUrl = BASE_SITE_URL;
@@ -392,13 +388,14 @@ export default function HomePage() {
       <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <StructuredData />
 
-      {/* 1) HERO */}
+      {/* 1) HERO (statik kalsın: LCP için en iyisi) */}
       <HeroSection />
 
-      {/* 2) HERO ALTI: HeroFeatureGrid + Danışmanlık Kartı */}
+      {/* 2) HERO ALTI: Feature grid + danışmanlık */}
       <section
         className="py-10 bg-gradient-to-b from-slate-950 to-slate-900"
         aria-labelledby="hero-supporting-features"
+        role="region"
       >
         <h2 id="hero-supporting-features" className="sr-only">
           Hızlı öne çıkan özellikler ve ücretsiz danışmanlık bağlantısı
@@ -418,30 +415,28 @@ export default function HomePage() {
       <section
         aria-labelledby="hizmetler-title"
         className="relative bg-slate-950 overflow-hidden"
+        role="region"
       >
         <h2 id="hizmetler-title" className="sr-only">
           Hizmetlerimiz
         </h2>
 
-        {/* Tam genişlik: ekstra container ve -mx/px kaldırıldı */}
+        {/* Tam genişlik */}
         <ServicesTabsDeferred idleTimeout={2800} rootMargin="320px" />
       </section>
 
-      {/* 4) PROJELER (ProjectsGallery kendi section'ını çiziyor) */}
+      {/* 4) PROJELER */}
       <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
-      {/* 5) TECH CAPABILITIES */}
-      <div
-        className="bg-slate-900 py-16"
-        style={BELOW_THE_FOLD_VISIBILITY_STYLE}
-      >
+      {/* 5) TECH CAPABILITIES (below-the-fold) */}
+      <div className="bg-slate-900 py-16" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
         <TechCapabilitiesDeferred
           techFeatures={SEO_TECH_FEATURES}
           infraFeatures={SEO_INFRA_FEATURES}
         />
       </div>
 
-      {/* 6) KURUMSAL ORGANİZASYON (full-width, containersız) */}
+      {/* 6) KURUMSAL ORGANİZASYON */}
       <div className="bg-slate-50 py-0 m-0 w-full">
         <CorporateEventsDeferred />
       </div>
