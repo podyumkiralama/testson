@@ -2,14 +2,13 @@
 
 // Statik bileşenler
 import HeroSection from "@/components/HeroSection";
-import CorporateEvents from "@/components/CorporateEvents";
-import CorporateIntro from "@/components/CorporateIntro";
-import TechCapabilities from "@/components/TechCapabilities";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import SeoArticles from "@/components/SeoArticles";
 import {
   ServicesTabsDeferred,
   ProjectsGalleryDeferred,
+  CorporateEventsDeferred,
+  CorporateIntroDeferred,
+  TechCapabilitiesDeferred,
+  WhyChooseUsDeferred,
   FaqDeferred,
 } from "@/components/DeferredSections.client";
 import { Suspense } from "react";
@@ -70,6 +69,11 @@ function SeoArticlesSkeleton() {
       </div>
     </section>
   );
+}
+
+async function SeoArticlesSection() {
+  const { default: SeoArticles } = await import("@/components/SeoArticles");
+  return <SeoArticles />;
 }
 
 export const revalidate = 3600;
@@ -431,7 +435,7 @@ export default function HomePage() {
         className="bg-slate-900 py-16"
         style={BELOW_THE_FOLD_VISIBILITY_STYLE}
       >
-        <TechCapabilities
+        <TechCapabilitiesDeferred
           techFeatures={SEO_TECH_FEATURES}
           infraFeatures={SEO_INFRA_FEATURES}
         />
@@ -439,21 +443,21 @@ export default function HomePage() {
 
       {/* 6) KURUMSAL ORGANİZASYON (full-width, containersız) */}
       <div className="bg-slate-50 py-0 m-0 w-full">
-        <CorporateEvents />
+        <CorporateEventsDeferred />
       </div>
 
       {/* 7) CORPORATE INTRO */}
-      <CorporateIntro />
+      <CorporateIntroDeferred />
 
       {/* 8) WHY CHOOSE US */}
       <div className="w-full p-0 m-0">
-        <WhyChooseUs />
+        <WhyChooseUsDeferred />
       </div>
 
       {/* 9) SEO MAKALELERİ */}
       <div className="w-full p-0 m-0">
         <Suspense fallback={<SeoArticlesSkeleton />}>
-          <SeoArticles />
+          <SeoArticlesSection />
         </Suspense>
       </div>
 
