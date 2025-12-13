@@ -1,5 +1,5 @@
 // components/HeroSection.js
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import heroImg from "@/public/img/hero-bg.webp";
 
 // —————————————————————————————————————————
@@ -106,17 +106,26 @@ function CTAGroup() {
 }
 
 function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
+  const { props } = getImageProps({
+    alt: ariaHidden ? "" : alt,
+    src: heroImg,
+    sizes: "(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px",
+    fetchPriority: "high",
+    placeholder: "blur",
+    loading: "eager",
+    quality: 60,
+    className: "absolute inset-0 h-full w-full object-cover object-center",
+  });
+
+  const { fetchPriority, alt: resolvedAlt, ...rest } = props;
+
+  // Plain <img> keeps the hero image fetch on the critical path without client-side hydration overhead.
+  /* eslint-disable-next-line @next/next/no-img-element, react/no-unknown-property */
   return (
-    <Image
-      src={heroImg}
-      alt={ariaHidden ? "" : alt}
-      fill
-      priority
-      fetchPriority="high"
-      sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
-      quality={45}
-      placeholder="empty"
-      className="absolute inset-0 h-full w-full object-cover object-center"
+    <img
+      {...rest}
+      alt={resolvedAlt}
+      fetchPriority={fetchPriority}
       aria-hidden={ariaHidden}
     />
   );
