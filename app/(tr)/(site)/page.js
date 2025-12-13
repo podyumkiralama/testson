@@ -2,16 +2,17 @@
 
 // Statik bileşenler
 import HeroSection from "@/components/HeroSection";
-import CorporateEvents from "@/components/CorporateEvents";
-import CorporateIntro from "@/components/CorporateIntro";
-import TechCapabilities from "@/components/TechCapabilities";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import SeoArticles from "@/components/SeoArticles";
 import {
   ServicesTabsDeferred,
   ProjectsGalleryDeferred,
+  CorporateEventsDeferred,
+  CorporateIntroDeferred,
+  TechCapabilitiesDeferred,
+  WhyChooseUsDeferred,
   FaqDeferred,
 } from "@/components/DeferredSections.client";
+import SeoArticles from "@/components/SeoArticles";
+import { Suspense } from "react";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { HERO_FEATURES_TR } from "@/lib/heroFeatures";
@@ -40,6 +41,36 @@ const SEO_INFRA_FEATURES = [
 const BELOW_THE_FOLD_VISIBILITY_STYLE = Object.freeze({
   contentVisibility: "auto",
 });
+
+function SeoArticlesSkeleton() {
+  return (
+    <section className="py-12 bg-gradient-to-br from-white via-neutral-50 to-blue-50/30">
+      <div className="container animate-pulse" aria-busy="true">
+        <div className="text-center mb-8 space-y-2">
+          <div className="mx-auto h-7 w-64 rounded-full bg-neutral-200" />
+          <div className="mx-auto h-4 w-80 max-w-full rounded-full bg-neutral-200" />
+        </div>
+
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="h-full rounded-2xl border border-neutral-200 bg-white shadow-sm"
+            >
+              <div className="h-40 w-full rounded-t-2xl bg-neutral-200" />
+              <div className="space-y-3 p-4">
+                <div className="h-4 w-20 rounded-full bg-neutral-200" />
+                <div className="h-6 w-3/4 rounded-full bg-neutral-200" />
+                <div className="h-4 w-full rounded-full bg-neutral-200" />
+                <div className="h-4 w-11/12 rounded-full bg-neutral-200" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export const revalidate = 3600;
 
@@ -400,7 +431,7 @@ export default function HomePage() {
         className="bg-slate-900 py-16"
         style={BELOW_THE_FOLD_VISIBILITY_STYLE}
       >
-        <TechCapabilities
+        <TechCapabilitiesDeferred
           techFeatures={SEO_TECH_FEATURES}
           infraFeatures={SEO_INFRA_FEATURES}
         />
@@ -408,20 +439,22 @@ export default function HomePage() {
 
       {/* 6) KURUMSAL ORGANİZASYON (full-width, containersız) */}
       <div className="bg-slate-50 py-0 m-0 w-full">
-        <CorporateEvents />
+        <CorporateEventsDeferred />
       </div>
 
       {/* 7) CORPORATE INTRO */}
-      <CorporateIntro />
+      <CorporateIntroDeferred />
 
       {/* 8) WHY CHOOSE US */}
       <div className="w-full p-0 m-0">
-        <WhyChooseUs />
+        <WhyChooseUsDeferred />
       </div>
 
       {/* 9) SEO MAKALELERİ */}
       <div className="w-full p-0 m-0">
-        <SeoArticles />
+        <Suspense fallback={<SeoArticlesSkeleton />}>
+          <SeoArticles />
+        </Suspense>
       </div>
 
       {/* 10) SSS */}
