@@ -4,7 +4,7 @@
 import React, {
   useState,
   useRef,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useCallback,
 } from "react";
@@ -68,12 +68,34 @@ const FaqRow = React.memo(function FaqRow({
   const contentRef = useRef(null);
   const [height, setHeight] = useState("0px");
 
-  useEffect(() => {
-    if (isOpen && contentRef.current) {
-      setHeight(`${contentRef.current.scrollHeight}px`);
-    } else {
-      setHeight("0px");
+  useLayoutEffect(() => {
+    const contentEl = contentRef.current;
+    if (!contentEl) return undefined;
+
+    let frameId = null;
+
+    const updateHeight = () => {
+      frameId = requestAnimationFrame(() => {
+        const nextHeight = isOpen ? `${contentEl.scrollHeight}px` : "0px";
+        setHeight((prev) => (prev === nextHeight ? prev : nextHeight));
+      });
+    };
+
+    updateHeight();
+
+    if (!isOpen) {
+      return () => {
+        if (frameId) cancelAnimationFrame(frameId);
+      };
     }
+
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(contentEl);
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+    };
   }, [isOpen]);
 
   return (
