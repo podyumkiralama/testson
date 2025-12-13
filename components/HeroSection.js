@@ -108,18 +108,18 @@ function CTAGroup() {
 
 function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
   return (
-    <Image
-      src={heroImg}
-      alt={ariaHidden ? "hero görseli" : alt}
-      fill
-      priority
-      fetchPriority="high"
-      sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
-      quality={38}
-      placeholder="empty"
-      className="absolute inset-0 h-full w-full object-cover object-center"
-      aria-hidden={ariaHidden}
-    />
+            <Image
+          src="/img/hero-bg.webp"
+          alt="Sahne, podyum, LED ekran ve ses-ışık ekipmanlarıyla kurulu etkinlik alanı"
+          fill
+          priority
+          fetchPriority="high"
+          decoding="async"
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL="/img/hero-bg-low.webp"
+          className="object-cover"
+        />
   );
 }
 
