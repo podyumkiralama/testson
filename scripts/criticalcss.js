@@ -45,7 +45,20 @@ async function collectHtmlFiles(dir) {
   return files.flat();
 }
 
+let warnedAboutStrip = false;
+
 function stripBlockingLinks(html) {
+  if (process.env.CRITICAL_CSS_STRIP_HEAD !== "true") {
+    return html;
+  }
+
+  if (!warnedAboutStrip) {
+    console.warn(
+      "[criticalcss] CRITICAL_CSS_STRIP_HEAD=true: ensure layout/global CSS is safe to remove from <head>.",
+    );
+    warnedAboutStrip = true;
+  }
+
   const headMatch = html.match(/<head[^>]*>[\s\S]*?<\/head>/i);
   if (!headMatch) return html;
 
