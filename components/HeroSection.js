@@ -3,7 +3,7 @@ import Image from "next/image";
 import heroImg from "@/public/img/hero-bg.webp";
 
 // —————————————————————————————————————————
-// SABİT VERİLER (SADECE HERO İÇİN)
+// SABİT VERİLER (SADECE HERO İÇİN) 
 // —————————————————————————————————————————
 
 const HERO_IMAGE_ALT =
