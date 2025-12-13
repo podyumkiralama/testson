@@ -2,14 +2,6 @@
 import Image from "next/image";
 import heroImg from "@/public/img/hero-bg.webp";
 
-// *******************************************************************
-// NOT: Maksimum LCP ve FCP performansı için font optimizasyonu,
-// bu bileşenden bağımsız olarak, next/font modülü kullanılarak
-// (örneğin layout.js dosyasında) uygulanmalıdır. Bu, font CSS'inin
-// otomatik olarak satır içine alınmasını (inlining) ve ağ gidiş-dönüş
-// süresinin ortadan kaldırılmasını sağlar (Bkz: Uzman Raporu 4.1).
-// *******************************************************************
-
 // —————————————————————————————————————————
 // SABİT VERİLER (SADECE HERO İÇİN)
 // —————————————————————————————————————————
@@ -28,7 +20,7 @@ const CTA_BUTTONS = [
     href: "tel:+905453048671",
     label: "Hemen Ara",
     icon: "📞",
-    ariaLabel: "Sahneva'yı telefonla ara",
+    srHint: "",
   },
   {
     href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.+Sahne+kiralama+ve+LED+ekran+fiyatlar%C4%B1+hakk%C4%B1nda+detayl%C4%B1+teklif+almak+istiyorum.&utm_source=homepage&utm_medium=hero_cta&utm_campaign=whatsapp",
@@ -37,8 +29,9 @@ const CTA_BUTTONS = [
     target: "_blank",
     rel: "noopener noreferrer nofollow",
     srHint: "(yeni sekmede açılır)",
+    ariaLabel:
+      "WhatsApp Teklif — WhatsApp üzerinden teklif isteyin (bağlantı yeni sekmede açılır)",
     gradient: "from-green-600 to-emerald-700",
-    ariaLabel: "WhatsApp üzerinden teklif al",
   },
 ];
 
@@ -113,23 +106,17 @@ function CTAGroup() {
   );
 }
 
-// LCP GÖRSELİ İÇİN MAKSİMUM HIZ OPTİMİZASYONU
 function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
   return (
     <Image
       src={heroImg}
-      alt={ariaHidden? "" : alt}
+      alt={ariaHidden ? "" : alt}
       fill
-      // LCP için 3 Yönlü Önceliklendirme
-      priority // 1. Kaynağın önceden yüklenmesini (preload) sağlar
-      loading="eager" // 2. Tembel yüklemeyi kesin olarak devre dışı bırakır
-      fetchPriority="high" // 3. Ağ trafiğinde en yüksek önceliği verir [1]
-      
-      // Mobil Bant Genişliği Tasarrufu ve LCP Optimizasyonu
-      sizes="(max-width: 768px) 100vw, 50vw" // Mobil için 100vw, daha büyük cihazlar için daha küçük kaynak talep eder [2]
-      
-      quality={45} // Orijinal kalite ayarı korunmuştur
-      placeholder="blur" // CLS'yi önlemek ve algılanan hızı artırmak için
+      priority
+      fetchPriority="high"
+      sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+      quality={45}
+      placeholder="empty"
       className="absolute inset-0 h-full w-full object-cover object-center"
       aria-hidden={ariaHidden}
     />
@@ -166,7 +153,7 @@ export default function HeroSection() {
             Sahneva Organizasyon • Türkiye Geneli Profesyonel Hizmet
           </p>
 
-          {/* Başlık (LCP Metin Adayı) */}
+          {/* Başlık */}
           <h1
             id="hero-title"
             className="mt-4 text-white text-3xl md:text-5xl lg:text-6xl font-black leading-tight"
@@ -194,12 +181,12 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll cue (CLS ve Erişilebilirlik Optimizasyonu) */}
+      {/* Scroll cue (istersen silebilirsin) */}
       <div
         className="absolute bottom-6 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
-        <div className="animate-bounce motion-reduce:hidden"> {/* Hareket hassasiyeti olanlar için gizle (motion-reduce:hidden) */}
+        <div className="animate-bounce motion-reduce:animate-none">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/70 rounded-full mt-2" />
           </div>
