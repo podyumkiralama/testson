@@ -42,7 +42,7 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: HOME_PAGE_TITLE,
-    template: "%s | Sahneva Organizasyon",
+    template: "%s | Sahneva",
   },
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
