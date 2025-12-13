@@ -577,10 +577,16 @@ function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
     },
   });
 
-  const { fetchPriority, ...rest } = props;
+  const { fetchPriority, alt: imageAlt, ...rest } = props;
 
-  // eslint-disable-next-line react/no-unknown-property -- force lowercase attribute for HTML validators
-  return <img {...rest} fetchpriority={fetchPriority} aria-hidden={ariaHidden} />;
+  return (
+    <img
+      {...rest}
+      alt={ariaHidden ? "" : imageAlt || alt}
+      fetchPriority={fetchPriority}
+      aria-hidden={ariaHidden}
+    />
+  );
 }
 
 export default function EnglishHomePage() {
@@ -669,7 +675,7 @@ export default function EnglishHomePage() {
             
               <h2 className="sr-only">Key highlights</h2>
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12 list-none p-0 m-0">
-                {HERO_FEATURES.map((item, index) => (
+                {HERO_FEATURES.map((item) => (
                   <li key={item.title} className="m-0 p-0">
                     
                       <div className="group bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 hover:border-white/40 transition-all duration-500 hover:scale-105 hover:bg-white/15">

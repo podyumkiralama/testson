@@ -1,5 +1,4 @@
 // app/(tr)/(site)/page.js
-import Link from "next/link";
 
 // Statik bileşenler
 import HeroSection from "@/components/HeroSection";
@@ -16,28 +15,13 @@ import {
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { HERO_FEATURES_TR } from "@/lib/heroFeatures";
-import {
-  HOME_PAGE_TITLE,
-  SITE_URL,
-  getOgImageUrl,
-} from "@/lib/seo/seoConfig";
+import { HOME_PAGE_TITLE, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 // —————————————————————————————————————————
 // SABİT VERİLER
 // —————————————————————————————————————————
-
-const SECTION_THEMES = {
-  light: {
-    title: "text-neutral-900",
-    description: "text-neutral-700",
-  },
-  dark: {
-    title: "text-white",
-    description: "text-slate-100",
-  },
-};
 
 const SEO_TECH_FEATURES = [
   "IP65 dış mekân LED paneller, 4500+ nit parlaklık",
@@ -295,47 +279,6 @@ function StructuredData() {
       suppressHydrationWarning
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
-  );
-}
-
-// —————————————————————————————————————————
-// PARÇALI BİLEŞENLER
-// —————————————————————————————————————————
-
-function SectionHeader({
-  id,
-  title,
-  highlight,
-  description,
-  afterText = "",
-  align = "center",
-  theme = "light",
-}) {
-  const themeClasses = SECTION_THEMES[theme];
-  const alignment = align === "left" ? "text-left" : "text-center";
-
-  return (
-    <header className={`${alignment} mb-12`}>
-      <h2
-        id={id}
-        className={`text-3xl md:text-4xl font-black ${themeClasses.title} mb-4`}
-      >
-        {title}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-          {highlight}
-        </span>
-        {afterText}
-      </h2>
-      {description ? (
-        <p
-          className={`text-lg ${themeClasses.description} max-w-3xl mx-auto ${
-            alignment === "left" ? "md:mx-0" : ""
-          }`}
-        >
-          {description}
-        </p>
-      ) : null}
-    </header>
   );
 }
 

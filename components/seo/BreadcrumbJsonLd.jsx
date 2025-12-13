@@ -1,4 +1,3 @@
-import React from "react";
 import { buildBreadcrumbList, normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 export function BreadcrumbJsonLd({ items, baseUrl }) {

@@ -3,7 +3,6 @@ import "../styles/globals.css";
 import { Inter } from "next/font/google";
 
 import SkipLinks from "@/components/SkipLinks";
-import CriticalAssets from "@/components/CriticalAssets";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
