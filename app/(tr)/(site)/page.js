@@ -12,6 +12,7 @@ import {
   SeoArticlesDeferred,
   FaqDeferred,
 } from "@/components/DeferredSections.client";
+import { Suspense } from "react";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { HERO_FEATURES_TR } from "@/lib/heroFeatures";
