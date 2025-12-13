@@ -204,7 +204,7 @@ export default async function SeoArticles({
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes={CARD_SIZES}
                         quality={80}
-                        loading={idx < 2 ? "eager" : "lazy"}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL={BLUR}
                       />
