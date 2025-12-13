@@ -12,6 +12,12 @@ const config = {
 
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          "var(--font-inter)",
+          "var(--font-inter-fallback, var(--font-system-stack))",
+        ],
+      },
       container: {
         center: true,
         padding: {

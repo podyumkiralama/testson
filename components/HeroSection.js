@@ -17,9 +17,30 @@ import heroImg from "@/public/img/hero-bg.webp";
 const HERO_IMAGE_ALT =
   "LED ekran, truss çatı ve ışık sistemi içeren Sahneva sahne kurulumunu gösteren arka plan görseli";
 
-const HERO_KEYWORDS =;
+const HERO_KEYWORDS = [
+  { text: "Sahne Kiralama", gradient: "text-blue-300" },
+  { text: "LED Ekran", gradient: "text-purple-300" },
+  { text: "Ses-Işık Sistemleri", gradient: "text-cyan-300" },
+];
 
-const CTA_BUTTONS =;
+const CTA_BUTTONS = [
+  {
+    href: "tel:+905453048671",
+    label: "Hemen Ara",
+    icon: "📞",
+    ariaLabel: "Sahneva'yı telefonla ara",
+  },
+  {
+    href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.+Sahne+kiralama+ve+LED+ekran+fiyatlar%C4%B1+hakk%C4%B1nda+detayl%C4%B1+teklif+almak+istiyorum.&utm_source=homepage&utm_medium=hero_cta&utm_campaign=whatsapp",
+    label: "WhatsApp Teklif",
+    icon: "💬",
+    target: "_blank",
+    rel: "noopener noreferrer nofollow",
+    srHint: "(yeni sekmede açılır)",
+    gradient: "from-green-600 to-emerald-700",
+    ariaLabel: "WhatsApp üzerinden teklif al",
+  },
+];
 
 const CTA_BASE_CLASS =
   "w-full sm:w-auto min-w-[180px] min-h-[44px] text-center group relative text-white font-bold text-base px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-transform duration-200 hover:scale-105 border border-white/20 focus-ring";
@@ -58,20 +79,18 @@ function CTAButton({
   gradient = "from-blue-600 to-purple-600",
   srHint,
   ariaLabel,
- ...rest
+  ...rest
 }) {
   return (
     <a
       href={href}
       className={`${CTA_BASE_CLASS} bg-gradient-to-r ${gradient}`}
-      aria-label={ariaLabel |
-
-| (srHint? `${label} ${srHint}` : label)}
+      aria-label={ariaLabel || (srHint ? `${label} ${srHint}` : label)}
       {...rest}
     >
       <span className="relative z-10 flex items-center justify-center gap-2">
         <span aria-hidden="true">{icon}</span> {label}
-        {srHint? <span className="sr-only">{srHint}</span> : null}
+        {srHint ? <span className="sr-only">{srHint}</span> : null}
       </span>
       <div className={CTA_OVERLAY_CLASS} aria-hidden="true" />
     </a>
@@ -81,7 +100,7 @@ function CTAButton({
 function CTAGroup() {
   return (
     <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3">
-      {CTA_BUTTONS.map(({ srHint, gradient, ariaLabel,...cta }) => (
+      {CTA_BUTTONS.map(({ srHint, gradient, ariaLabel, ...cta }) => (
         <CTAButton
           key={cta.href}
           gradient={gradient}
