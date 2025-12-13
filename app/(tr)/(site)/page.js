@@ -11,7 +11,6 @@ import {
   WhyChooseUsDeferred,
   FaqDeferred,
 } from "@/components/DeferredSections.client";
-import SeoArticles from "@/components/SeoArticles";
 import { Suspense } from "react";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
