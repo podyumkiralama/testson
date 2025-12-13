@@ -115,7 +115,7 @@ function CTAGroup() {
 function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
   return (
     <div className="absolute inset-0" aria-hidden={ariaHidden ? "true" : undefined}>
-      {/* Blur placeholder (görsel gelene kadar dolu his) */}
+      {/* Blur placeholder */}
       <div
         className="absolute inset-0 scale-[1.02] blur-2xl"
         style={{
@@ -130,13 +130,22 @@ function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
         {/* Mobil */}
         <source
           media="(max-width: 767px)"
-          srcSet="/img/hero-bg-mobile.webp"
+          srcSet="
+            /img/hero-bg-mobile.webp 800w,
+            /img/hero-bg-mobile.webp 1000w
+          "
+          sizes="100vw"
           type="image/webp"
         />
+
         {/* Desktop */}
         <source
           media="(min-width: 768px)"
-          srcSet="/img/hero-bg-desktop.webp"
+          srcSet="
+            /img/hero-bg-desktop.webp 1600w,
+            /img/hero-bg-desktop.webp 2400w
+          "
+          sizes="100vw"
           type="image/webp"
         />
 
@@ -147,17 +156,14 @@ function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
           fetchPriority="high"
           loading="eager"
           decoding="async"
+          sizes="100vw"
           className="absolute inset-0 h-full w-full object-cover object-center"
-          style={{
-            backgroundImage: `url(${HERO_BLUR_BASE64})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
         />
       </picture>
     </div>
   );
 }
+
 
 // —————————————————————————————————————————
 // ANA HERO BİLEŞEN (SERVER COMPONENT)
