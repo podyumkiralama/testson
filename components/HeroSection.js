@@ -1,19 +1,20 @@
 // components/HeroSection.js
-import Image from "next/image";
-import heroImg from "@/public/img/hero-bg.webp";
 
 // —————————————————————————————————————————
-// SABİT VERİLER (SADECE HERO İÇİN) 
+// SABİT VERİLER (SADECE HERO İÇİN)
 // —————————————————————————————————————————
 
 const HERO_IMAGE_ALT =
   "LED ekran, truss çatı ve ışık sistemi içeren Sahneva sahne kurulumunu gösteren arka plan görseli";
 
+// Inline base64 blur (ek istek yok)
+const HERO_BLUR_BASE64 =
+  "data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoIAAgAAkA4JaQAA3AA/vuUAAA=";
+
 const HERO_KEYWORDS = [
   { text: "Sahne Kiralama", gradient: "text-blue-300" },
   { text: "LED Ekran", gradient: "text-purple-300" },
   { text: "Ses-Işık Sistemleri", gradient: "text-cyan-300" },
-  { text: "Ses-Işık Sistemleri", gradient: "text-purple-300" },
 ];
 
 const CTA_BUTTONS = [
@@ -107,22 +108,54 @@ function CTAGroup() {
   );
 }
 
+// —————————————————————————————————————————
+// MOBIL/DESKTOP HERO BACKGROUND (ENTEGRE)
+// —————————————————————————————————————————
+
 function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
   return (
-            <Image
-  src="/img/hero-bg.webp"
-  alt={ariaHidden ? "Sahne, podyum, LED ekran ve ses-ışık ekipmanlarıyla kurulu etkinlik alanı" : alt}
-  fill
-  priority
-  fetchPriority="high"
-  decoding="async"
-  sizes="100vw"
-  quality={38}
-  placeholder="empty"
-  blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoIAAgAAkA4JaQAA3AA/vuUAAA="
-  className="object-cover"
-  aria-hidden={ariaHidden}
-/>
+    <div className="absolute inset-0" aria-hidden={ariaHidden ? "true" : undefined}>
+      {/* Blur placeholder (görsel gelene kadar dolu his) */}
+      <div
+        className="absolute inset-0 scale-[1.02] blur-2xl"
+        style={{
+          backgroundImage: `url(${HERO_BLUR_BASE64})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        aria-hidden="true"
+      />
+
+      <picture>
+        {/* Mobil */}
+        <source
+          media="(max-width: 767px)"
+          srcSet="/img/hero-bg-mobile.webp"
+          type="image/webp"
+        />
+        {/* Desktop */}
+        <source
+          media="(min-width: 768px)"
+          srcSet="/img/hero-bg-desktop.webp"
+          type="image/webp"
+        />
+
+        {/* Fallback */}
+        <img
+          src="/img/hero-bg-desktop.webp"
+          alt={ariaHidden ? "" : alt}
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          style={{
+            backgroundImage: `url(${HERO_BLUR_BASE64})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      </picture>
+    </div>
   );
 }
 
@@ -137,10 +170,9 @@ export default function HeroSection() {
       aria-labelledby="hero-title"
       aria-describedby="hero-description hero-keywords"
     >
-      {/* Arka plan görseli */}
+      {/* Arka plan */}
       <div className="absolute inset-0" aria-hidden="true">
         <HeroBackgroundImage ariaHidden />
-        {/* Tek, hafif overlay – fazla koyulaştırmadan okunabilirlik sağlar */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
       </div>
 
@@ -149,10 +181,7 @@ export default function HeroSection() {
         <div className="max-w-3xl mx-auto text-center">
           {/* Badge */}
           <p className="inline-flex items-center gap-3 bg-black/50 rounded-full px-4 py-2 border border-white/10 text-xs md:text-sm text-slate-100">
-            <span
-              className="w-2 h-2 bg-green-400 rounded-full"
-              aria-hidden="true"
-            />
+            <span className="w-2 h-2 bg-green-400 rounded-full" aria-hidden="true" />
             Sahneva Organizasyon • Türkiye Geneli Profesyonel Hizmet
           </p>
 
@@ -185,17 +214,16 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll cue – sadece desktop */}
-<div
-  className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2"
-  aria-hidden="true"
->
-  <div className="animate-bounce motion-reduce:animate-none">
-    <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-      <div className="w-1 h-3 bg-white/70 rounded-full mt-2" />
-    </div>
-  </div>
-</div>
-
+      <div
+        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2"
+        aria-hidden="true"
+      >
+        <div className="animate-bounce motion-reduce:animate-none">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
