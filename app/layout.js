@@ -165,7 +165,7 @@ export default function RootLayout({ children }) {
         <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
         <NewTabAccessibility />
 
-        {/* Non-critical CSS (scrollbar, animasyon, nc-* class'ları) */}
+        {/* Non-critical CSS (animasyon, nc-* class'ları) */}
         <NonCriticalStylesheet />
 
         {/* JSON-LD */}
