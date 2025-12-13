@@ -7,6 +7,7 @@
 ## Task 2: Static HTML Beasties pass
 - Added a `scripts/criticalcss.js` post-build step that looks for prerendered HTML (defaulting to `.next/server/app`, falling back to `.next` or `out`).
 - The script attempts to inline critical CSS with **Beasties**. If you really need to remove any remaining blocking stylesheet/preload links from `<head>`, set `CRITICAL_CSS_STRIP_HEAD=true` when running the script; otherwise, links are kept to avoid layout flashes.
+- Layout/global CSS dosyalarıyla çakışma yaşamamak için `CRITICAL_CSS_STRIP_HEAD` değişkenini kapalı bırakmak güvenli: Beasties `pruneSource: false` ile kaynak CSS'i korur ve link'ler yüklenmeye devam eder, bu yüzden layout stilleri devrede kalır.
 - If Beasties is unavailable in the environment, it falls back to the existing `critters` dependency so builds keep working; install Beasties in CI for the intended flow.
 
 ## Usage
