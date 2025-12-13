@@ -351,7 +351,7 @@ function ServicesTabsComponent({
                           ${
                             isActive
                               ? "text-white bg-sky-500 shadow-lg shadow-sky-500/40 border border-sky-300"
-                              : "text-slate-300 bg-slate-900/80 border border-slate-700 hover:border-sky-400/70 hover:text-sky-300"
+                              : "text-slate-100 bg-slate-900/80 border border-slate-700 hover:border-sky-400/70 hover:text-white"
                           }
                         `}
                       >
