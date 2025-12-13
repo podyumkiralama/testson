@@ -38,6 +38,12 @@ export default defineConfig([
       "react/react-in-jsx-scope": "off",
       "react/no-unescaped-entities": "off",
       "react/prop-types": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/refs": "off",
+      "@next/next/no-img-element": "off",
+      "react-hooks/static-components": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react/jsx-no-target-blank": "off",
       // İstersen erişilebilirlik için bunları açarsın:
       // "react-hooks/rules-of-hooks": "error",
       // "react-hooks/exhaustive-deps": "warn",

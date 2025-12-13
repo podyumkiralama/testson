@@ -1,7 +1,7 @@
 // components/WhyChooseUs.js
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { ScrollReveal, ScrollRevealGroup } from "@/components/ScrollReveal";
 
 // —————————————————————————————————————————

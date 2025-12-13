@@ -1,7 +1,7 @@
 // components/TechCapabilities.js
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 const SEO_TECH_FEATURES = [

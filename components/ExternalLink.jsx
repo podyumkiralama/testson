@@ -28,9 +28,6 @@ export default function ExternalLink({
     return undefined;
   };
 
-  const isWhatsappLink = (url) =>
-    url.hostname === "wa.me" || url.hostname.endsWith("whatsapp.com");
-
   // Metni string’e çevir (sadece düz string ise)
   const visibleText =
     typeof children === "string" ? children.trim() : "";

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
   darkMode: "class", // 🌙 Dark mode toggle desteği
 
   content: [
@@ -38,3 +38,5 @@ export default {
     require("@tailwindcss/forms"), // ⭐ Formlar için ekledik
   ],
 };
+
+export default config;

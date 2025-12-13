@@ -1,7 +1,5 @@
 // components/CorporateIntro.jsx
 "use client";
-
-import React from "react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ScrollReveal";
 

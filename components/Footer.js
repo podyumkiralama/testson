@@ -76,7 +76,9 @@ const FooterLink = ({
 
 /* --- Yardımcı Bileşen: Sosyal Medya İkonu --- */
 const SocialLink = ({ href, label, title, icon, gradient, rel }) => {
-  const relValue = ["noopener", "noreferrer", rel].filter(Boolean).join(" ");
+  const relValue = rel
+    ? `noopener noreferrer ${rel}`
+    : "noopener noreferrer";
 
   return (
     <li>

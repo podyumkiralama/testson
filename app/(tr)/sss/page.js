@@ -287,9 +287,9 @@ function FaqSection({ id, icon, title, items }) {
 
       
         <div className="space-y-3">
-          {items.map((it, i) => (
-            
-              <details className="faq-card group rounded-xl bg-white p-4">
+          {items.map((it) => (
+
+              <details key={it.q} className="faq-card group rounded-xl bg-white p-4">
                 <summary
                   className="cursor-pointer select-none list-none font-semibold leading-7 flex items-center justify-between"
                   role="button"
