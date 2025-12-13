@@ -449,12 +449,7 @@ export default function HomePage() {
         <WhyChooseUsDeferred />
       </div>
 
-      {/* 9) SEO MAKALELERİ */}
-      <div className="w-full p-0 m-0">
-        <Suspense fallback={<SeoArticlesSkeleton />}>
-          <SeoArticlesSection />
-        </Suspense>
-      </div>
+
 
       {/* 10) SSS */}
       <div className="w-full bg-transparent p-0 m-0">
