@@ -13,6 +13,7 @@ const HERO_KEYWORDS = [
   { text: "Sahne Kiralama", gradient: "text-blue-300" },
   { text: "LED Ekran", gradient: "text-purple-300" },
   { text: "Ses-Işık Sistemleri", gradient: "text-cyan-300" },
+  { text: "Ses-Işık Sistemleri", gradient: "text-purple-300" },
 ];
 
 const CTA_BUTTONS = [
@@ -110,16 +111,17 @@ function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
   return (
             <Image
   src="/img/hero-bg.webp"
-  alt="Sahne, podyum, LED ekran ve ses-ışık ekipmanlarıyla kurulu etkinlik alanı"
+  alt={ariaHidden ? "Sahne, podyum, LED ekran ve ses-ışık ekipmanlarıyla kurulu etkinlik alanı" : alt}
   fill
   priority
   fetchPriority="high"
   decoding="async"
   sizes="100vw"
   quality={38}
-  placeholder="blur"
+  placeholder="empty"
   blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoIAAgAAkA4JaQAA3AA/vuUAAA="
   className="object-cover"
+  aria-hidden={ariaHidden}
 />
   );
 }
