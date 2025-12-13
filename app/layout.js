@@ -1,14 +1,14 @@
 // app/layout.jsx
 import "../styles/globals.css";
 
+import dynamic from "next/dynamic";
+
 import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
 import UtilityBar from "@/components/UtilityBar.client";
-import Navbar from "@/components/Navbar";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
-import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import Footer from "@/components/Footer";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
@@ -17,9 +17,19 @@ import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
 
+// ✅ Navbar: hydration’ı Hero’dan sonra (LCP hissi iyileşir)
+const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
+
+// ✅ StickyVideoRail: prod’da bile defer; gerekirse sonra daha da geciktiririz
+const StickyVideoRailclient = dynamic(
+  () => import("@/components/StickyVideoRail.client"),
+  { ssr: false }
+);
+
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
+
 /* ================== VIEWPORT ================== */
 export const viewport = {
   width: "device-width",
@@ -96,7 +106,6 @@ const organizationJsonLd = {
 };
 
 /* ================== JSON-LD: LOCALBUSINESS ================== */
-/** Not: ayrı node, Organization'a @id ile bağlı */
 const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
 
 const localBusinessJsonLd = {
@@ -183,7 +192,9 @@ export default function RootLayout({ children }) {
         >
           <UtilityBar />
           <Navbar />
-          <StickyVideoRailclient />
+          {process.env.NODE_ENV === "production" ? (
+            <StickyVideoRailclient />
+          ) : null}
         </header>
 
         <main
