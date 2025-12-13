@@ -1,20 +1,17 @@
 // components/HeroSection.js
+import Image from "next/image";
 
-// —————————————————————————————————————————
-// SABİT VERİLER (SADECE HERO İÇİN)
-// —————————————————————————————————————————
+// ——————————————————————————————
+// SABİTLER
+// ——————————————————————————————
 
 const HERO_IMAGE_ALT =
-  "LED ekran, truss çatı ve ışık sistemi içeren Sahneva sahne kurulumunu gösteren arka plan görseli";
-
-// Inline base64 blur (ek istek yok)
-const HERO_BLUR_BASE64 =
-  "data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoIAAgAAkA4JaQAA3AA/vuUAAA=";
+  "LED ekran, truss çatı ve ışık sistemi içeren Sahneva sahne kurulumunu gösteren etkinlik alanı";
 
 const HERO_KEYWORDS = [
   { text: "Sahne Kiralama", gradient: "text-blue-300" },
   { text: "LED Ekran", gradient: "text-purple-300" },
-  { text: "Ses-Işık Sistemleri", gradient: "text-cyan-300" },
+  { text: "Ses & Işık Sistemleri", gradient: "text-cyan-300" },
 ];
 
 const CTA_BUTTONS = [
@@ -22,42 +19,40 @@ const CTA_BUTTONS = [
     href: "tel:+905453048671",
     label: "Hemen Ara",
     icon: "📞",
-    srHint: "",
   },
   {
-    href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.+Sahne+kiralama+ve+LED+ekran+fiyatlar%C4%B1+hakk%C4%B1nda+detayl%C4%B1+teklif+almak+istiyorum.&utm_source=homepage&utm_medium=hero_cta&utm_campaign=whatsapp",
+    href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.",
     label: "WhatsApp Teklif",
     icon: "💬",
     target: "_blank",
     rel: "noopener noreferrer nofollow",
-    srHint: "(yeni sekmede açılır)",
     ariaLabel:
-      "WhatsApp Teklif — WhatsApp üzerinden teklif isteyin (bağlantı yeni sekmede açılır)",
+      "WhatsApp üzerinden teklif isteyin (bağlantı yeni sekmede açılır)",
     gradient: "from-green-600 to-emerald-700",
   },
 ];
 
-const CTA_BASE_CLASS =
-  "w-full sm:w-auto min-w-[180px] min-h-[44px] text-center group relative text-white font-bold text-base px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-transform duration-200 hover:scale-105 border border-white/20 focus-ring";
+const CTA_BASE =
+  "w-full sm:w-auto min-w-[180px] min-h-[44px] relative font-bold text-white px-6 py-3 rounded-xl border border-white/20 shadow-md hover:shadow-lg transition-transform hover:scale-105 focus-ring";
 
-const CTA_OVERLAY_CLASS =
-  "absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200";
+const CTA_OVERLAY =
+  "absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity";
 
-// —————————————————————————————————————————
-// ALT PARÇALAR
-// —————————————————————————————————————————
+// ——————————————————————————————
+// ALT BİLEŞENLER
+// ——————————————————————————————
 
 function KeywordPills({ id }) {
   return (
     <ul
       id={id}
-      className="flex flex-wrap justify-center gap-2 mt-4 mb-6 max-w-4xl mx-auto"
-      aria-label="Öne çıkan hizmet başlıkları"
+      className="flex flex-wrap justify-center gap-2 mt-4 mb-6"
+      aria-label="Öne çıkan hizmetler"
     >
       {HERO_KEYWORDS.map(({ text, gradient }) => (
-        <li key={text} className="list-none">
+        <li key={text}>
           <span
-            className={`text-sm md:text-base font-semibold px-3 py-1 ${gradient} bg-white/15 rounded-lg border border-white/10`}
+            className={`px-3 py-1 text-sm md:text-base font-semibold rounded-lg bg-white/15 border border-white/10 ${gradient}`}
           >
             {text}
           </span>
@@ -67,107 +62,67 @@ function KeywordPills({ id }) {
   );
 }
 
-function CTAButton({
-  href,
-  label,
-  icon,
-  gradient = "from-blue-600 to-purple-600",
-  srHint,
-  ariaLabel,
-  ...rest
-}) {
-  return (
-    <a
-      href={href}
-      className={`${CTA_BASE_CLASS} bg-gradient-to-r ${gradient}`}
-      aria-label={ariaLabel || (srHint ? `${label} ${srHint}` : label)}
-      {...rest}
-    >
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        <span aria-hidden="true">{icon}</span> {label}
-        {srHint ? <span className="sr-only">{srHint}</span> : null}
-      </span>
-      <div className={CTA_OVERLAY_CLASS} aria-hidden="true" />
-    </a>
-  );
-}
-
 function CTAGroup() {
   return (
-    <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3">
-      {CTA_BUTTONS.map(({ srHint, gradient, ariaLabel, ...cta }) => (
-        <CTAButton
-          key={cta.href}
-          gradient={gradient}
-          srHint={srHint}
-          ariaLabel={ariaLabel}
-          {...cta}
-        />
-      ))}
+    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+      {CTA_BUTTONS.map(
+        ({ href, label, icon, gradient = "from-blue-600 to-purple-600", ariaLabel, ...rest }) => (
+          <a
+            key={href}
+            href={href}
+            aria-label={ariaLabel || label}
+            className={`${CTA_BASE} bg-gradient-to-r ${gradient} group`}
+            {...rest}
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span aria-hidden="true">{icon}</span>
+              {label}
+            </span>
+            <span className={CTA_OVERLAY} aria-hidden="true" />
+          </a>
+        )
+      )}
     </div>
   );
 }
 
-// —————————————————————————————————————————
-// MOBIL/DESKTOP HERO BACKGROUND (ENTEGRE)
-// —————————————————————————————————————————
+// ——————————————————————————————
+// HERO BACKGROUND (BLUR YOK)
+// ——————————————————————————————
 
-function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
+function HeroBackgroundImage({ ariaHidden = false }) {
   return (
-    <div className="absolute inset-0" aria-hidden={ariaHidden ? "true" : undefined}>
-      {/* Blur placeholder */}
-      <div
-        className="absolute inset-0 scale-[1.02] blur-2xl"
-        style={{
-          backgroundImage: `url(${HERO_BLUR_BASE64})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        aria-hidden="true"
+    <>
+      {/* Mobile */}
+      <Image
+        src="/img/hero-bg-mobile.webp"
+        alt={ariaHidden ? "" : HERO_IMAGE_ALT}
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className="absolute inset-0 object-cover md:hidden"
+        aria-hidden={ariaHidden}
       />
 
-      <picture>
-        {/* Mobil */}
-        <source
-          media="(max-width: 767px)"
-          srcSet="
-            /img/hero-bg-mobile.webp 800w,
-            /img/hero-bg-mobile.webp 1000w
-          "
-          sizes="100vw"
-          type="image/webp"
-        />
-
-        {/* Desktop */}
-        <source
-          media="(min-width: 768px)"
-          srcSet="
-            /img/hero-bg-desktop.webp 1600w,
-            /img/hero-bg-desktop.webp 2400w
-          "
-          sizes="100vw"
-          type="image/webp"
-        />
-
-        {/* Fallback */}
-        <img
-          src="/img/hero-bg-desktop.webp"
-          alt={ariaHidden ? "" : alt}
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-          sizes="100vw"
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-      </picture>
-    </div>
+      {/* Desktop */}
+      <Image
+        src="/img/hero-bg-desktop.webp"
+        alt={ariaHidden ? "" : HERO_IMAGE_ALT}
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className="absolute inset-0 object-cover hidden md:block"
+        aria-hidden={ariaHidden}
+      />
+    </>
   );
 }
 
-
-// —————————————————————————————————————————
-// ANA HERO BİLEŞEN (SERVER COMPONENT)
-// —————————————————————————————————————————
+// ——————————————————————————————
+// ANA HERO
+// ——————————————————————————————
 
 export default function HeroSection() {
   return (
@@ -183,40 +138,33 @@ export default function HeroSection() {
       </div>
 
       {/* İçerik */}
-      <div className="relative z-10 container py-10">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Badge */}
-          <p className="inline-flex items-center gap-3 bg-black/50 rounded-full px-4 py-2 border border-white/10 text-xs md:text-sm text-slate-100">
-            <span className="w-2 h-2 bg-green-400 rounded-full" aria-hidden="true" />
-            Sahneva Organizasyon • Türkiye Geneli Profesyonel Hizmet
-          </p>
+      <div className="relative z-10 container py-10 text-center">
+        <p className="inline-flex items-center gap-2 bg-black/50 px-4 py-2 rounded-full border border-white/10 text-xs md:text-sm text-white">
+          <span className="w-2 h-2 bg-green-400 rounded-full" />
+          Sahneva Organizasyon • Türkiye Geneli
+        </p>
 
-          {/* Başlık */}
-          <h1
-            id="hero-title"
-            className="mt-4 text-white text-3xl md:text-5xl lg:text-6xl font-black leading-tight"
-          >
-            Türkiye genelinde
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-400 block">
-              Sahne &amp; LED Ekran Kiralama
-            </span>
-          </h1>
+        <h1
+          id="hero-title"
+          className="mt-4 text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight"
+        >
+          Türkiye genelinde
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-400">
+            Sahne & LED Ekran Kiralama
+          </span>
+        </h1>
 
-          {/* Keyword pill’ler */}
-          <KeywordPills id="hero-keywords" />
+        <KeywordPills id="hero-keywords" />
 
-          {/* Alt açıklama */}
-          <p
-            id="hero-description"
-            className="text-slate-100 text-sm md:text-lg mt-2 md:mt-4 max-w-xl mx-auto"
-          >
-            500+ başarılı proje, %98 müşteri memnuniyeti ve Türkiye geneli hızlı
-            kurulum ile etkinliğinizde yanınızdayız.
-          </p>
+        <p
+          id="hero-description"
+          className="mt-3 text-sm md:text-lg text-slate-100 max-w-xl mx-auto"
+        >
+          500+ başarılı proje, %98 müşteri memnuniyeti ve hızlı kurulum ile
+          etkinliğinizde yanınızdayız.
+        </p>
 
-          {/* CTA’lar */}
-          <CTAGroup />
-        </div>
+        <CTAGroup />
       </div>
 
       {/* Scroll cue – sadece desktop */}
