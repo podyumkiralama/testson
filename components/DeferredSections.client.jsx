@@ -6,8 +6,20 @@ import { useEffect, useRef, useState } from "react";
 
 // Dinamik componentler
 const ServicesTabs = dynamic(() => import("./ServicesTabs"), { ssr: false });
-const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), { ssr: false });
+const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), {
+  ssr: false,
+});
 const Faq = dynamic(() => import("./Faq"), { ssr: false });
+const CorporateEvents = dynamic(() => import("./CorporateEvents"), {
+  ssr: false,
+});
+const CorporateIntro = dynamic(() => import("./CorporateIntro"), {
+  ssr: false,
+});
+const TechCapabilities = dynamic(() => import("./TechCapabilities"), {
+  ssr: false,
+});
+const WhyChooseUs = dynamic(() => import("./WhyChooseUs"), { ssr: false });
 
 // Lazy-load görünürlük hook'u
 function useDeferredVisible(options) {
@@ -84,3 +96,64 @@ export function FaqDeferred(props) {
     </section>
   );
 }
+
+/* ───────────────── Corporate Events (temiz wrapper) ───────────────── */
+
+export function CorporateEventsDeferred(props) {
+  const [ref, visible] = useDeferredVisible({
+    rootMargin: "200px 0px",
+    threshold: 0.1,
+  });
+
+  return (
+    <section ref={ref}>
+      {visible ? <CorporateEvents {...props} /> : <div className="min-h-[320px]" />}
+    </section>
+  );
+}
+
+/* ───────────────── Corporate Intro (temiz wrapper) ───────────────── */
+
+export function CorporateIntroDeferred(props) {
+  const [ref, visible] = useDeferredVisible({
+    rootMargin: "200px 0px",
+    threshold: 0.1,
+  });
+
+  return (
+    <section ref={ref}>
+      {visible ? <CorporateIntro {...props} /> : <div className="min-h-[240px]" />}
+    </section>
+  );
+}
+
+/* ───────────────── Tech Capabilities (temiz wrapper) ───────────────── */
+
+export function TechCapabilitiesDeferred(props) {
+  const [ref, visible] = useDeferredVisible({
+    rootMargin: "200px 0px",
+    threshold: 0.1,
+  });
+
+  return (
+    <section ref={ref}>
+      {visible ? <TechCapabilities {...props} /> : <div className="min-h-[360px]" />}
+    </section>
+  );
+}
+
+/* ───────────────── Why Choose Us (temiz wrapper) ───────────────── */
+
+export function WhyChooseUsDeferred(props) {
+  const [ref, visible] = useDeferredVisible({
+    rootMargin: "200px 0px",
+    threshold: 0.1,
+  });
+
+  return (
+    <section ref={ref}>
+      {visible ? <WhyChooseUs {...props} /> : <div className="min-h-[320px]" />}
+    </section>
+  );
+}
+
