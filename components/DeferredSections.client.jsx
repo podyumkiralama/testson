@@ -98,21 +98,6 @@ export function FaqDeferred(props) {
   );
 }
 
-/* ───────────────── Navbar (temiz wrapper) ───────────────── */
-
-export function NavbarDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "0px 0px",
-    threshold: 0,
-  });
-
-  return (
-    <section ref={ref}>
-      {visible ? <Navbar {...props} /> : <div className="h-16 lg:h-20" />}
-    </section>
-  );
-}
-
 /* ───────────────── Corporate Events (temiz wrapper) ───────────────── */
 
 export function CorporateEventsDeferred(props) {
