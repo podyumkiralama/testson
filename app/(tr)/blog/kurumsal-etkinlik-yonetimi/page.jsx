@@ -87,46 +87,50 @@ const FAQ_ITEMS = [
 
 /* ================== SCHEMA (JSON-LD) ================== */
 function ArticleSchema() {
+  const site = String(SITE_URL || "").replace(/\/$/, "");
+  const orgId = `${site}/#org`;
+  const editorId = `${site}/#editor`;
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Article",
-        "@id": `${BLOG_URL}#article`,
-        "headline": "Kurumsal Etkinlik Yönetimi: Kusursuz Organizasyon İçin Teknik Rehber",
-        "description": metadata.description,
-        "image": `${SITE_URL}/img/blog/kurumsal-etkinlik-hero.webp`,
-        "datePublished": PUBLISH_DATE,
-        "dateModified": new Date().toISOString().split("T")[0],
-        "author": {
-          "@id": `${SITE_URL}/#org`
-        },
-        "publisher": {
-          "@id": `${SITE_URL}/#org`
-        },
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": BLOG_URL
-        }
+        "@type": "BlogPosting",
+        "@id": `${BLOG_URL}#blogposting`,
+        headline: metadata?.title || "Blog Yazısı",
+        description: metadata?.description,
+        image: `${site}/img/blog/kurumsal-etkinlik-hero.webp`,
+        datePublished: PUBLISH_DATE,
+        dateModified: PUBLISH_DATE,
+        inLanguage: "tr-TR",
+        author: { "@id": editorId },
+        publisher: { "@id": orgId },
+        mainEntityOfPage: { "@type": "WebPage", "@id": BLOG_URL },
+        isPartOf: { "@type": "Blog", "@id": `${site}/blog#blog` },
       },
       {
         "@type": "FAQPage",
-        "mainEntity": FAQ_ITEMS.map(item => ({
+        "@id": `${BLOG_URL}#faq`,
+        mainEntity: FAQ_ITEMS.map((item) => ({
           "@type": "Question",
-          "name": item.question,
-          "acceptedAnswer": { "@type": "Answer", "text": item.answer }
-        }))
-      }
-    ]
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      },
+    ],
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={
+        __html: JSON.stringify(schema).replace(/</g, "\u003c"),
+      }
     />
   );
 }
+
 
 /* ================== BİLEŞENLER ================== */
 const Breadcrumbs = () => (
