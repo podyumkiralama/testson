@@ -11,7 +11,11 @@ import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
+
+// ✅ Rich Results için timezone dahil ISO 8601
 const PUBLISH_DATE = "2025-05-20T00:00:00+03:00";
+const MODIFIED_DATE = "2025-05-20T00:00:00+03:00";
+
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
 /* ================== META DATA ================== */
@@ -106,8 +110,11 @@ function ArticleSchema() {
         headline: metadata?.title || "Blog Yazısı",
         description: metadata?.description,
         image: `${site}/img/blog/led-2026-hero.webp`,
-        datePublished: "2025-05-20T00:00:00+03:00",
-        dateModified: "2025-05-20T00:00:00+03:00";,
+
+        // ✅ Rich Results: timezone dahil
+        datePublished: PUBLISH_DATE,
+        dateModified: MODIFIED_DATE,
+
         inLanguage: "tr-TR",
         author: { "@id": editorId },
         publisher: { "@id": orgId },
@@ -137,7 +144,6 @@ function ArticleSchema() {
   );
 }
 
-
 /* ================== BİLEŞENLER ================== */
 const Breadcrumbs = () => (
   <nav aria-label="Breadcrumb" className="mb-6 text-sm text-gray-600">
@@ -158,10 +164,7 @@ const Breadcrumbs = () => (
       <li aria-hidden="true" className="text-gray-500">
         /
       </li>
-      <li
-        className="text-gray-900 font-medium truncate"
-        aria-current="page"
-      >
+      <li className="text-gray-900 font-medium truncate" aria-current="page">
         2026 LED Ekran Teknolojisi Trendleri
       </li>
     </ol>
@@ -234,9 +237,9 @@ export default function LedTrends2026Page() {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto font-light antialiased">
-            COB paneller, 2.0 nesil sürücüler ve HDR içerik ile
-            kurumsal etkinliklerde LED ekranlar artık sadece fon değil,
-            başrol oyuncu. Peki teknik kararları 2026’da nasıl almalısınız?
+            COB paneller, 2.0 nesil sürücüler ve HDR içerik ile kurumsal
+            etkinliklerde LED ekranlar artık sadece fon değil, başrol oyuncu.
+            Peki teknik kararları 2026’da nasıl almalısınız?
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-200 mt-8 pt-8 border-t border-white/10">
@@ -275,39 +278,18 @@ export default function LedTrends2026Page() {
       </header>
 
       {/* --- İSTATİSTİKLER --- */}
-      <section
-        className="relative -mt-10 z-30 px-4"
-        aria-label="2026 LED Ekran İstatistikleri"
-      >
+      <section className="relative -mt-10 z-30 px-4" aria-label="2026 LED Ekran İstatistikleri">
         <div className="container mx-auto">
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-10">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-x-0 md:divide-x divide-gray-100">
               {[
-                {
-                  val: "P1.5",
-                  label: "2026 iç mekan sahnelerde ortalama piksel aralığı",
-                  color: "text-blue-700",
-                },
-                {
-                  val: "3840Hz",
-                  label: "Yeni nesil sürücülerde minimum yenileme oranı",
-                  color: "text-indigo-700",
-                },
-                {
-                  val: "↑ 60%",
-                  label: "COB LED ile artan darbe ve çizilme dayanımı",
-                  color: "text-emerald-700",
-                },
-                {
-                  val: "HDR",
-                  label: "Büyük markaların tercih ettiği yeni standart",
-                  color: "text-amber-700",
-                },
+                { val: "P1.5", label: "2026 iç mekan sahnelerde ortalama piksel aralığı", color: "text-blue-700" },
+                { val: "3840Hz", label: "Yeni nesil sürücülerde minimum yenileme oranı", color: "text-indigo-700" },
+                { val: "↑ 60%", label: "COB LED ile artan darbe ve çizilme dayanımı", color: "text-emerald-700" },
+                { val: "HDR", label: "Büyük markaların tercih ettiği yeni standart", color: "text-amber-700" },
               ].map((stat, i) => (
                 <div key={i} className="text-center group px-2">
-                  <div
-                    className={`text-3xl md:text-4xl font-black ${stat.color} mb-2 group-hover:scale-110 transition-transform duration-300`}
-                  >
+                  <div className={`text-3xl md:text-4xl font-black ${stat.color} mb-2 group-hover:scale-110 transition-transform duration-300`}>
                     {stat.val}
                   </div>
                   <div className="text-xs md:text-sm text-gray-600 font-medium leading-snug max-w-[160px] mx-auto">
@@ -331,25 +313,18 @@ export default function LedTrends2026Page() {
               <article className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl max-w-none">
                 <div className="bg-blue-50/60 p-6 rounded-xl border-l-4 border-blue-500 mb-8 not-prose">
                   <p className="text-lg text-gray-700 font-medium italic m-0">
-                    2018’de “LED ekran olsun yeter” dönemi bitti. 2026’da
-                    markalar; piksel aralığı, sürücü teknolojisi, HDR desteği
-                    ve kamera dostu flicker performansını aynı anda talep
-                    ediyor.
+                    2018’de “LED ekran olsun yeter” dönemi bitti. 2026’da markalar; piksel aralığı, sürücü teknolojisi, HDR desteği
+                    ve kamera dostu flicker performansını aynı anda talep ediyor.
                   </p>
                   <p className="text-sm text-gray-600 mt-3 mb-0">
-                    Bu yazı, LED ekran kiralama kararı almadan önce teknik
-                    bir checklist oluşturmanız için hazırlandı.
+                    Bu yazı, LED ekran kiralama kararı almadan önce teknik bir checklist oluşturmanız için hazırlandı.
                   </p>
                 </div>
 
                 <p>
-                  Büyük bir ürün lansmanı, global bayi toplantısı veya
-                  hibrit bir konferans planlıyor olabilirsiniz. Ekranda
-                  gördüğünüz görsel, salondaki herkes için markanızın
-                  vitrini. Piksel aralığı doğru seçilmediğinde veya sürücü
-                  kartları yetersiz olduğunda; özellikle kamera
-                  çekimlerinde banding, flicker ve renk bozulmaları ortaya
-                  çıkar.
+                  Büyük bir ürün lansmanı, global bayi toplantısı veya hibrit bir konferans planlıyor olabilirsiniz. Ekranda
+                  gördüğünüz görsel, salondaki herkes için markanızın vitrini. Piksel aralığı doğru seçilmediğinde veya sürücü
+                  kartları yetersiz olduğunda; özellikle kamera çekimlerinde banding, flicker ve renk bozulmaları ortaya çıkar.
                 </p>
 
                 <figure className="my-10 not-prose">
@@ -363,43 +338,24 @@ export default function LedTrends2026Page() {
                     loading="lazy"
                   />
                   <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
-                    2026 sahne tasarımlarında LED ekran; dekorun değil,
-                    hikâyenin merkezinde konumlanıyor.
+                    2026 sahne tasarımlarında LED ekran; dekorun değil, hikâyenin merkezinde konumlanıyor.
                   </figcaption>
                 </figure>
 
                 {/* Profesyonel ipucu – heading yerine bold text (başlık sırası uyarısını çözüyor) */}
                 <div className="my-10 bg-gradient-to-r from-indigo-50 to-cyan-50 border border-blue-100 p-6 rounded-2xl shadow-sm not-prose">
                   <div className="flex items-start gap-4">
-                    <span
-                      className="text-3xl flex-shrink-0"
-                      aria-hidden="true"
-                    >
-                      💡
-                    </span>
+                    <span className="text-3xl flex-shrink-0" aria-hidden="true">💡</span>
                     <div>
-                      <p className="text-blue-900 font-bold mt-0 mb-2 text-lg">
-                        Profesyonel ipucu
-                      </p>
+                      <p className="text-blue-900 font-bold mt-0 mb-2 text-lg">Profesyonel ipucu</p>
                       <p className="mb-2 text-blue-800 text-base">
-                        2026 planlamasında LED ekran tekliflerini
-                        değerlendirirken sadece metrekaresine değil,
-                        <strong> panel tipine, piksel aralığına ve sürücü
-                        kartı nesline</strong> mutlaka bakın.
+                        2026 planlamasında LED ekran tekliflerini değerlendirirken sadece metrekaresine değil,
+                        <strong> panel tipine, piksel aralığına ve sürücü kartı nesline</strong> mutlaka bakın.
                       </p>
                       <ul className="text-blue-800 list-disc pl-5 space-y-1 text-sm m-0">
-                        <li className="m-0">
-                          Teklif dosyasında piksel aralığı (P1.9 / P2.6 vb.)
-                          net yazmalı.
-                        </li>
-                        <li className="m-0">
-                          Sürücü yenileme oranı en az 3840Hz ve üzeri
-                          olmalı.
-                        </li>
-                        <li className="m-0">
-                          Kullanılacak paneller için marka/model bilgisi
-                          istenmeli.
-                        </li>
+                        <li className="m-0">Teklif dosyasında piksel aralığı (P1.9 / P2.6 vb.) net yazmalı.</li>
+                        <li className="m-0">Sürücü yenileme oranı en az 3840Hz ve üzeri olmalı.</li>
+                        <li className="m-0">Kullanılacak paneller için marka/model bilgisi istenmeli.</li>
                       </ul>
                     </div>
                   </div>
@@ -407,87 +363,46 @@ export default function LedTrends2026Page() {
 
                 <h2 id="fine-pitch">1. Fine-Pitch ve P1.x Dönemi</h2>
                 <p>
-                  10–15 yıl önce P6 – P10 paneller konferans salonları
-                  için standarttı. 2026’da ise iç mekan sahnelerde{" "}
-                  <strong>P1.5 – P2.6</strong> aralığı yeni normal haline
-                  geldi. Bunun anlamı: aynı sahne genişliğinde daha keskin
-                  metinler, daha net grafikler ve kamera için TV
-                  kalitesinde görüntü.
+                  10–15 yıl önce P6 – P10 paneller konferans salonları için standarttı. 2026’da ise iç mekan sahnelerde{" "}
+                  <strong>P1.5 – P2.6</strong> aralığı yeni normal haline geldi. Bunun anlamı: aynı sahne genişliğinde daha keskin
+                  metinler, daha net grafikler ve kamera için TV kalitesinde görüntü.
                 </p>
+
                 <p>
-                  Özellikle <strong>CEO konuşmaları</strong> ve hissedar
-                  toplantıları gibi hassas etkinliklerde, arkadaki LED
-                  ekranın gözle görülen piksel çizgileri oluşturması marka
-                  algısını ciddi biçimde zedeliyor. Bu yüzden izleme
-                  mesafesini doğru analiz edip piksel aralığını bu mesafe
-                  üzerinden seçmek kritik.
+                  Özellikle <strong>CEO konuşmaları</strong> ve hissedar toplantıları gibi hassas etkinliklerde, arkadaki LED ekranın
+                  gözle görülen piksel çizgileri oluşturması marka algısını ciddi biçimde zedeliyor. Bu yüzden izleme mesafesini doğru
+                  analiz edip piksel aralığını bu mesafe üzerinden seçmek kritik.
                 </p>
 
                 <div className="not-prose my-8 overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
                   <table className="w-full text-sm text-left bg-white min-w-[600px]">
-                    <caption className="sr-only">
-                      2026 iç mekan LED ekran piksel aralığı önerileri
-                    </caption>
+                    <caption className="sr-only">2026 iç mekan LED ekran piksel aralığı önerileri</caption>
                     <thead className="bg-gray-50 text-gray-700 uppercase tracking-wider text-xs border-b">
                       <tr>
-                        <th scope="col" className="p-4 font-bold">
-                          Piksel Aralığı
-                        </th>
-                        <th scope="col" className="p-4 font-bold">
-                          Önerilen İzleme Mesafesi
-                        </th>
-                        <th scope="col" className="p-4 font-bold">
-                          Tipik Kullanım
-                        </th>
-                        <th scope="col" className="p-4 font-bold">
-                          Not
-                        </th>
+                        <th scope="col" className="p-4 font-bold">Piksel Aralığı</th>
+                        <th scope="col" className="p-4 font-bold">Önerilen İzleme Mesafesi</th>
+                        <th scope="col" className="p-4 font-bold">Tipik Kullanım</th>
+                        <th scope="col" className="p-4 font-bold">Not</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       <tr className="hover:bg-gray-50 transition-colors">
-                        <th
-                          scope="row"
-                          className="p-4 font-bold text-blue-600"
-                        >
-                          P1.5
-                        </th>
+                        <th scope="row" className="p-4 font-bold text-blue-600">P1.5</th>
                         <td className="p-4">2–12 m</td>
-                        <td className="p-4">
-                          Stüdyo, premium kurumsal sahne
-                        </td>
-                        <td className="p-4 text-gray-600">
-                          Kamera çekimi yoğun çalışmalarda ideal
-                        </td>
+                        <td className="p-4">Stüdyo, premium kurumsal sahne</td>
+                        <td className="p-4 text-gray-600">Kamera çekimi yoğun çalışmalarda ideal</td>
                       </tr>
                       <tr className="hover:bg-gray-50 transition-colors">
-                        <th
-                          scope="row"
-                          className="p-4 font-bold text-blue-600"
-                        >
-                          P2.0
-                        </th>
+                        <th scope="row" className="p-4 font-bold text-blue-600">P2.0</th>
                         <td className="p-4">3–18 m</td>
-                        <td className="p-4">
-                          Lansman, konferans, kongre
-                        </td>
-                        <td className="p-4 text-gray-600">
-                          Fiyat / performans dengesi en iyi seviye
-                        </td>
+                        <td className="p-4">Lansman, konferans, kongre</td>
+                        <td className="p-4 text-gray-600">Fiyat / performans dengesi en iyi seviye</td>
                       </tr>
                       <tr className="hover:bg-gray-50 transition-colors">
-                        <th
-                          scope="row"
-                          className="p-4 font-bold text-blue-600"
-                        >
-                          P2.6
-                        </th>
+                        <th scope="row" className="p-4 font-bold text-blue-600">P2.6</th>
                         <td className="p-4">4–25 m</td>
                         <td className="p-4">Büyük salon, fuar sahnesi</td>
-                        <td className="p-4 text-gray-600">
-                          Bütçe dostu ancak kamera için iyi kalibrasyon
-                          ister
-                        </td>
+                        <td className="p-4 text-gray-600">Bütçe dostu ancak kamera için iyi kalibrasyon ister</td>
                       </tr>
                     </tbody>
                   </table>
@@ -495,11 +410,8 @@ export default function LedTrends2026Page() {
 
                 <h2 id="cob-led">2. COB LED 2.0 Nesli: Dayanıklılık ve Siyah Seviye</h2>
                 <p>
-                  SMD panellerde her pikselin üç ayrı LED bileşeni dış
-                  ortamla temas halindedir. COB panel yüzeyinde ise tüm
-                  çipler koruyucu bir tabaka ile kaplıdır. Bu sayede hem
-                  darbelere hem toza karşı çok daha dayanıklı bir yapı
-                  oluşur.
+                  SMD panellerde her pikselin üç ayrı LED bileşeni dış ortamla temas halindedir. COB panel yüzeyinde ise tüm çipler
+                  koruyucu bir tabaka ile kaplıdır. Bu sayede hem darbelere hem toza karşı çok daha dayanıklı bir yapı oluşur.
                 </p>
 
                 <figure className="my-10 not-prose">
@@ -513,94 +425,56 @@ export default function LedTrends2026Page() {
                     loading="lazy"
                   />
                   <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
-                    COB LED paneller, pürüzsüz yüzey yapısı sayesinde hem
-                    daha koyu siyah seviyeleri hem de daha iyi yansıma
-                    kontrolü sunar.
+                    COB LED paneller, pürüzsüz yüzey yapısı sayesinde hem daha koyu siyah seviyeleri hem de daha iyi yansıma kontrolü sunar.
                   </figcaption>
                 </figure>
 
                 <p>
-                  2026’da COB 2.0 olarak anılan yeni nesil paneller; düşük
-                  mavi ışık, anti-glare yüzey ve gelişmiş kalibrasyon
-                  algoritmaları ile özellikle uzun süreli konferanslarda
-                  göz konforunu ciddi biçimde artırıyor.
+                  2026’da COB 2.0 olarak anılan yeni nesil paneller; düşük mavi ışık, anti-glare yüzey ve gelişmiş kalibrasyon algoritmaları ile
+                  özellikle uzun süreli konferanslarda göz konforunu ciddi biçimde artırıyor.
                 </p>
 
                 <h2 id="hdr">3. HDR İçerik ve Renk Kalibrasyonu</h2>
                 <p>
-                  LED ekranınız HDR destekli olsa bile, içerikler SDR
-                  üretilmişse gerçek potansiyeli göremezsiniz. 2026
-                  trendlerinde markalar; lansman filmlerini doğrudan
-                  LED’e özel LUT ve renk profilleriyle hazırlatmaya
-                  başlıyor.
+                  LED ekranınız HDR destekli olsa bile, içerikler SDR üretilmişse gerçek potansiyeli göremezsiniz. 2026 trendlerinde markalar;
+                  lansman filmlerini doğrudan LED’e özel LUT ve renk profilleriyle hazırlatmaya başlıyor.
                 </p>
 
                 <div className="not-prose my-10 p-6 bg-white border border-gray-200 rounded-2xl shadow-sm">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <span className="text-2xl" aria-hidden="true">
-                      🎨
-                    </span>
+                    <span className="text-2xl" aria-hidden="true">🎨</span>
                     HDR İçin 3 Adımlı Workflow
                   </h3>
                   <ol className="list-decimal list-inside space-y-2 text-sm text-gray-700">
-                    <li>
-                      LED ekran markası / modeline göre renk profilinin
-                      teknik ekipten alınması.
-                    </li>
-                    <li>
-                      İçerik ajansının bu profile göre LUT oluşturup tüm
-                      video / görsellere uygulaması.
-                    </li>
-                    <li>
-                      Kurulum sonrası sahnede canlı kalibrasyon ile kamera
-                      ve insan gözü için ortak optimum noktanın
-                      yakalanması.
-                    </li>
+                    <li>LED ekran markası / modeline göre renk profilinin teknik ekipten alınması.</li>
+                    <li>İçerik ajansının bu profile göre LUT oluşturup tüm video / görsellere uygulaması.</li>
+                    <li>Kurulum sonrası sahnede canlı kalibrasyon ile kamera ve insan gözü için ortak optimum noktanın yakalanması.</li>
                   </ol>
                 </div>
 
-                <h2 id="sahne-tasarim">
-                  4. 2026 Sahne Tasarımında LED ile Neler Değişiyor?
-                </h2>
+                <h2 id="sahne-tasarim">4. 2026 Sahne Tasarımında LED ile Neler Değişiyor?</h2>
                 <p>
-                  Artık LED ekran sadece arka fon değil, sahnenin tamamını
-                  saran bir deneyim alanı. Side-screen yerine L şeklinde
-                  ekranlar, data görselleştirme için dikey totemler ve
-                  zemin LED uygulamaları kurumsal etkinliklere de inmeye
-                  başladı.
+                  Artık LED ekran sadece arka fon değil, sahnenin tamamını saran bir deneyim alanı. Side-screen yerine L şeklinde ekranlar,
+                  data görselleştirme için dikey totemler ve zemin LED uygulamaları kurumsal etkinliklere de inmeye başladı.
                 </p>
 
-                {/* Teknik Checklist */}
                 <h2 id="teknik-checklist">Teknik Checklist – Teklif Almadan Önce</h2>
                 <div className="not-prose bg-gray-50 border border-gray-200 rounded-xl p-6 my-8 space-y-4">
                   <p className="text-sm text-gray-700 font-medium mb-2">
-                    Aşağıdaki maddeleri teklif dosyanızda net olarak
-                    görmüyorsanız, mutlaka yazılı olarak isteyin:
+                    Aşağıdaki maddeleri teklif dosyanızda net olarak görmüyorsanız, mutlaka yazılı olarak isteyin:
                   </p>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
                     <li>LED panel marka / model bilgisi</li>
                     <li>Piksel aralığı ve panel ölçüsü</li>
                     <li>İç / dış mekan sınıfı ve parlaklık değeri (cd/m²)</li>
-                    <li>
-                      Sürücü kart yenileme oranı (en az 3840Hz önerilir)
-                    </li>
-                    <li>
-                      Kurulum süresi, teknik ekip sayısı ve yedek panel
-                      stoğu
-                    </li>
-                    <li>
-                      İçerik hazırlığı için tavsiye edilen çözünürlük /
-                      FPS değerleri
-                    </li>
+                    <li>Sürücü kart yenileme oranı (en az 3840Hz önerilir)</li>
+                    <li>Kurulum süresi, teknik ekip sayısı ve yedek panel stoğu</li>
+                    <li>İçerik hazırlığı için tavsiye edilen çözünürlük / FPS değerleri</li>
                   </ul>
                 </div>
 
-                {/* FAQ SECTION */}
                 <h2 id="faq">Sık Sorulan Sorular</h2>
-                <section
-                  aria-labelledby="faq-heading"
-                  className="not-prose space-y-3 mt-6"
-                >
+                <section aria-labelledby="faq-heading" className="not-prose space-y-3 mt-6">
                   <h3 id="faq-heading" className="sr-only">
                     LED ekran trendleri hakkında sıkça sorulan sorular
                   </h3>
@@ -626,17 +500,13 @@ export default function LedTrends2026Page() {
                   ))}
                 </section>
 
-                {/* BOTTOM CTA */}
                 <div className="not-prose mt-16 bg-gradient-to-br from-gray-900 to-blue-900 rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-
                   <h3 className="text-2xl md:text-3xl font-black mb-4 relative z-10">
                     2026 LED Ekran Projenizi Birlikte Tasarlayalım
                   </h3>
                   <p className="text-blue-100 mb-8 max-w-xl mx-auto relative z-10 text-lg">
-                    Fine-pitch LED paneller, COB teknolojisi ve HDR içerik
-                    üretimiyle sahnenizi bir üst seviyeye taşımak için
-                    teknik ekibimizle hemen iletişime geçin.
+                    Fine-pitch LED paneller, COB teknolojisi ve HDR içerik üretimiyle sahnenizi bir üst seviyeye taşımak için teknik ekibimizle hemen iletişime geçin.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
                     <a
@@ -659,21 +529,15 @@ export default function LedTrends2026Page() {
               </article>
             </div>
 
-            {/* SAĞ KOLON (STICKY SIDEBAR) */}
             <aside className="lg:w-1/3 relative">
               <div className="sticky top-24 space-y-8">
                 <TableOfContents />
 
-                {/* TEKLİF KUTUSU */}
                 <div className="bg-white rounded-2xl shadow-xl border border-blue-100 p-6 relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 to-purple-500" />
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    LED Projeniz İçin Hızlı Teklif
-                  </h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">LED Projeniz İçin Hızlı Teklif</h3>
                   <p className="text-sm text-gray-600 mb-6">
-                    Sahne ölçülerinizi ve etkinlik tarihini paylaşın, 2
-                    saat içinde LED ekran senaryosu ve fiyatlandırmayı size
-                    iletelim.
+                    Sahne ölçülerinizi ve etkinlik tarihini paylaşın, 2 saat içinde LED ekran senaryosu ve fiyatlandırmayı size iletelim.
                   </p>
                   <div className="space-y-3">
                     <a
@@ -694,36 +558,14 @@ export default function LedTrends2026Page() {
                   </div>
                 </div>
 
-                {/* HİZMETLER MENÜSÜ */}
-                <nav
-                  className="bg-gray-50 rounded-2xl p-6 border border-gray-200"
-                  aria-label="İlgili Hizmetler"
-                >
-                  <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider text-gray-700">
-                    Hizmetlerimiz
-                  </h4>
+                <nav className="bg-gray-50 rounded-2xl p-6 border border-gray-200" aria-label="İlgili Hizmetler">
+                  <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">Hizmetlerimiz</h4>
                   <ul className="space-y-1">
                     {[
-                      {
-                        href: "/led-ekran-kiralama",
-                        icon: "🖥️",
-                        label: "LED Ekran Kiralama",
-                      },
-                      {
-                        href: "/sahne-kiralama",
-                        icon: "🎭",
-                        label: "Sahne Kiralama",
-                      },
-                      {
-                        href: "/ses-isik-sistemleri",
-                        icon: "🎵",
-                        label: "Ses & Işık Sistemleri",
-                      },
-                      {
-                        href: "/kurumsal-organizasyon",
-                        icon: "🏢",
-                        label: "Kurumsal Organizasyon",
-                      },
+                      { href: "/led-ekran-kiralama", icon: "🖥️", label: "LED Ekran Kiralama" },
+                      { href: "/sahne-kiralama", icon: "🎭", label: "Sahne Kiralama" },
+                      { href: "/ses-isik-sistemleri", icon: "🎵", label: "Ses & Işık Sistemleri" },
+                      { href: "/kurumsal-organizasyon", icon: "🏢", label: "Kurumsal Organizasyon" },
                     ].map((link) => (
                       <li key={link.href}>
                         <Link
@@ -733,9 +575,7 @@ export default function LedTrends2026Page() {
                           <span className="bg-white group-hover:bg-blue-50 text-lg w-8 h-8 flex items-center justify-center rounded-md border border-gray-100 shadow-sm transition-colors">
                             {link.icon}
                           </span>
-                          <span className="font-medium text-sm">
-                            {link.label}
-                          </span>
+                          <span className="font-medium text-sm">{link.label}</span>
                         </Link>
                       </li>
                     ))}
