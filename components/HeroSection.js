@@ -101,6 +101,8 @@ function HeroBackgroundImage({ ariaHidden = false }) {
         priority
         fetchPriority="high"
         sizes="100vw"
+        quality={70}
+        media="(max-width: 767px)"
         className="absolute inset-0 object-cover md:hidden"
         aria-hidden={ariaHidden}
       />
@@ -113,6 +115,8 @@ function HeroBackgroundImage({ ariaHidden = false }) {
         priority
         fetchPriority="high"
         sizes="100vw"
+        quality={70}
+        media="(min-width: 768px)"
         className="absolute inset-0 object-cover hidden md:block"
         aria-hidden={ariaHidden}
       />
