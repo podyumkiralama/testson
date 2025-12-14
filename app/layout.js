@@ -99,6 +99,15 @@ const globalJsonLd = {
         availableLanguage: ["tr", "en", "ar"],
       },
     },
+
+    {
+      "@type": "Organization",
+      "@id": `${BASE_SITE_URL}/#editor`,
+      name: "Sahneva Editör",
+      url: BASE_SITE_URL,
+      parentOrganization: { "@id": ORGANIZATION_ID },
+    },
+
     {
       "@type": "LocalBusiness",
       "@id": LOCAL_BUSINESS_ID,
@@ -122,6 +131,7 @@ const globalJsonLd = {
         "https://www.youtube.com/@sahneva",
       ],
     },
+
     {
       "@type": "WebSite",
       "@id": WEBSITE_ID,
@@ -134,6 +144,7 @@ const globalJsonLd = {
     },
   ],
 };
+
 
 /* ================== ROOT LAYOUT ================== */
 export default function RootLayout({ children }) {
