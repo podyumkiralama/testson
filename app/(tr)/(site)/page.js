@@ -1,4 +1,5 @@
 // app/(tr)/(site)/page.js
+
 import HeroSection from "@/components/HeroSection";
 import HeroBelow from "@/components/HeroBelow";
 import {
@@ -25,19 +26,30 @@ const BELOW_THE_FOLD_VISIBILITY_STYLE = {
 
 /* --------------------
    JSON-LD (Schema.org) - Home rich snippets
+   Not: Organization/WebSite/LocalBusiness layout.jsx'te zaten var.
 -------------------- */
 function StructuredData() {
   const HOME_URL = `${BASE_SITE_URL}/`;
+
   const WEBPAGE_ID = `${HOME_URL}#webpage`;
   const SERVICE_ID = `${HOME_URL}#primary-service`;
   const CATALOG_ID = `${HOME_URL}#catalog`;
   const FAQ_ID = `${HOME_URL}#sss`;
-  const IMAGE_ID = `${HOME_URL}#og`;
+
+  // Görseller
+  const HERO_IMAGE_ID = `${HOME_URL}#hero-image`;
+  const OG_IMAGE_ID = `${HOME_URL}#og-image`;
+
   const VIDEO_ID = `${HOME_URL}#intro-video`;
+
+  const ogUrl =
+    getOgImageUrl?.({ path: "/img/og/sahneva-og.webp", absolute: true }) ??
+    `${BASE_SITE_URL}/img/og/sahneva-og.webp`;
 
   const data = {
     "@context": "https://schema.org",
     "@graph": [
+      /* ---------------- WebPage ---------------- */
       {
         "@type": "WebPage",
         "@id": WEBPAGE_ID,
@@ -48,8 +60,26 @@ function StructuredData() {
         inLanguage: "tr-TR",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": ORGANIZATION_ID },
-        primaryImageOfPage: { "@id": IMAGE_ID },
+        primaryImageOfPage: { "@id": HERO_IMAGE_ID },
       },
+
+      /* ---------------- Images ---------------- */
+      {
+        "@type": "ImageObject",
+        "@id": HERO_IMAGE_ID,
+        contentUrl: `${BASE_SITE_URL}/img/hero-bg.webp`,
+        width: 1600,
+        height: 900,
+      },
+      {
+        "@type": "ImageObject",
+        "@id": OG_IMAGE_ID,
+        contentUrl: ogUrl,
+        width: 1200,
+        height: 630,
+      },
+
+      /* ---------------- OfferCatalog ---------------- */
       {
         "@type": "OfferCatalog",
         "@id": CATALOG_ID,
@@ -58,10 +88,15 @@ function StructuredData() {
         itemListElement: [
           {
             "@type": "Offer",
+            url: `${BASE_SITE_URL}/podyum-kiralama`,
             itemOffered: {
               "@type": "Service",
               name: "Podyum Kiralama",
+              url: `${BASE_SITE_URL}/podyum-kiralama`,
+              image: `${BASE_SITE_URL}/img/hizmet-podyum.webp`,
               description: "Modüler podyum sahne kiralama hizmeti",
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
             },
             priceSpecification: {
               "@type": "UnitPriceSpecification",
@@ -76,10 +111,15 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
+            url: `${BASE_SITE_URL}/led-ekran-kiralama`,
             itemOffered: {
               "@type": "Service",
               name: "LED Ekran Kiralama",
+              url: `${BASE_SITE_URL}/led-ekran-kiralama`,
+              image: `${BASE_SITE_URL}/img/hizmet-led.webp`,
               description: "İç/dış mekan LED ekran kiralama",
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
             },
             priceSpecification: {
               "@type": "UnitPriceSpecification",
@@ -94,7 +134,16 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Çadır Kiralama" },
+            url: `${BASE_SITE_URL}/cadir-kiralama`,
+            itemOffered: {
+              "@type": "Service",
+              name: "Çadır Kiralama",
+              url: `${BASE_SITE_URL}/cadir-kiralama`,
+              // Çadır için hizmet görselin varsa burayı güncelleyebilirsin:
+              // image: `${BASE_SITE_URL}/img/hizmet-cadir.webp`,
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "PriceSpecification",
               priceCurrency: "TRY",
@@ -107,7 +156,12 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Sandalye Kiralama" },
+            itemOffered: {
+              "@type": "Service",
+              name: "Sandalye Kiralama",
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "UnitPriceSpecification",
               price: "200.00",
@@ -120,7 +174,12 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Masa Kiralama" },
+            itemOffered: {
+              "@type": "Service",
+              name: "Masa Kiralama",
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "PriceSpecification",
               priceCurrency: "TRY",
@@ -133,7 +192,15 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Sahne Kiralama" },
+            url: `${BASE_SITE_URL}/sahne-kiralama`,
+            itemOffered: {
+              "@type": "Service",
+              name: "Sahne Kiralama",
+              url: `${BASE_SITE_URL}/sahne-kiralama`,
+              image: `${BASE_SITE_URL}/img/hizmet-sahne.webp`,
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "PriceSpecification",
               priceCurrency: "TRY",
@@ -146,7 +213,15 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Ses-Işık Sistemleri" },
+            url: `${BASE_SITE_URL}/ses-isik-sistemleri`,
+            itemOffered: {
+              "@type": "Service",
+              name: "Ses-Işık Sistemleri",
+              url: `${BASE_SITE_URL}/ses-isik-sistemleri`,
+              // image: `${BASE_SITE_URL}/img/hizmet-ses-isik.webp`, // varsa ekle
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "PriceSpecification",
               priceCurrency: "TRY",
@@ -159,7 +234,12 @@ function StructuredData() {
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "İstanbul İçi Nakliye" },
+            itemOffered: {
+              "@type": "Service",
+              name: "İstanbul İçi Nakliye",
+              provider: { "@id": ORGANIZATION_ID },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+            },
             priceSpecification: {
               "@type": "PriceSpecification",
               price: "7000.00",
@@ -171,6 +251,8 @@ function StructuredData() {
           },
         ],
       },
+
+      /* ---------------- Primary Service ---------------- */
       {
         "@type": "Service",
         "@id": SERVICE_ID,
@@ -183,13 +265,8 @@ function StructuredData() {
         hasOfferCatalog: { "@id": CATALOG_ID },
         serviceType: "Event Production",
       },
-      {
-        "@type": "ImageObject",
-        "@id": IMAGE_ID,
-        contentUrl: getOgImageUrl(),
-        width: 1200,
-        height: 630,
-      },
+
+      /* ---------------- VideoObject ---------------- */
       {
         "@type": "VideoObject",
         "@id": VIDEO_ID,
@@ -203,10 +280,12 @@ function StructuredData() {
         contentUrl: "https://www.youtube.com/watch?v=173gBurWSRQ",
         embedUrl: "https://www.youtube.com/embed/173gBurWSRQ",
       },
+
+      /* ---------------- FAQPage ---------------- */
       {
         "@type": "FAQPage",
         "@id": FAQ_ID,
-        url: HOME_URL,
+        url: `${HOME_URL}#sss`,
         mainEntity: [
           {
             "@type": "Question",
@@ -296,11 +375,16 @@ export default function HomePage() {
       <StructuredData />
       <BreadcrumbJsonLd items={breadcrumbItems} />
 
+      {/* 1) HERO (statik kalsın: LCP için en iyisi) */}
       <HeroSection />
+
+      {/* 2) HERO ALTI */}
       <HeroBelow />
 
+      {/* anchor */}
       <div id="teklif-al" className="sr-only" />
 
+      {/* 3) HİZMETLER TABS */}
       <section aria-labelledby="hizmetler-title" className="bg-black">
         <h2 id="hizmetler-title" className="sr-only">
           Hizmetler
@@ -308,8 +392,10 @@ export default function HomePage() {
         <ServicesTabsDeferred idleTimeout={1800} rootMargin="260px" />
       </section>
 
+      {/* 4) PROJELER */}
       <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
+      {/* 5) TECH CAPABILITIES (below-the-fold) */}
       <div className="bg-slate-900 py-16" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
         <TechCapabilitiesDeferred
           techFeatures={SEO_TECH_FEATURES}
@@ -317,18 +403,22 @@ export default function HomePage() {
         />
       </div>
 
+      {/* 6) KURUMSAL ORGANİZASYON */}
       <div className="bg-slate-50 py-0 m-0 w-full">
         <CorporateEventsDeferred />
       </div>
 
+      {/* 7) KURUMSAL INTRO (below-the-fold) */}
       <div className="bg-black py-0 m-0 w-full" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
         <CorporateIntroDeferred />
       </div>
 
+      {/* 8) WHY CHOOSE US */}
       <div className="w-full p-0 m-0">
         <WhyChooseUsDeferred />
       </div>
 
+      {/* 10) SSS */}
       <div className="w-full bg-transparent p-0 m-0">
         <FaqDeferred />
       </div>
