@@ -510,7 +510,7 @@ export default function Navbar({
         aria-labelledby={resolvedAriaLabel ? undefined : resolvedAriaLabelledby}
         aria-describedby={resolvedAriaDescribedby}
         role={navRole}
-        className="sticky top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200/80 shadow-lg"
+        className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200/80 shadow-lg"
       >
         {shouldRenderHeading && (
           <h2 id={computedHeadingId} className="sr-only">
