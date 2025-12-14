@@ -127,8 +127,6 @@ function ArticleSchema() {
       dangerouslySetInnerHTML={{
   __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
 }}
-
-      }
     />
   );
 }
