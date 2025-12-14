@@ -11,7 +11,7 @@ import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
-const PUBLISH_DATE = "2025-12-15";
+const PUBLISH_DATE = "2025-05-20T00:00:00+03:00";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
 /* ================== META DATA ================== */
