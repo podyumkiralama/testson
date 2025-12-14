@@ -108,7 +108,7 @@ export function NavbarDeferred(props) {
 
   return (
     <section ref={ref}>
-      {visible ? <Navbar {...props} /> : <div className="min-h-[80px]" />}
+      {visible ? <Navbar {...props} /> : <div className="h-16 lg:h-20" />}
     </section>
   );
 }
