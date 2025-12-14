@@ -174,7 +174,7 @@ export default async function SeoArticles({
 
         {/* role=list semantiği kartların liste olarak algılanmasını sağlar */}
         <ul className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 list-none">
-          {items.map((a, idx) => {
+          {items.map((a) => {
             const formattedDate =
               a.date &&
               a.date.toLocaleDateString("tr-TR", {
