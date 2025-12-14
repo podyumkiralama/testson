@@ -118,36 +118,37 @@ async function getBlogPosts() {
 function BlogJsonLd({ posts, baseUrl }) {
   if (!posts?.length) return null;
 
-  const orgId = `${baseUrl}/#org`;
+  const site = String(baseUrl || "").replace(/\/$/, ""); // slash güvenliği
+  const orgId = `${site}/#org`;
+  const editorId = `${site}/#editor`;
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Blog", // ItemList yerine Blog tipi daha spesifik olabilir ama ItemList de uygundur.
-    "mainEntityOfPage": {
+    "@type": "Blog",
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${baseUrl}/blog`
+      "@id": `${site}/blog`,
     },
-    "headline": metadata.title,
-    "description": metadata.description,
-    "blogPost": posts.map((post) => ({
+    headline: metadata.title,
+    description: metadata.description,
+    blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
-      "headline": post.title,
-      "image": post.image.startsWith("http") ? post.image : `${baseUrl}${post.image}`,
-      "datePublished": post.date,
-      "author": {
-        "@id": orgId
-      },
-      "publisher": {
-        "@id": orgId
-      },
-      "url": `${baseUrl}/blog/${post.slug}`
-    }))
+      headline: post.title,
+      image: post.image?.startsWith("http") ? post.image : `${site}${post.image}`,
+      datePublished: post.date,
+      author: { "@id": editorId },     // ✅ düzeltildi
+      publisher: { "@id": orgId },     // ✅ doğru
+      url: `${site}/blog/${post.slug}`,
+    })),
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }
