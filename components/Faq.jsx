@@ -4,7 +4,7 @@
 import React, {
   useState,
   useRef,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useCallback,
 } from "react";
@@ -66,37 +66,58 @@ const FaqRow = React.memo(function FaqRow({
   onToggle,
 }) {
   const contentRef = useRef(null);
-  const [height, setHeight] = useState("0px");
+  const contentInnerRef = useRef(null);
+  const measuredHeightRef = useRef(0);
+  const rafIdRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const contentEl = contentRef.current;
-    if (!contentEl) return undefined;
+  const scheduleHeightWrite = useCallback(
+    (nextHeight) => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
 
-    let frameId = null;
+      rafIdRef.current = requestAnimationFrame(() => {
+        const host = contentRef.current;
+        if (!host) return;
 
-    const updateHeight = () => {
-      frameId = requestAnimationFrame(() => {
-        const nextHeight = isOpen ? `${contentEl.scrollHeight}px` : "0px";
-        setHeight((prev) => (prev === nextHeight ? prev : nextHeight));
+        const heightValue = isOpen ? `${Math.ceil(nextHeight)}px` : "0px";
+
+        if (host.style.height !== heightValue) {
+          host.style.height = heightValue;
+        }
       });
-    };
+    },
+    [isOpen]
+  );
 
-    updateHeight();
+  useEffect(() => {
+    const innerEl = contentInnerRef.current;
+    if (!innerEl) return undefined;
 
-    if (!isOpen) {
-      return () => {
-        if (frameId) cancelAnimationFrame(frameId);
-      };
-    }
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
 
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(contentEl);
+      measuredHeightRef.current = entry.contentRect.height;
+      scheduleHeightWrite(entry.contentRect.height);
+    });
+
+    observer.observe(innerEl);
 
     return () => {
-      if (frameId) cancelAnimationFrame(frameId);
-      resizeObserver.disconnect();
+      observer.disconnect();
     };
-  }, [isOpen]);
+  }, [scheduleHeightWrite]);
+
+  useEffect(() => {
+    scheduleHeightWrite(measuredHeightRef.current);
+
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, [isOpen, scheduleHeightWrite]);
 
   return (
     <div
@@ -150,10 +171,10 @@ const FaqRow = React.memo(function FaqRow({
         role="region"
         aria-labelledby={`${slug}-header`}
         ref={contentRef}
-        style={{ height }}
+        style={{ height: "0px" }}
         className="transition-all duration-300 ease-in-out overflow-hidden"
       >
-        <div className="px-5 pb-5">
+        <div ref={contentInnerRef} className="px-5 pb-5">
           <div className="pt-4 border-t border-white/10 text-slate-400 text-sm md:text-base leading-relaxed">
             {answer}
           </div>
