@@ -422,7 +422,7 @@ function ServicesTabsComponent({
                         {activeService.features.map((feature, idx) => (
                           <li
                             key={idx}
-                            className="group flex items-center gap-2.5 p-2.5 rounded-lg bg:white/5 border border-white/5 hover:bg-white/10 hover:border-white/15 transition-colors"
+                            className="group flex items-center gap-2.5 p-2.5 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/15 transition-colors"
                           >
                             <TechCheckIcon />
                             <span className="text-xs md:text-sm font-medium text-slate-200 group-hover:text-white transition-colors">
@@ -469,7 +469,7 @@ function ServicesTabsComponent({
                         DEFAULT_DICTIONARY.imageAlt
                       )}
                       fill
-                      className="object-cover transition-transform duration-800 group-hover:scale-105 nc-ServicesTabs-image-1"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 nc-ServicesTabs-image-1"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       quality={78}
                       priority={activeService?.id === initialServiceId}
