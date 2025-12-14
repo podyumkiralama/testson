@@ -182,7 +182,7 @@ export default function RootLayout({ children }) {
           className="w-full relative z-50"
         >
           <UtilityBar />
-          <Navbar />
+          <NavbarDeferred />
           {process.env.NODE_ENV === "production" ? <StickyVideoRailclient /> : null}
         </header>
 
