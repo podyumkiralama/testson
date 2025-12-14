@@ -3,6 +3,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import Navbar from "./Navbar";
 
 // Dinamik componentler
 const ServicesTabs = dynamic(() => import("./ServicesTabs"), { ssr: false });
@@ -20,6 +21,12 @@ const TechCapabilities = dynamic(() => import("./TechCapabilities"), {
   ssr: false,
 });
 const WhyChooseUs = dynamic(() => import("./WhyChooseUs"), { ssr: false });
+
+// Navbar hâlihazırda anında render ediliyor. Eski deferred referanslarını bozmayacak
+// şekilde fallback sağlamak için eşlenik bir wrapper export ediyoruz.
+export function NavbarDeferred(props) {
+  return <Navbar {...props} />;
+}
 
 // Lazy-load görünürlük hook'u
 function useDeferredVisible(options) {
