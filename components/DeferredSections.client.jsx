@@ -4,6 +4,10 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
+// Navbar hâlihazırda anında render ediliyor. Eski deferred referanslarını bozmayacak
+// şekilde fallback sağlamak için eşlenik bir wrapper export ediyoruz.
+export { default as NavbarDeferred } from "./Navbar";
+
 // Dinamik componentler
 const ServicesTabs = dynamic(() => import("./ServicesTabs"), { ssr: false });
 const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), {
