@@ -93,31 +93,30 @@ const FAQ_ITEMS = [
 
 /* ================== SCHEMA (JSON-LD) ================== */
 function ArticleSchema() {
+  const site = String(SITE_URL || "").replace(/\/$/, "");
+  const orgId = `${site}/#org`;
+  const editorId = `${site}/#editor`;
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Article",
-        "@id": `${BLOG_URL}#article`,
+        "@type": "BlogPosting", // ✅ Article → BlogPosting (daha spesifik)
+        "@id": `${BLOG_URL}#blogposting`,
         headline:
           "2026 LED Ekran Teknolojisi Trendleri: COB Paneller ve Fine-Pitch Sahne Tasarımı",
         description: metadata.description,
-        image: `${SITE_URL}/img/blog/led-2026-hero.webp`,
+        image: `${site}/img/blog/led-2026-hero.webp`,
         datePublished: PUBLISH_DATE,
-        dateModified: new Date().toISOString().split("T")[0],
-        author: {
-          "@id": `${SITE_URL}/#org`,
-        },
-        publisher: {
-          "@id": `${SITE_URL}/#org`,
-        },
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": BLOG_URL,
-        },
+        dateModified: PUBLISH_DATE, // stabil
+        author: { "@id": editorId },     // ✅ referans
+        publisher: { "@id": orgId },     // ✅ referans
+        mainEntityOfPage: { "@type": "WebPage", "@id": BLOG_URL },
+        isPartOf: { "@type": "Blog", "@id": `${site}/blog` }, // küçük ama faydalı bağ
       },
       {
         "@type": "FAQPage",
+        "@id": `${BLOG_URL}#faq`,
         mainEntity: FAQ_ITEMS.map((item) => ({
           "@type": "Question",
           name: item.question,
@@ -130,7 +129,10 @@ function ArticleSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }
