@@ -11,7 +11,7 @@ import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
-const PUBLISH_DATE = "2025-12-15";
+const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
 /* ================== META DATA ================== */
@@ -91,32 +91,51 @@ const FAQ_ITEMS = [
   },
 ];
 
+/* ================== DATE HELPER ================== */
+// "2025-12-15" gibi gelirse → "2025-12-15T00:00:00+03:00" yapar
+const toIsoWithTz = (d) => {
+  const s = String(d || "").trim();
+  if (!s) return undefined;
+  // Zaten ISO + timezone ise dokunma
+  if (/[zZ]$/.test(s) || /[+\-]\d{2}:\d{2}$/.test(s)) return s;
+  // Sadece YYYY-MM-DD ise TR timezone ile tamamla
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return `${s}T00:00:00+03:00`;
+  return s; // bilinmeyen format: bozmayalım
+};
+
 /* ================== SCHEMA (JSON-LD) ================== */
 function ArticleSchema() {
   const site = String(SITE_URL || "").replace(/\/$/, "");
   const orgId = `${site}/#org`;
   const editorId = `${site}/#editor`;
 
+  const published = toIsoWithTz(PUBLISH_DATE);
+  const modified = toIsoWithTz(PUBLISH_DATE);
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "BlogPosting", // ✅ Article → BlogPosting (daha spesifik)
+        "@type": "BlogPosting",
         "@id": `${BLOG_URL}#blogposting`,
         headline:
           "2026 LED Ekran Teknolojisi Trendleri: COB Paneller ve Fine-Pitch Sahne Tasarımı",
+        name:
+          "2026 LED Ekran Teknolojisi Trendleri: COB Paneller ve Fine-Pitch Sahne Tasarımı",
         description: metadata.description,
-        image: `${site}/img/blog/led-2026-hero.webp`,
-        datePublished: PUBLISH_DATE,
-        dateModified: PUBLISH_DATE, // stabil
-        author: { "@id": editorId },     // ✅ referans
-        publisher: { "@id": orgId },     // ✅ referans
+        image: [`${site}/img/blog/led-2026-hero.webp`],
+        datePublished: published,
+        dateModified: modified,
+        inLanguage: "tr-TR",
+        author: { "@id": editorId },
+        publisher: { "@id": orgId },
         mainEntityOfPage: { "@type": "WebPage", "@id": BLOG_URL },
-        isPartOf: { "@type": "Blog", "@id": `${site}/blog` }, // küçük ama faydalı bağ
+        isPartOf: { "@type": "Blog", "@id": `${site}/blog` },
       },
       {
         "@type": "FAQPage",
         "@id": `${BLOG_URL}#faq`,
+        inLanguage: "tr-TR",
         mainEntity: FAQ_ITEMS.map((item) => ({
           "@type": "Question",
           name: item.question,
@@ -136,6 +155,7 @@ function ArticleSchema() {
     />
   );
 }
+
 
 /* ================== BİLEŞENLER ================== */
 const Breadcrumbs = () => (
