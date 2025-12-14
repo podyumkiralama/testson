@@ -14,7 +14,12 @@ import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
-import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
+import {
+  BASE_SITE_URL,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+  LOCAL_BUSINESS_ID,
+} from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
 
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
@@ -31,10 +36,7 @@ export const viewport = {
 /* ================== METADATA ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: HOME_PAGE_TITLE,
-    template: "%s | Sahneva",
-  },
+  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
   applicationName: "Sahneva Organizasyon",
@@ -73,72 +75,64 @@ export const metadata = {
   },
 };
 
-/* ================== JSON-LD: ORGANIZATION ================== */
-const organizationJsonLd = {
+/* ================== JSON-LD: GLOBAL GRAPH ================== */
+const globalJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": ORGANIZATION_ID,
-  name: "Sahneva Organizasyon",
-  url: BASE_SITE_URL,
-  logo: `${BASE_SITE_URL}/img/logo.png`,
-  description:
-    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
-  sameAs: [
-    "https://www.instagram.com/sahnevaorganizasyon",
-    "https://www.youtube.com/@sahneva",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      logo: `${BASE_SITE_URL}/img/logo.png`,
+      description:
+        "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+90-545-304-8671",
+        contactType: "customer service",
+        areaServed: ["TR"],
+        availableLanguage: ["tr", "en", "ar"],
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": LOCAL_BUSINESS_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      image: `${BASE_SITE_URL}/img/logo.png`,
+      telephone: "+90-545-304-8671",
+      priceRange: "₺₺₺",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
+        addressLocality: "İstanbul",
+        addressRegion: "TR34",
+        postalCode: "34400",
+        addressCountry: "TR",
+      },
+      areaServed: { "@type": "AdministrativeArea", name: "Türkiye" },
+      parentOrganization: { "@id": ORGANIZATION_ID },
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: BASE_SITE_URL,
+      name: "Sahneva Organizasyon",
+      description:
+        "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
+      inLanguage: "tr-TR",
+      publisher: { "@id": ORGANIZATION_ID },
+    },
   ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+90-545-304-8671",
-    contactType: "customer service",
-    areaServed: ["TR"],
-    availableLanguage: ["tr", "en", "ar"],
-  },
-};
-
-/* ================== JSON-LD: LOCALBUSINESS ================== */
-const LOCAL_BUSINESS_ID = `${BASE_SITE_URL}/#local`;
-
-const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": LOCAL_BUSINESS_ID,
-  name: "Sahneva Organizasyon",
-  url: BASE_SITE_URL,
-  image: `${BASE_SITE_URL}/img/logo.png`,
-  telephone: "+90-545-304-8671",
-  priceRange: "₺₺₺",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
-    addressLocality: "İstanbul",
-    addressRegion: "TR34",
-    postalCode: "34400",
-    addressCountry: "TR",
-  },
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: "Türkiye",
-  },
-  parentOrganization: {
-    "@id": ORGANIZATION_ID,
-  },
-  sameAs: [
-    "https://www.instagram.com/sahnevaorganizasyon",
-    "https://www.youtube.com/@sahneva",
-  ],
-};
-
-/* ================== JSON-LD: WEBSITE ================== */
-const websiteJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": WEBSITE_ID,
-  url: BASE_SITE_URL,
-  name: "Sahneva Organizasyon",
-  description:
-    "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
-  inLanguage: "tr-TR",
 };
 
 /* ================== ROOT LAYOUT ================== */
@@ -151,29 +145,19 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
-        {/* Erişilebilirlik & i18n */}
         <SkipLinks />
         <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
         <NewTabAccessibility />
 
-        {/* Non-critical CSS (animasyon, nc-* class'ları) */}
         <NonCriticalStylesheet />
 
-        {/* JSON-LD */}
+        {/* JSON-LD (single script) */}
         <script
           type="application/ld+json"
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(globalJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
 
         <header
@@ -197,10 +181,7 @@ export default function RootLayout({ children }) {
 
         <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
 
-        {/* Core Web Vitals izleme */}
         <DeferredSpeedInsights />
-
-        {/* GA4 + Consent Mode V2 */}
         <AnalyticsConsentWrapper />
       </body>
     </html>
