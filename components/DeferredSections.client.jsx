@@ -10,6 +10,7 @@ const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), {
   ssr: false,
 });
 const Faq = dynamic(() => import("./Faq"), { ssr: false });
+const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
 const CorporateEvents = dynamic(() => import("./CorporateEvents"), {
   ssr: false,
 });
@@ -93,6 +94,21 @@ export function FaqDeferred(props) {
   return (
     <section ref={ref}>
       {visible ? <Faq {...props} /> : <div className="min-h-[220px]" />}
+    </section>
+  );
+}
+
+/* ───────────────── Navbar (temiz wrapper) ───────────────── */
+
+export function NavbarDeferred(props) {
+  const [ref, visible] = useDeferredVisible({
+    rootMargin: "0px 0px",
+    threshold: 0,
+  });
+
+  return (
+    <section ref={ref}>
+      {visible ? <Navbar {...props} /> : <div className="min-h-[80px]" />}
     </section>
   );
 }
