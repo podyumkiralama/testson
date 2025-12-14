@@ -10,7 +10,7 @@ import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Footer from "@/components/Footer";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
-import { NavbarDeferred } from "@/components/DeferredSections.client";
+import Navbar from "@/components/Navbar";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
