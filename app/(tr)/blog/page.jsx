@@ -118,28 +118,56 @@ async function getBlogPosts() {
 function BlogJsonLd({ posts, baseUrl }) {
   if (!posts?.length) return null;
 
-  const site = String(baseUrl || "").replace(/\/$/, ""); // slash güvenliği
+  const site = String(baseUrl || "").replace(/\/$/, "");
   const orgId = `${site}/#org`;
   const editorId = `${site}/#editor`;
+  const blogUrl = `${site}/blog`;
+
+  const title =
+    typeof metadata?.title === "string"
+      ? metadata.title
+      : metadata?.title?.default || "Sahneva Blog";
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${site}/blog`,
-    },
-    headline: metadata.title,
-    description: metadata.description,
-    blogPost: posts.map((post) => ({
-      "@type": "BlogPosting",
-      headline: post.title,
-      image: post.image?.startsWith("http") ? post.image : `${site}${post.image}`,
-      datePublished: post.date,
-      author: { "@id": editorId },     // ✅ düzeltildi
-      publisher: { "@id": orgId },     // ✅ doğru
-      url: `${site}/blog/${post.slug}`,
-    })),
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${blogUrl}#blog`,
+        url: blogUrl,
+        name: title,
+        description: metadata?.description,
+        publisher: { "@id": orgId },
+        inLanguage: "tr-TR",
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${blogUrl}#posts`,
+        itemListElement: posts.map((post, idx) => {
+          const postUrl = `${blogUrl}/${post.slug}`;
+          const img = String(post.image || "");
+          const absImg = /^https?:\/\//i.test(img) ? img : `${site}${img}`;
+
+          return {
+            "@type": "ListItem",
+            position: idx + 1,
+            url: postUrl,
+            item: {
+              "@type": "BlogPosting",
+              "@id": `${postUrl}#blogposting`,
+              headline: post.title,
+              description: post.description,
+              image: absImg,
+              datePublished: post.date,
+              author: { "@id": editorId },
+              publisher: { "@id": orgId },
+              mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+              isPartOf: { "@id": `${blogUrl}#blog` },
+            },
+          };
+        }),
+      },
+    ],
   };
 
   return (
@@ -147,11 +175,12 @@ function BlogJsonLd({ posts, baseUrl }) {
       type="application/ld+json"
       suppressHydrationWarning
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        __html: JSON.stringify(jsonLd).replace(/</g, "\u003c"),
       }}
     />
   );
 }
+
 
 /* ================== BLOG KART BİLEŞENİ ================== */
 function BlogCard({ post, isFeatured = false }) {
