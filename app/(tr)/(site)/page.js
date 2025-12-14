@@ -1,5 +1,4 @@
 // app/(tr)/(site)/page.js
-
 import HeroSection from "@/components/HeroSection";
 import HeroBelow from "@/components/HeroBelow";
 import {
@@ -24,15 +23,243 @@ const BELOW_THE_FOLD_VISIBILITY_STYLE = {
   containIntrinsicSize: "1px 1200px",
 };
 
-/* -------------------
-   JSON-LD helpers
-------------------- */
-function JsonLd({ data }) {
+/* --------------------
+   JSON-LD (Schema.org) - Home rich snippets
+-------------------- */
+function StructuredData() {
+  const HOME_URL = `${BASE_SITE_URL}/`;
+  const WEBPAGE_ID = `${HOME_URL}#webpage`;
+  const SERVICE_ID = `${HOME_URL}#primary-service`;
+  const CATALOG_ID = `${HOME_URL}#catalog`;
+  const FAQ_ID = `${HOME_URL}#sss`;
+  const IMAGE_ID = `${HOME_URL}#og`;
+  const VIDEO_ID = `${HOME_URL}#intro-video`;
+
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": WEBPAGE_ID,
+        url: HOME_URL,
+        name: HOME_PAGE_TITLE,
+        description:
+          "Sahneva ile profesyonel sahne, podyum, LED ekran, ses ve ışık sistemleri kiralama çözümlerini keşfedin. İstanbul merkezli, Türkiye geneli hızlı kurulum.",
+        inLanguage: "tr-TR",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORGANIZATION_ID },
+        primaryImageOfPage: { "@id": IMAGE_ID },
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": CATALOG_ID,
+        name: "Etkinlik Ekipmanları Kiralama Kataloğu",
+        url: HOME_URL,
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Podyum Kiralama",
+              description: "Modüler podyum sahne kiralama hizmeti",
+            },
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: "250.00",
+              priceCurrency: "TRY",
+              unitText: "m²",
+              unitCode: "MTK",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "LED Ekran Kiralama",
+              description: "İç/dış mekan LED ekran kiralama",
+            },
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: "1700.00",
+              priceCurrency: "TRY",
+              unitText: "günlük",
+              unitCode: "DAY",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Çadır Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "6000.00",
+              maxPrice: "800000.00",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Sandalye Kiralama" },
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: "200.00",
+              priceCurrency: "TRY",
+              unitText: "adet",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Masa Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "1000.00",
+              maxPrice: "2000.00",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Sahne Kiralama" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "10000.00",
+              maxPrice: "200000.00",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Ses-Işık Sistemleri" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "TRY",
+              minPrice: "10000.00",
+              maxPrice: "300000.00",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "İstanbul İçi Nakliye" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: "7000.00",
+              priceCurrency: "TRY",
+            },
+            availability: "https://schema.org/InStock",
+            areaServed: { "@type": "Country", name: "Türkiye" },
+            seller: { "@id": ORGANIZATION_ID },
+          },
+        ],
+      },
+      {
+        "@type": "Service",
+        "@id": SERVICE_ID,
+        name: "Etkinlik Ekipmanları Kiralama",
+        description:
+          "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama hizmeti. Kurulum, teknik operasyon ve söküm dahil.",
+        url: HOME_URL,
+        areaServed: { "@type": "Country", name: "Türkiye" },
+        provider: { "@id": ORGANIZATION_ID },
+        hasOfferCatalog: { "@id": CATALOG_ID },
+        serviceType: "Event Production",
+      },
+      {
+        "@type": "ImageObject",
+        "@id": IMAGE_ID,
+        contentUrl: getOgImageUrl(),
+        width: 1200,
+        height: 630,
+      },
+      {
+        "@type": "VideoObject",
+        "@id": VIDEO_ID,
+        name: "Sahneva – Sahne, Podyum ve LED Ekran Kiralama Tanıtım Videosu",
+        description:
+          "Sahneva’nın sahne, podyum, LED ekran ve ses-ışık sistemleriyle gerçekleştirdiği kurulum ve etkinliklerden kısa bir özet.",
+        thumbnailUrl: ["https://img.youtube.com/vi/173gBurWSRQ/hqdefault.jpg"],
+        uploadDate: "2024-01-01",
+        duration: "PT1M30S",
+        publisher: { "@id": ORGANIZATION_ID },
+        contentUrl: "https://www.youtube.com/watch?v=173gBurWSRQ",
+        embedUrl: "https://www.youtube.com/embed/173gBurWSRQ",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": FAQ_ID,
+        url: HOME_URL,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Sahne, podyum ve LED ekran kiralama hizmetini hangi şehirlerde veriyorsunuz?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Sahneva olarak İstanbul merkezli çalışıyor ve Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama hizmeti sunuyoruz. Şehir dışı projelerde nakliye ve konaklama planlamasını ekibimizle birlikte organize ediyoruz.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Kiralama sürecinde keşif ve fiyat teklifi nasıl ilerliyor?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Talebiniz geldikten sonra etkinlik alanı, katılımcı sayısı ve ihtiyaç duyduğunuz ekipmanları birlikte netleştiriyoruz. Gerekirse ücretsiz keşif yapıyor, ardından sahne, podyum, LED ekran ve ses-ışık sistemleri için detaylı ve kalem kalem ayrılmış teklif paylaşıyoruz.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Kurulum ve söküm hizmete dahil mi?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Evet. Tüm sahne, podyum, LED ekran ve ses-ışık kiralamalarında profesyonel ekip tarafından kurulum, etkinlik süresince teknik takip ve etkinlik bitiminde söküm hizmeti standart olarak dahildir.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Sahne ve LED ekran kiralama fiyatları neye göre değişiyor?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Fiyatlar; sahne veya podyum ölçüsü, LED ekran metrekaresi ve piksel aralığı, ses-ışık sistemi kapasitesi, etkinlik günü sayısı ve şehir içi/dışı olmasına göre değişir. Bütçenize uygun birkaç farklı paket seçeneği sunuyoruz.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Etkinlikten ne kadar önce rezervasyon yapmalıyım?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Özellikle yüksek sezonda (bahar-yaz dönemi) sahne, podyum ve LED ekran stoklarının dolmaması için en az 2–3 hafta öncesinden rezervasyon yapmanızı öneriyoruz. Acil projeler için ise aynı hafta içinde hızlı kurulum yapabildiğimiz durumlar da oluyor.",
+            },
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <script
       type="application/ld+json"
       suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }
@@ -40,31 +267,6 @@ function JsonLd({ data }) {
 export default function HomePage() {
   const baseUrl = BASE_SITE_URL;
   const breadcrumbItems = [{ name: "Ana Sayfa", url: `${baseUrl}/` }];
-
-  // OG image
-  const ogImage = getOgImageUrl?.({
-    path: "/img/og/sahneva-og.webp",
-    absolute: true,
-  });
-
-  // Basic structured data (minimal, safe)
-  const websiteJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": WEBSITE_ID,
-    url: `${baseUrl}/`,
-    name: "Sahneva",
-    publisher: { "@id": ORGANIZATION_ID },
-  };
-
-  const organizationJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": ORGANIZATION_ID,
-    name: "Sahneva Organizasyon",
-    url: `${baseUrl}/`,
-    logo: `${baseUrl}/img/logo/sahneva-logo.webp`,
-  };
 
   // SEO lists used in TechCapabilities
   const SEO_TECH_FEATURES = [
@@ -83,37 +285,22 @@ export default function HomePage() {
   ];
 
   const SEO_INFRA_FEATURES = [
-    {
-      title: "Keşif & Planlama",
-      desc: "Mekân keşfi, teknik ihtiyaç analizi ve proje planı.",
-    },
-    {
-      title: "Kurulum & Operasyon",
-      desc: "Zamanında kurulum, sahada teknik ekip ve operasyon yönetimi.",
-    },
-    {
-      title: "Söküm & Teslim",
-      desc: "Etkinlik sonrası güvenli söküm ve raporlama.",
-    },
+    { title: "Keşif & Planlama", desc: "Mekân keşfi, teknik ihtiyaç analizi ve proje planı." },
+    { title: "Kurulum & Operasyon", desc: "Zamanında kurulum, sahada teknik ekip ve operasyon yönetimi." },
+    { title: "Söküm & Teslim", desc: "Etkinlik sonrası güvenli söküm ve raporlama." },
   ];
 
   return (
     <div className="overflow-x-hidden bg-black">
-      {/* Basic JSON-LD */}
-      <JsonLd data={websiteJsonLd} />
-      <JsonLd data={organizationJsonLd} />
+      {/* Home Rich Snippets */}
+      <StructuredData />
       <BreadcrumbJsonLd items={breadcrumbItems} />
 
-      {/* 1) HERO (statik kalsın: LCP için en iyisi) */}
       <HeroSection />
-
-      {/* 2) HERO ALTI */}
       <HeroBelow />
 
-      {/* anchor */}
       <div id="teklif-al" className="sr-only" />
 
-      {/* 3) HİZMETLER TABS */}
       <section aria-labelledby="hizmetler-title" className="bg-black">
         <h2 id="hizmetler-title" className="sr-only">
           Hizmetler
@@ -121,10 +308,8 @@ export default function HomePage() {
         <ServicesTabsDeferred idleTimeout={1800} rootMargin="260px" />
       </section>
 
-      {/* 4) PROJELER */}
       <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
-      {/* 5) TECH CAPABILITIES (below-the-fold) */}
       <div className="bg-slate-900 py-16" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
         <TechCapabilitiesDeferred
           techFeatures={SEO_TECH_FEATURES}
@@ -132,22 +317,18 @@ export default function HomePage() {
         />
       </div>
 
-      {/* 6) KURUMSAL ORGANİZASYON */}
       <div className="bg-slate-50 py-0 m-0 w-full">
         <CorporateEventsDeferred />
       </div>
 
-      {/* 7) KURUMSAL INTRO (below-the-fold) */}
       <div className="bg-black py-0 m-0 w-full" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
         <CorporateIntroDeferred />
       </div>
 
-      {/* 8) WHY CHOOSE US */}
       <div className="w-full p-0 m-0">
         <WhyChooseUsDeferred />
       </div>
 
-      {/* 10) SSS */}
       <div className="w-full bg-transparent p-0 m-0">
         <FaqDeferred />
       </div>
