@@ -533,12 +533,6 @@ export default function LedTrends2026Page() {
               <div className="sticky top-24 space-y-8">
                 <TableOfContents />
 
-                <div className="bg-white rounded-2xl shadow-xl border border-blue-100 p-6 relative overflow-hidden group">
-                  <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 to-purple-500" />
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">LED Projeniz İçin Hızlı Teklif</h3>
-                  <p className="text-sm text-gray-600 mb-6">
-                    Sahne ölçülerinizi ve etkinlik tarihini paylaşın, 2 saat içinde LED ekran senaryosu ve fiyatlandırmayı size iletelim.
-                  </p>
                 <nav className="bg-gray-50 rounded-2xl p-6 border border-gray-200" aria-label="İlgili Hizmetler">
                   <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">Hizmetlerimiz</h4>
                   <ul className="space-y-1">
