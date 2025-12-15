@@ -19,10 +19,6 @@ const BLOG_URL = `${SITE_URL}${BLOG_PATH}`;
 const LED_SERVICE_PATH = "/led-ekran-kiralama";
 const LED_SERVICE_URL = `${SITE_URL}${LED_SERVICE_PATH}`;
 
-// Diyagram görselleri (public/ içinden string path ile) ✅
-// Not: Dosya adlarında Türkçe karakter kullanma (ı, ş, ğ) sorun çıkarabilir.
-const PIXEL_PITCH_SRC = "/img/blog/led-2026-hero.webp";
-const COB_SMD_SRC = "/img/blog/cob-led-macro.webp";
 
 // ✅ Rich Results için timezone dahil ISO 8601
 const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
