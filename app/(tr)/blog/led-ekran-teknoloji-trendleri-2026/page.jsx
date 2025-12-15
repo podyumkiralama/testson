@@ -3,18 +3,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
-// Statik image import – INVALID_IMAGE_OPTIMIZE_REQUEST hatasını önler
+// Statik image importları
 import heroImg from "@/public/img/blog/led-2026-hero.webp";
 import stageWideImg from "@/public/img/blog/led-2026-sahne-genis.webp";
 import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 
+// Diyagram görselleri
+import pixelPitchComparison from "@/public/img/blog/pixel-pitch-karsilastirma.webp";
+import cobSmdComparison from "@/public/img/blog/cob-smd-yapısal-fark.webp";
+
 /* ================== YAPILANDIRMA & SABİTLER ================== */
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(
+  /\/$/,
+  ""
+);
 const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
+const LED_SERVICE_PATH = "/led-ekran-kiralama";
+const LED_SERVICE_URL = `${SITE_URL}${LED_SERVICE_PATH}`;
 
 // ✅ Rich Results için timezone dahil ISO 8601
-const PUBLISH_DATE = "2025-05-20T00:00:00+03:00";
-const MODIFIED_DATE = "2025-05-20T00:00:00+03:00";
+const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
+const MODIFIED_DATE = "2025-12-15T00:00:00+03:00";
 
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
@@ -27,7 +36,6 @@ export const metadata = {
   alternates: {
     canonical: BLOG_URL,
   },
-  image: "/img/blog/led-2026-hero.webp",
   openGraph: {
     title: "2026 LED Ekran Teknolojisi Trendleri ve Etkinlik Tasarımı",
     description:
@@ -60,10 +68,17 @@ export const metadata = {
     "etkinlik LED ekran kiralama",
     "sahne LED ekran tasarımı",
     "fine pitch LED",
+    "LED ekran kiralama fiyatları",
   ],
   authors: [{ name: AUTHOR_NAME }],
   publisher: "Sahneva",
-  date: PUBLISH_DATE,
+  other: {
+    "article:published_time": PUBLISH_DATE,
+    "article:modified_time": MODIFIED_DATE,
+    "article:author": AUTHOR_NAME,
+    // Servis sayfasına bağlayıcı sinyal
+    "article:section": "LED Ekran Kiralama",
+  },
 };
 
 /* ================== FAQ VERİLERİ ================== */
@@ -111,7 +126,6 @@ function ArticleSchema() {
         description: metadata?.description,
         image: `${site}/img/blog/led-2026-hero.webp`,
 
-        // ✅ Rich Results: timezone dahil
         datePublished: PUBLISH_DATE,
         dateModified: MODIFIED_DATE,
 
@@ -120,6 +134,9 @@ function ArticleSchema() {
         publisher: { "@id": orgId },
         mainEntityOfPage: { "@type": "WebPage", "@id": BLOG_URL },
         isPartOf: { "@type": "Blog", "@id": `${site}/blog#blog` },
+
+        // ✅ /led-ekran-kiralama'yı destekleyen net bağ
+        relatedLink: [LED_SERVICE_URL],
       },
       {
         "@type": "FAQPage",
@@ -182,6 +199,7 @@ const TableOfContents = () => (
         { id: "cob-led", label: "2. COB LED 2.0 Nesli" },
         { id: "hdr", label: "3. HDR İçerik ve Renk Kalibrasyonu" },
         { id: "sahne-tasarim", label: "4. 2026 Sahne Tasarımı Örnekleri" },
+        { id: "fiyatlar", label: "2026’da LED Ekran Kiralama Fiyatlarını Ne Belirler?" },
         { id: "teknik-checklist", label: "Teknik Checklist" },
         { id: "faq", label: "Sık Sorulan Sorular" },
       ].map((item) => (
@@ -267,7 +285,7 @@ export default function LedTrends2026Page() {
               <span>LED Projeniz İçin WhatsApp&apos;tan Yazın</span>
             </a>
             <Link
-              href="/led-ekran-kiralama"
+              href={LED_SERVICE_PATH}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 border border-white/20 backdrop-blur-md transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400"
             >
               <span>🖥️</span>
@@ -321,10 +339,14 @@ export default function LedTrends2026Page() {
                   </p>
                 </div>
 
+                {/* ✅ STRATEJİK LINK #1: İlk 300 kelime içinde */}
                 <p>
                   Büyük bir ürün lansmanı, global bayi toplantısı veya hibrit bir konferans planlıyor olabilirsiniz. Ekranda
-                  gördüğünüz görsel, salondaki herkes için markanızın vitrini. Piksel aralığı doğru seçilmediğinde veya sürücü
-                  kartları yetersiz olduğunda; özellikle kamera çekimlerinde banding, flicker ve renk bozulmaları ortaya çıkar.
+                  gördüğünüz görsel, salondaki herkes için markanızın vitrini. Bu yüzden{" "}
+                  <Link href={LED_SERVICE_PATH}>profesyonel LED ekran kiralama</Link>{" "}
+                  sürecinde yalnızca metrekare değil; piksel aralığı, sürücü kartı ve içerik uyumu gibi teknik detayları da doğru
+                  seçmek gerekir. Piksel aralığı doğru seçilmediğinde veya sürücü kartları yetersiz olduğunda; özellikle kamera
+                  çekimlerinde banding, flicker ve renk bozulmaları ortaya çıkar.
                 </p>
 
                 <figure className="my-10 not-prose">
@@ -342,7 +364,7 @@ export default function LedTrends2026Page() {
                   </figcaption>
                 </figure>
 
-                {/* Profesyonel ipucu – heading yerine bold text (başlık sırası uyarısını çözüyor) */}
+                {/* Profesyonel ipucu Kutusu */}
                 <div className="my-10 bg-gradient-to-r from-indigo-50 to-cyan-50 border border-blue-100 p-6 rounded-2xl shadow-sm not-prose">
                   <div className="flex items-start gap-4">
                     <span className="text-3xl flex-shrink-0" aria-hidden="true">💡</span>
@@ -367,6 +389,21 @@ export default function LedTrends2026Page() {
                   <strong>P1.5 – P2.6</strong> aralığı yeni normal haline geldi. Bunun anlamı: aynı sahne genişliğinde daha keskin
                   metinler, daha net grafikler ve kamera için TV kalitesinde görüntü.
                 </p>
+
+                <figure className="my-10 not-prose">
+                  <Image
+                    src={pixelPitchComparison}
+                    alt="Farklı piksel aralıklarının (P1.5, P2.6, P5) yakından ve uzaktan görünüm karşılaştırması"
+                    width={pixelPitchComparison.width}
+                    height={pixelPitchComparison.height}
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
+                    Piksel aralığı ne kadar düşük olursa, metin ve grafikler o kadar yakından bile keskin görünür. P1.5, P2.6'ya göre iki kat daha fazla çözünürlük demektir.
+                  </figcaption>
+                </figure>
 
                 <p>
                   Özellikle <strong>CEO konuşmaları</strong> ve hissedar toplantıları gibi hassas etkinliklerde, arkadaki LED ekranın
@@ -429,6 +466,21 @@ export default function LedTrends2026Page() {
                   </figcaption>
                 </figure>
 
+                <figure className="my-10 not-prose">
+                  <Image
+                    src={cobSmdComparison}
+                    alt="COB ve SMD LED panel yapılarının kesit diyagramı. COB'un LED çipleri koruyucu katman altında gösteriliyor."
+                    width={cobSmdComparison.width}
+                    height={cobSmdComparison.height}
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
+                    SMD'de LED'ler açıkta iken, COB'da çipler koruyucu, darbe emici bir dolgu malzemesi (encapsulation) ile kaplıdır. Bu, sahne kurulumunda hasar riskini azaltır.
+                  </figcaption>
+                </figure>
+
                 <p>
                   2026’da COB 2.0 olarak anılan yeni nesil paneller; düşük mavi ışık, anti-glare yüzey ve gelişmiş kalibrasyon algoritmaları ile
                   özellikle uzun süreli konferanslarda göz konforunu ciddi biçimde artırıyor.
@@ -458,6 +510,19 @@ export default function LedTrends2026Page() {
                   data görselleştirme için dikey totemler ve zemin LED uygulamaları kurumsal etkinliklere de inmeye başladı.
                 </p>
 
+                {/* ✅ EK BÖLÜM: SERP + Commercial intent */}
+                <h2 id="fiyatlar">2026’da LED Ekran Kiralama Fiyatlarını Ne Belirler?</h2>
+                <p>
+                  LED ekran kiralama fiyatı tek bir “m²” hesabı değildir. Teklifleri doğru kıyaslamak için şu teknik değişkenleri aynı anda
+                  değerlendirmek gerekir: piksel aralığı (P1.5–P2.6), panel tipi (COB/SMD), yenileme oranı (3840Hz+), içerik çözünürlüğü/FPS,
+                  kurulum süresi ve yedek panel stoğu. Eğer bu parametreler net değilse, en ucuz teklif genellikle sahnede en pahalıya patlar.
+                </p>
+                <p>
+                  Bu yüzden karar aşamasında{" "}
+                  <Link href={LED_SERVICE_PATH}>LED ekran kiralama fiyatlandırmasını etkileyen faktörleri</Link>{" "}
+                  net şekilde görmek ve teknik ekip planlamasını doğru yapmak kritik.
+                </p>
+
                 <h2 id="teknik-checklist">Teknik Checklist – Teklif Almadan Önce</h2>
                 <div className="not-prose bg-gray-50 border border-gray-200 rounded-xl p-6 my-8 space-y-4">
                   <p className="text-sm text-gray-700 font-medium mb-2">
@@ -471,6 +536,15 @@ export default function LedTrends2026Page() {
                     <li>Kurulum süresi, teknik ekip sayısı ve yedek panel stoğu</li>
                     <li>İçerik hazırlığı için tavsiye edilen çözünürlük / FPS değerleri</li>
                   </ul>
+
+                  {/* ✅ STRATEJİK LINK #2: Checklist sonrası */}
+                  <div className="pt-4 border-t border-gray-200">
+                    <p className="text-sm text-gray-700 m-0">
+                      Bu kriterlerin tamamını karşılayan, proje keşfi + kurulum + teknik operasyon dahil{" "}
+                      <Link href={LED_SERVICE_PATH}>LED ekran kiralama hizmetimizi</Link>{" "}
+                      inceleyebilirsiniz.
+                    </p>
+                  </div>
                 </div>
 
                 <h2 id="faq">Sık Sorulan Sorular</h2>
@@ -502,12 +576,26 @@ export default function LedTrends2026Page() {
 
                 <div className="not-prose mt-16 bg-gradient-to-br from-gray-900 to-blue-900 rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
                   <h3 className="text-2xl md:text-3xl font-black mb-4 relative z-10">
                     2026 LED Ekran Projenizi Birlikte Tasarlayalım
                   </h3>
                   <p className="text-blue-100 mb-8 max-w-xl mx-auto relative z-10 text-lg">
                     Fine-pitch LED paneller, COB teknolojisi ve HDR içerik üretimiyle sahnenizi bir üst seviyeye taşımak için teknik ekibimizle hemen iletişime geçin.
                   </p>
+
+                  {/* ✅ STRATEJİK LINK #3: Kapanış vuruşu */}
+                  <p className="text-blue-100 max-w-xl mx-auto relative z-10 text-sm mb-6">
+                    Ayrıca{" "}
+                    <Link
+                      href={LED_SERVICE_PATH}
+                      className="text-white underline underline-offset-4 decoration-white/40 hover:decoration-white"
+                    >
+                      2026’ya uygun LED ekran kiralama çözümlerimizi
+                    </Link>{" "}
+                    detaylı inceleyip projenize göre doğru panel/kurulum planını netleştirebilirsiniz.
+                  </p>
+
                   <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
                     <a
                       href="https://wa.me/905453048671"
@@ -537,7 +625,7 @@ export default function LedTrends2026Page() {
                   <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">Hizmetlerimiz</h4>
                   <ul className="space-y-1">
                     {[
-                      { href: "/led-ekran-kiralama", icon: "🖥️", label: "LED Ekran Kiralama" },
+                      { href: LED_SERVICE_PATH, icon: "🖥️", label: "LED Ekran Kiralama" },
                       { href: "/sahne-kiralama", icon: "🎭", label: "Sahne Kiralama" },
                       { href: "/ses-isik-sistemleri", icon: "🎵", label: "Ses & Işık Sistemleri" },
                       { href: "/kurumsal-organizasyon", icon: "🏢", label: "Kurumsal Organizasyon" },
@@ -559,8 +647,8 @@ export default function LedTrends2026Page() {
               </div>
             </aside>
           </div>
-        </div>   
-      </div>     
+        </div>
+      </div>
     </>
   );
 }
