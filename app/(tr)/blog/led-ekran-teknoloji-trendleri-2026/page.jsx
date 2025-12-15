@@ -1,26 +1,28 @@
-// app/(tr)/blog/led-ekran-2026-teknoloji-trendleri/page.jsx
 import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
-// Statik image importları
+// Statik image importları (mevcut olanlar)
 import heroImg from "@/public/img/blog/led-2026-hero.webp";
 import stageWideImg from "@/public/img/blog/led-2026-sahne-genis.webp";
 import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
-
-// Diyagram görselleri
-const PIXEL_PITCH_SRC = "/img/blog/pixel-pitch-karsilastirma.webp";
-const COB_SMD_SRC = "/img/blog/cob-smd-yapisal-fark.webp";
-
 
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(
   /\/$/,
   ""
 );
-const BLOG_URL = `${SITE_URL}/blog/led-ekran-2026-teknoloji-trendleri`;
+
+const BLOG_PATH = "/blog/led-ekran-teknoloji-trendleri-2026";
+const BLOG_URL = `${SITE_URL}${BLOG_PATH}`;
+
 const LED_SERVICE_PATH = "/led-ekran-kiralama";
 const LED_SERVICE_URL = `${SITE_URL}${LED_SERVICE_PATH}`;
+
+// Diyagram görselleri (public/ içinden string path ile) ✅
+// Not: Dosya adlarında Türkçe karakter kullanma (ı, ş, ğ) sorun çıkarabilir.
+const PIXEL_PITCH_SRC = "/img/blog/led-2026-hero.webp";
+const COB_SMD_SRC = "/img/blog/cob-led-macro.webp";
 
 // ✅ Rich Results için timezone dahil ISO 8601
 const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
@@ -34,9 +36,7 @@ export const metadata = {
     "2026 LED Ekran Teknolojisi Trendleri: COB, 2.0 Nesil Paneller ve Sahne Tasarımı | Sahneva",
   description:
     "2026’da LED ekran teknolojisinde COB paneller, ultra düşük piksel aralığı ve HDR sahne tasarımı etkinlikleri nasıl değiştirecek? Lansman, festival ve kurumsal etkinlikler için teknik rehber.",
-  alternates: {
-    canonical: BLOG_URL,
-  },
+  alternates: { canonical: BLOG_URL },
   openGraph: {
     title: "2026 LED Ekran Teknolojisi Trendleri ve Etkinlik Tasarımı",
     description:
@@ -77,7 +77,6 @@ export const metadata = {
     "article:published_time": PUBLISH_DATE,
     "article:modified_time": MODIFIED_DATE,
     "article:author": AUTHOR_NAME,
-    // Servis sayfasına bağlayıcı sinyal
     "article:section": "LED Ekran Kiralama",
   },
 };
@@ -126,10 +125,8 @@ function ArticleSchema() {
         headline: metadata?.title || "Blog Yazısı",
         description: metadata?.description,
         image: `${site}/img/blog/led-2026-hero.webp`,
-
         datePublished: PUBLISH_DATE,
         dateModified: MODIFIED_DATE,
-
         inLanguage: "tr-TR",
         author: { "@id": editorId },
         publisher: { "@id": orgId },
@@ -244,17 +241,20 @@ export default function LedTrends2026Page() {
             fetchPriority="high"
           />
         </div>
+
         <div className="container mx-auto px-4 relative z-20 text-center max-w-4xl">
           <div className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-sm font-semibold mb-8 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-blue-300 animate-pulse" />
             2026 LED Ekran Trend Raporu
           </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.15] mb-6 tracking-tight">
             2026’da LED Ekran{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-300 to-indigo-300">
               Sahne Tasarımını Nasıl Değiştiriyor?
             </span>
           </h1>
+
           <p className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto font-light antialiased">
             COB paneller, 2.0 nesil sürücüler ve HDR içerik ile kurumsal
             etkinliklerde LED ekranlar artık sadece fon değil, başrol oyuncu.
@@ -273,7 +273,6 @@ export default function LedTrends2026Page() {
             </span>
           </div>
 
-          {/* Kontrastı düzeltilmiş çağrı butonları */}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <a
               href="https://wa.me/905453048671"
@@ -285,6 +284,7 @@ export default function LedTrends2026Page() {
               <span>💬</span>
               <span>LED Projeniz İçin WhatsApp&apos;tan Yazın</span>
             </a>
+
             <Link
               href={LED_SERVICE_PATH}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 border border-white/20 backdrop-blur-md transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400"
@@ -308,7 +308,9 @@ export default function LedTrends2026Page() {
                 { val: "HDR", label: "Büyük markaların tercih ettiği yeni standart", color: "text-amber-700" },
               ].map((stat, i) => (
                 <div key={i} className="text-center group px-2">
-                  <div className={`text-3xl md:text-4xl font-black ${stat.color} mb-2 group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`text-3xl md:text-4xl font-black ${stat.color} mb-2 group-hover:scale-110 transition-transform duration-300`}
+                  >
                     {stat.val}
                   </div>
                   <div className="text-xs md:text-sm text-gray-600 font-medium leading-snug max-w-[160px] mx-auto">
@@ -327,7 +329,7 @@ export default function LedTrends2026Page() {
           <Breadcrumbs />
 
           <div className="flex flex-col lg:flex-row gap-12 relative">
-            {/* SOL KOLON (MAKALE) */}
+            {/* SOL KOLON */}
             <div className="lg:w-2/3">
               <article className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl max-w-none">
                 <div className="bg-blue-50/60 p-6 rounded-xl border-l-4 border-blue-500 mb-8 not-prose">
@@ -340,7 +342,7 @@ export default function LedTrends2026Page() {
                   </p>
                 </div>
 
-                {/* ✅ STRATEJİK LINK #1: İlk 300 kelime içinde */}
+                {/* ✅ STRATEJİK LINK #1 */}
                 <p>
                   Büyük bir ürün lansmanı, global bayi toplantısı veya hibrit bir konferans planlıyor olabilirsiniz. Ekranda
                   gördüğünüz görsel, salondaki herkes için markanızın vitrini. Bu yüzden{" "}
@@ -365,7 +367,6 @@ export default function LedTrends2026Page() {
                   </figcaption>
                 </figure>
 
-                {/* Profesyonel ipucu Kutusu */}
                 <div className="my-10 bg-gradient-to-r from-indigo-50 to-cyan-50 border border-blue-100 p-6 rounded-2xl shadow-sm not-prose">
                   <div className="flex items-start gap-4">
                     <span className="text-3xl flex-shrink-0" aria-hidden="true">💡</span>
@@ -393,10 +394,10 @@ export default function LedTrends2026Page() {
 
                 <figure className="my-10 not-prose">
                   <Image
-                    src={pixelPitchComparison}
+                    src={PIXEL_PITCH_SRC}
                     alt="Farklı piksel aralıklarının (P1.5, P2.6, P5) yakından ve uzaktan görünüm karşılaştırması"
-                    width={pixelPitchComparison.width}
-                    height={pixelPitchComparison.height}
+                    width={1200}
+                    height={675}
                     sizes="(max-width: 768px) 100vw, 800px"
                     className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
                     loading="lazy"
@@ -469,10 +470,10 @@ export default function LedTrends2026Page() {
 
                 <figure className="my-10 not-prose">
                   <Image
-                    src={cobSmdComparison}
+                    src={COB_SMD_SRC}
                     alt="COB ve SMD LED panel yapılarının kesit diyagramı. COB'un LED çipleri koruyucu katman altında gösteriliyor."
-                    width={cobSmdComparison.width}
-                    height={cobSmdComparison.height}
+                    width={1200}
+                    height={675}
                     sizes="(max-width: 768px) 100vw, 800px"
                     className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
                     loading="lazy"
@@ -511,12 +512,11 @@ export default function LedTrends2026Page() {
                   data görselleştirme için dikey totemler ve zemin LED uygulamaları kurumsal etkinliklere de inmeye başladı.
                 </p>
 
-                {/* ✅ EK BÖLÜM: SERP + Commercial intent */}
                 <h2 id="fiyatlar">2026’da LED Ekran Kiralama Fiyatlarını Ne Belirler?</h2>
                 <p>
                   LED ekran kiralama fiyatı tek bir “m²” hesabı değildir. Teklifleri doğru kıyaslamak için şu teknik değişkenleri aynı anda
                   değerlendirmek gerekir: piksel aralığı (P1.5–P2.6), panel tipi (COB/SMD), yenileme oranı (3840Hz+), içerik çözünürlüğü/FPS,
-                  kurulum süresi ve yedek panel stoğu. Eğer bu parametreler net değilse, en ucuz teklif genellikle sahnede en pahalıya patlar.
+                  kurulum süresi ve yedek panel stoğu.
                 </p>
                 <p>
                   Bu yüzden karar aşamasında{" "}
@@ -538,7 +538,7 @@ export default function LedTrends2026Page() {
                     <li>İçerik hazırlığı için tavsiye edilen çözünürlük / FPS değerleri</li>
                   </ul>
 
-                  {/* ✅ STRATEJİK LINK #2: Checklist sonrası */}
+                  {/* ✅ STRATEJİK LINK #2 */}
                   <div className="pt-4 border-t border-gray-200">
                     <p className="text-sm text-gray-700 m-0">
                       Bu kriterlerin tamamını karşılayan, proje keşfi + kurulum + teknik operasyon dahil{" "}
@@ -585,7 +585,7 @@ export default function LedTrends2026Page() {
                     Fine-pitch LED paneller, COB teknolojisi ve HDR içerik üretimiyle sahnenizi bir üst seviyeye taşımak için teknik ekibimizle hemen iletişime geçin.
                   </p>
 
-                  {/* ✅ STRATEJİK LINK #3: Kapanış vuruşu */}
+                  {/* ✅ STRATEJİK LINK #3 */}
                   <p className="text-blue-100 max-w-xl mx-auto relative z-10 text-sm mb-6">
                     Ayrıca{" "}
                     <Link
@@ -618,12 +618,15 @@ export default function LedTrends2026Page() {
               </article>
             </div>
 
+            {/* SAĞ KOLON */}
             <aside className="lg:w-1/3 relative">
               <div className="sticky top-24 space-y-8">
                 <TableOfContents />
 
                 <nav className="bg-gray-50 rounded-2xl p-6 border border-gray-200" aria-label="İlgili Hizmetler">
-                  <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">Hizmetlerimiz</h4>
+                  <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">
+                    Hizmetlerimiz
+                  </h4>
                   <ul className="space-y-1">
                     {[
                       { href: LED_SERVICE_PATH, icon: "🖥️", label: "LED Ekran Kiralama" },
