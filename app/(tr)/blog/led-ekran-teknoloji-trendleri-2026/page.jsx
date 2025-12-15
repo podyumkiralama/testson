@@ -2,10 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
-// ✅ Repoda VAR olan görseller (public/img/blog/)
+// Statik image importları
 import heroImg from "@/public/img/blog/led-2026-hero.webp";
 import stageWideImg from "@/public/img/blog/led-2026-sahne-genis.webp";
 import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
+
+// Yeni eklenen görseller
+import pixelPitchComparison from "@/public/img/blog/pixel-pitch-karsilastirma.webp";
+import cobSmdComparison from "@/public/img/blog/cob-smd-yapisal-fark.webp";
 
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(
@@ -13,11 +17,14 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com")
   ""
 );
 
-const BLOG_PATH = "/blog/led-ekran-teknoloji-trendleri-2026";
+const BLOG_PATH = "/blog/led-ekran-2026-teknoloji-trendleri";
 const BLOG_URL = `${SITE_URL}${BLOG_PATH}`;
 
 const LED_SERVICE_PATH = "/led-ekran-kiralama";
 const LED_SERVICE_URL = `${SITE_URL}${LED_SERVICE_PATH}`;
+
+// ✅ Öne çıkan görsel (featured) = HERO (public path)
+const FEATURED_IMAGE = "/img/blog/led-2026-hero.webp";
 
 // ✅ Rich Results için timezone dahil ISO 8601
 const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
@@ -33,8 +40,8 @@ export const metadata = {
     "2026’da LED ekran teknolojisinde COB paneller, ultra düşük piksel aralığı ve HDR sahne tasarımı etkinlikleri nasıl değiştirecek? Lansman, festival ve kurumsal etkinlikler için teknik rehber.",
   alternates: { canonical: BLOG_URL },
 
-  // ✅ Blog kartları sende buradan okuyor: metadata.image
-  image: "/img/blog/led-2026-hero.webp",
+  // ✅ Blog kartlarında öne çıkan görselin gelmesi için (senin sistemin bunu okuyor)
+  image: FEATURED_IMAGE,
 
   openGraph: {
     title: "2026 LED Ekran Teknolojisi Trendleri ve Etkinlik Tasarımı",
@@ -46,10 +53,10 @@ export const metadata = {
     siteName: "Sahneva",
     images: [
       {
-        url: `${SITE_URL}/img/blog/led-2026-hero.webp`,
+        url: `${SITE_URL}${FEATURED_IMAGE}`,
         width: 1200,
         height: 630,
-        alt: "2026 LED ekran teknolojisi trendlerini temsil eden kurumsal etkinlik sahnesi",
+        alt: "Geniş sahnede 2026 LED ekran teknolojilerini temsil eden kurumsal etkinlik",
       },
     ],
   },
@@ -58,7 +65,7 @@ export const metadata = {
     title: "2026 LED Ekran Teknolojisi Trendleri",
     description:
       "COB LED, ince piksel aralığı ve HDR içerik ile sahne tasarımında yeni dönem.",
-    images: [`${SITE_URL}/img/blog/led-2026-hero.webp`],
+    images: [`${SITE_URL}${FEATURED_IMAGE}`],
   },
   keywords: [
     "LED ekran trendleri 2026",
@@ -93,6 +100,11 @@ const FAQ_ITEMS = [
       "Kurumsal etkinlik, lansman ve TV prodüksiyonuna yakın işler için genellikle P1.9 – P2.6 aralığı tercih edilir. 6–20 metre izleme mesafelerinde hem kamera için hem izleyici gözü için oldukça keskin bir görüntü sunar.",
   },
   {
+    question: "COB LED paneller dış mekan etkinliklerde kullanılabilir mi?",
+    answer:
+      "Teknik olarak mümkündür ancak COB paneller daha çok iç mekan, stüdyo ve broadcast işler için tasarlanır. Yüksek parlaklık gerektiren açık hava etkinliklerinde genellikle SMD tabanlı outdoor paneller tercih edilir.",
+  },
+  {
     question: "HDR destekli LED ekran gerçekten fark yaratıyor mu?",
     answer:
       "Evet. HDR destekli LED ekranlar, özellikle ürün lansmanlarında metalik yüzeyler, derin siyahlar ve canlı renk geçişlerinde çok daha gerçekçi bir algı oluşturur. Profesyonel içerik üretimiyle birleştiğinde sahne adeta TV stüdyosu kalitesine yükselir.",
@@ -100,7 +112,7 @@ const FAQ_ITEMS = [
   {
     question: "Sahneva 2026 LED trendlerine uygun ne tür çözümler sunuyor?",
     answer:
-      "Sahneva; fine-pitch iç mekan paneller, yüksek yenileme oranına sahip LED ekran sistemleri, renk kalibrasyonu, medya server entegrasyonları ve komple sahne–ses–ışık altyapısını anahtar teslim sunar.",
+      "Sahneva; COB ve fine-pitch iç mekan paneller, 2.0 nesil sürücülü yüksek yenileme oranına sahip LED ekran sistemleri, HDR renk kalibrasyonu, medya server entegrasyonları ve komple sahne–ses–ışık altyapısını anahtar teslim olarak sunar.",
   },
 ];
 
@@ -118,7 +130,7 @@ function ArticleSchema() {
         "@id": `${BLOG_URL}#blogposting`,
         headline: metadata?.title || "Blog Yazısı",
         description: metadata?.description,
-        image: `${site}/img/blog/led-2026-hero.webp`,
+        image: `${site}${FEATURED_IMAGE}`,
         datePublished: PUBLISH_DATE,
         dateModified: MODIFIED_DATE,
         inLanguage: "tr-TR",
@@ -151,7 +163,7 @@ function ArticleSchema() {
   );
 }
 
-/* ================== UI ================== */
+/* ================== BİLEŞENLER ================== */
 const Breadcrumbs = () => (
   <nav aria-label="Breadcrumb" className="mb-6 text-sm text-gray-600">
     <ol className="flex items-center space-x-2 flex-wrap">
@@ -186,9 +198,9 @@ const TableOfContents = () => (
     <ul className="space-y-2 text-sm">
       {[
         { id: "fine-pitch", label: "1. Fine-Pitch ve P1.x Dönemi" },
-        { id: "cob-led", label: "2. COB LED ve Dayanıklılık" },
+        { id: "cob-led", label: "2. COB LED 2.0 Nesli" },
         { id: "hdr", label: "3. HDR İçerik ve Renk Kalibrasyonu" },
-        { id: "sahne-tasarim", label: "4. 2026 Sahne Tasarımında LED" },
+        { id: "sahne-tasarim", label: "4. 2026 Sahne Tasarımı Örnekleri" },
         { id: "fiyatlar", label: "2026’da LED Ekran Kiralama Fiyatlarını Ne Belirler?" },
         { id: "teknik-checklist", label: "Teknik Checklist" },
         { id: "faq", label: "Sık Sorulan Sorular" },
@@ -206,7 +218,7 @@ const TableOfContents = () => (
   </div>
 );
 
-/* ================== PAGE ================== */
+/* ================== ANA SAYFA ================== */
 export default function LedTrends2026Page() {
   const breadcrumbItems = [
     { name: "Ana Sayfa", url: `${SITE_URL}/` },
@@ -219,13 +231,13 @@ export default function LedTrends2026Page() {
       <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={SITE_URL} />
       <ArticleSchema />
 
-      {/* HERO */}
+      {/* --- HERO SECTION (Öne çıkan görsel = HERO) --- */}
       <header className="relative py-24 bg-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-blue-900/40 z-10" />
         <div className="absolute inset-0 z-0">
           <Image
             src={heroImg}
-            alt="2026 LED ekran teknolojisi trendlerini temsil eden kurumsal etkinlik sahnesi"
+            alt="Geniş sahnede 2026 LED ekran teknolojilerini temsil eden kurumsal etkinlik"
             fill
             className="object-cover opacity-65"
             priority
@@ -248,8 +260,8 @@ export default function LedTrends2026Page() {
           </h1>
 
           <p className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto font-light antialiased">
-            COB paneller, 2.0 nesil sürücüler ve HDR içerik ile kurumsal etkinliklerde LED ekranlar artık sadece fon değil,
-            başrol oyuncu. Teknik kararları 2026’da nasıl almalısınız?
+            COB paneller, 2.0 nesil sürücüler ve HDR içerik ile kurumsal etkinliklerde LED ekranlar artık sadece fon değil, başrol oyuncu.
+            Peki teknik kararları 2026’da nasıl almalısınız?
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-200 mt-8 pt-8 border-t border-white/10">
@@ -275,7 +287,6 @@ export default function LedTrends2026Page() {
               <span>💬</span>
               <span>LED Projeniz İçin WhatsApp&apos;tan Yazın</span>
             </a>
-
             <Link
               href={LED_SERVICE_PATH}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 border border-white/20 backdrop-blur-md transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400"
@@ -287,12 +298,13 @@ export default function LedTrends2026Page() {
         </div>
       </header>
 
-      {/* CONTENT */}
+      {/* --- MAIN CONTENT --- */}
       <div className="bg-white py-16">
         <div className="container mx-auto px-4">
           <Breadcrumbs />
 
           <div className="flex flex-col lg:flex-row gap-12 relative">
+            {/* SOL KOLON */}
             <div className="lg:w-2/3">
               <article className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl max-w-none">
                 <div className="bg-blue-50/60 p-6 rounded-xl border-l-4 border-blue-500 mb-8 not-prose">
@@ -305,13 +317,11 @@ export default function LedTrends2026Page() {
                   </p>
                 </div>
 
-                {/* ✅ STRATEJİK LINK #1 */}
                 <p>
                   Büyük bir ürün lansmanı, global bayi toplantısı veya hibrit bir konferans planlıyor olabilirsiniz. Ekranda
                   gördüğünüz görsel, salondaki herkes için markanızın vitrini. Bu yüzden{" "}
                   <Link href={LED_SERVICE_PATH}>profesyonel LED ekran kiralama</Link>{" "}
-                  sürecinde yalnızca metrekare değil; piksel aralığı, sürücü kartı ve içerik uyumu gibi teknik detayları da doğru
-                  seçmek gerekir.
+                  sürecinde yalnızca metrekare değil; piksel aralığı, sürücü kartı ve içerik uyumu gibi teknik detayları da doğru seçmek gerekir.
                 </p>
 
                 <figure className="my-10 not-prose">
@@ -331,14 +341,28 @@ export default function LedTrends2026Page() {
 
                 <h2 id="fine-pitch">1. Fine-Pitch ve P1.x Dönemi</h2>
                 <p>
-                  2026’da iç mekan sahnelerde <strong>P1.9 – P2.6</strong> aralığı yeni normal haline geldi. Yakın izleme mesafesinde
-                  daha keskin metinler ve kamera için TV kalitesine yakın görüntü elde edilir.
+                  2026’da iç mekan sahnelerde <strong>P1.5 – P2.6</strong> aralığı yeni normal haline geldi. Bunun anlamı: aynı sahnede daha keskin metinler,
+                  daha net grafikler ve kamera için TV kalitesinde görüntü.
                 </p>
 
-                <h2 id="cob-led">2. COB LED ve Dayanıklılık</h2>
+                <figure className="my-10 not-prose">
+                  <Image
+                    src={pixelPitchComparison}
+                    alt="LED ekranlarda farklı piksel aralıklarını temsil eden genel görsel"
+                    width={pixelPitchComparison.width}
+                    height={pixelPitchComparison.height}
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
+                    Piksel aralığı küçüldükçe yazılar ve görseller daha yakından bile net görünür.
+                  </figcaption>
+                </figure>
+
+                <h2 id="cob-led">2. COB LED 2.0 Nesli: Dayanıklılık ve Siyah Seviye</h2>
                 <p>
-                  COB (Chip on Board) paneller, pürüzsüz yüzey yapısı sayesinde daha homojen ışık ve daha iyi yansıma kontrolü
-                  sunar. Kurulum sırasında darbe/çizilme riski de azalır.
+                  COB panel yüzeyinde tüm çipler koruyucu bir tabaka ile kaplıdır. Bu sayede hem darbelere hem toza karşı çok daha dayanıklı bir yapı oluşur.
                 </p>
 
                 <figure className="my-10 not-prose">
@@ -352,26 +376,38 @@ export default function LedTrends2026Page() {
                     loading="lazy"
                   />
                   <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
-                    COB LED paneller, pürüzsüz yüzey yapısı sayesinde hem siyah seviyelerinde hem yansıma kontrolünde avantaj sağlar.
+                    COB LED paneller, pürüzsüz yüzey yapısı sayesinde hem daha koyu siyah seviyeleri hem de daha iyi yansıma kontrolü sunar.
+                  </figcaption>
+                </figure>
+
+                <figure className="my-10 not-prose">
+                  <Image
+                    src={cobSmdComparison}
+                    alt="COB ve SMD LED yapılarını temsil eden karşılaştırma görseli"
+                    width={cobSmdComparison.width}
+                    height={cobSmdComparison.height}
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className="w-full h-auto rounded-2xl shadow-lg border border-gray-100"
+                    loading="lazy"
+                  />
+                  <figcaption className="mt-3 text-sm text-gray-600 text-center font-medium">
+                    COB yüzey yapısı sahne kurulumunda hasar riskini azaltır; SMD ise outdoor kullanımda yaygındır.
                   </figcaption>
                 </figure>
 
                 <h2 id="hdr">3. HDR İçerik ve Renk Kalibrasyonu</h2>
                 <p>
-                  HDR destekli bir LED sistem, doğru içerik üretimi ve sahnede yapılan canlı kalibrasyon ile birleştiğinde ürün
-                  lansmanlarında ve kurumsal etkinliklerde algıyı ciddi biçimde yükseltir.
+                  HDR destekli bir LED sistem, doğru içerik üretimi ve sahnede yapılan canlı kalibrasyon ile birleştiğinde algıyı ciddi biçimde yükseltir.
                 </p>
 
-                <h2 id="sahne-tasarim">4. 2026 Sahne Tasarımında LED</h2>
+                <h2 id="sahne-tasarim">4. 2026 Sahne Tasarımında LED ile Neler Değişiyor?</h2>
                 <p>
-                  LED ekran artık yalnızca arka fon değil; sahnenin tamamını saran bir deneyim alanı. Yan ekranlar, totemler ve sahne
-                  mimarisiyle birleşen ekran kurguları öne çıkıyor.
+                  LED ekran artık yalnızca arka fon değil; sahnenin tamamını saran bir deneyim alanı. Yan ekranlar, totemler ve sahne mimarisiyle birleşen ekran kurguları öne çıkıyor.
                 </p>
 
                 <h2 id="fiyatlar">2026’da LED Ekran Kiralama Fiyatlarını Ne Belirler?</h2>
                 <p>
-                  Fiyat tek bir “m²” hesabı değildir. Piksel aralığı, panel tipi, yenileme oranı, kurulum süresi ve yedek panel stoğu
-                  gibi teknik değişkenler toplam maliyeti belirler.
+                  LED ekran kiralama fiyatı tek bir “m²” hesabı değildir. Piksel aralığı, panel tipi, yenileme oranı, kurulum süresi ve yedek panel stoğu gibi değişkenler toplam maliyeti belirler.
                 </p>
                 <p>
                   Bu yüzden karar aşamasında{" "}
@@ -382,14 +418,13 @@ export default function LedTrends2026Page() {
                 <h2 id="teknik-checklist">Teknik Checklist – Teklif Almadan Önce</h2>
                 <div className="not-prose bg-gray-50 border border-gray-200 rounded-xl p-6 my-8 space-y-4">
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
-                    <li>LED panel marka / model</li>
-                    <li>Piksel aralığı (P1.9 / P2.6 vb.)</li>
+                    <li>LED panel marka / model bilgisi</li>
+                    <li>Piksel aralığı ve panel ölçüsü</li>
                     <li>Yenileme oranı (3840Hz+ önerilir)</li>
-                    <li>Kurulum süresi, ekip sayısı, yedek panel</li>
+                    <li>Kurulum süresi, teknik ekip sayısı, yedek panel</li>
                     <li>İçerik için tavsiye çözünürlük / FPS</li>
                   </ul>
 
-                  {/* ✅ STRATEJİK LINK #2 */}
                   <div className="pt-4 border-t border-gray-200">
                     <p className="text-sm text-gray-700 m-0">
                       Bu kriterlerin tamamını karşılayan{" "}
@@ -432,19 +467,19 @@ export default function LedTrends2026Page() {
                   <h3 className="text-2xl md:text-3xl font-black mb-4 relative z-10">
                     2026 LED Ekran Projenizi Birlikte Tasarlayalım
                   </h3>
-                  <p className="text-blue-100 mb-6 max-w-xl mx-auto relative z-10 text-lg">
-                    Teknik keşif + kurulum + operasyon dahil, 2026 trendlerine uygun LED ekran kurgusu için bize ulaşın.
+                  <p className="text-blue-100 mb-8 max-w-xl mx-auto relative z-10 text-lg">
+                    Fine-pitch LED paneller, COB teknolojisi ve HDR içerik üretimiyle sahnenizi bir üst seviyeye taşımak için teknik ekibimizle hemen iletişime geçin.
                   </p>
 
-                  {/* ✅ STRATEJİK LINK #3 */}
                   <p className="text-blue-100 max-w-xl mx-auto relative z-10 text-sm mb-6">
+                    Ayrıca{" "}
                     <Link
                       href={LED_SERVICE_PATH}
                       className="text-white underline underline-offset-4 decoration-white/40 hover:decoration-white"
                     >
                       2026’ya uygun LED ekran kiralama çözümlerimizi
                     </Link>{" "}
-                    inceleyip projenize göre doğru panel/kurulum planını netleştirebilirsiniz.
+                    detaylı inceleyip projenize göre doğru panel/kurulum planını netleştirebilirsiniz.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
@@ -468,6 +503,7 @@ export default function LedTrends2026Page() {
               </article>
             </div>
 
+            {/* SAĞ KOLON */}
             <aside className="lg:w-1/3 relative">
               <div className="sticky top-24 space-y-8">
                 <TableOfContents />
