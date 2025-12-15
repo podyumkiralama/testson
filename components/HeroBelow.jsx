@@ -8,9 +8,9 @@ function HeroFeatureGrid() {
     <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 list-none p-0 m-0">
       {HERO_FEATURES_TR.map((item, index) => (
         <li key={item.title} className="m-0 p-0">
-          <ScrollReveal asChild delay={String(index * 0.5)} direction="scale">
+          {/* ✅ CLS FIX: scale yok → sadece fade (veya direction propunu kaldır) */}
+          <ScrollReveal asChild delay={String(index * 0.5)} direction="fade">
             <div className="group bg-slate-900/80 rounded-xl p-4 border border-white/10">
-              {/* ✅ CLS FIX: icon/emoji alanını sabitle (font swap genişliği oynatmasın) */}
               <div
                 className="mb-2 inline-flex h-8 w-8 items-center justify-center leading-none text-2xl"
                 aria-hidden="true"
