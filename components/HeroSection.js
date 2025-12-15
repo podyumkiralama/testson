@@ -84,25 +84,15 @@ function CTAButton({
   return (
     <a
       href={href}
-      className={`${CTA_BASE_CLASS} bg-gradient-to-r ${gradient} whitespace-nowrap`}
+      className={`${CTA_BASE_CLASS} bg-gradient-to-r ${gradient}`}
       {...ariaProps}
       {...rest}
     >
       <span className="relative z-10 flex items-center justify-center gap-2">
-        {/* ✅ CLS FIX: emoji/icon alanı sabit */}
-        <span
-          className="inline-flex w-6 h-6 items-center justify-center leading-none flex-shrink-0"
-          aria-hidden="true"
-        >
-          {icon}
-        </span>
-
-        {/* ✅ metin ölçüsü sabit */}
-        <span className="leading-none">{label}</span>
-
+        <span aria-hidden="true">{icon}</span>
+        {label}
         {srHint && <span className="sr-only">{srHint}</span>}
       </span>
-
       <div className={CTA_OVERLAY_CLASS} aria-hidden="true" />
     </a>
   );
