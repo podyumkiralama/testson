@@ -17,6 +17,7 @@
   --brand-primary: #6d28d9; /* Purple-700 */
   --brand-secondary: #4f46e5; /* Indigo-600 */
 }
+
 html {
   scroll-behavior: smooth;
   font-size: 100%;
@@ -28,6 +29,7 @@ html {
 html,
 body {
   width: 100%;
+  min-height: 100%;
 }
 
 body {
