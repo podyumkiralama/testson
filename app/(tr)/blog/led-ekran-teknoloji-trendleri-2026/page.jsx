@@ -9,8 +9,9 @@ import stageWideImg from "@/public/img/blog/led-2026-sahne-genis.webp";
 import cobMacroImg from "@/public/img/blog/cob-led-macro.webp";
 
 // Diyagram görselleri
-import pixelPitchComparison from "@/public/img/blog/pixel-pitch-karsilastirma.webp";
-import cobSmdComparison from "@/public/img/blog/cob-smd-yapısal-fark.webp";
+const PIXEL_PITCH_SRC = "/img/blog/pixel-pitch-karsilastirma.webp";
+const COB_SMD_SRC = "/img/blog/cob-smd-yapisal-fark.webp";
+
 
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(
