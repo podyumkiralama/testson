@@ -24,7 +24,8 @@ html {
   scroll-behavior: smooth;
   font-size: 100%;
   -webkit-tap-highlight-color: transparent;
-
+  overflow-x: hidden;
+}
   /* Varsayılan tarayıcı scroll barı korunsun ve tekrar yüklenme olmasın */
   scrollbar-gutter: auto;
 
@@ -251,6 +252,4 @@ svg {
 /* ServicesTabs image sizing (layout-critical) */
 .nc-ServicesTabs-image-1 {
   object-fit: cover;
-  width: 100%;
-  height: 100%;
 }
