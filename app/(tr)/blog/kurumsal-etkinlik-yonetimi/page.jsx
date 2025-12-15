@@ -6,7 +6,9 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 /* ================== YAPILANDIRMA & SABİTLER ================== */
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
 const BLOG_URL = `${SITE_URL}/blog/kurumsal-etkinlik-yonetimi`;
-const PUBLISH_DATE = "2025-05-20";
+// ✅ Rich Results için timezone dahil ISO 8601
+const PUBLISH_DATE = "2025-12-15T00:00:00+03:00";
+const MODIFIED_DATE = "2025-12-15T00:00:00+03:00";
 const AUTHOR_NAME = "Sahneva İçerik Ekibi";
 
 /* ================== META DATA ================== */
@@ -84,16 +86,35 @@ const FAQ_ITEMS = [
       "Sahneva; sahne ve podyum kurulumundan LED ekranlara, ses-ışık sistemlerinden truss ve rigging altyapısına, çadır ve zemin kaplamadan jeneratör desteğine kadar teknik süreci anahtar teslim yönetir.",
   },
 ];
-
 /* ================== SCHEMA (JSON-LD) ================== */
 function ArticleSchema() {
   const site = String(SITE_URL || "").replace(/\/$/, "");
   const orgId = `${site}/#org`;
   const editorId = `${site}/#editor`;
 
+  // MODIFIED_DATE yoksa publish'i kullan
+  const modified =
+    typeof MODIFIED_DATE !== "undefined" && MODIFIED_DATE ? MODIFIED_DATE : PUBLISH_DATE;
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
+      // Publisher org (referanslar boşta kalmasın)
+      {
+        "@type": "Organization",
+        "@id": orgId,
+        name: "Sahneva",
+        url: site,
+      },
+      // Author/editor (referanslar boşta kalmasın)
+      {
+        "@type": "Person",
+        "@id": editorId,
+        name: (typeof AUTHOR_NAME !== "undefined" && AUTHOR_NAME) ? AUTHOR_NAME : "Sahneva İçerik Ekibi",
+        worksFor: { "@id": orgId },
+      },
+
+      // BlogPosting
       {
         "@type": "BlogPosting",
         "@id": `${BLOG_URL}#blogposting`,
@@ -101,13 +122,15 @@ function ArticleSchema() {
         description: metadata?.description,
         image: `${site}/img/blog/kurumsal-etkinlik-hero.webp`,
         datePublished: PUBLISH_DATE,
-        dateModified: PUBLISH_DATE,
+        dateModified: modified,
         inLanguage: "tr-TR",
         author: { "@id": editorId },
         publisher: { "@id": orgId },
         mainEntityOfPage: { "@type": "WebPage", "@id": BLOG_URL },
         isPartOf: { "@type": "Blog", "@id": `${site}/blog#blog` },
       },
+
+      // FAQ rich result
       {
         "@type": "FAQPage",
         "@id": `${BLOG_URL}#faq`,
@@ -125,12 +148,11 @@ function ArticleSchema() {
       type="application/ld+json"
       suppressHydrationWarning
       dangerouslySetInnerHTML={{
-  __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-}}
+        __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }
-
 
 /* ================== BİLEŞENLER ================== */
 const Breadcrumbs = () => (
