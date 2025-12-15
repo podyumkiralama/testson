@@ -22,17 +22,27 @@ const CTA_BUTTONS = [
     icon: "📞",
     srHint: "",
   },
-  {
-    href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.+Sahne+kiralama+ve+LED+ekran+fiyatlar%C4%B1+hakk%C4%B1nda+detayl%C4%B1+teklif+almak+istiyorum.&utm_source=homepage&utm_medium=hero_cta&utm_campaign=whatsapp",
-    label: "WhatsApp Teklif",
-    icon: "💬",
-    target: "_blank",
-    rel: "noopener noreferrer nofollow",
-    srHint: "(yeni sekmede açılır)",
-    ariaLabel:
-      "WhatsApp Teklif — WhatsApp üzerinden teklif isteyin (bağlantı yeni sekmede açılır)",
-    gradient: "from-green-600 to-emerald-700",
-  },
+ <a
+  href={item.href}
+  target={item.target}
+  rel={item.rel}
+  referrerPolicy="no-referrer"
+  className="w-full sm:w-auto min-w-[180px] min-h-[44px] text-center group relative text-white font-bold text-base px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-transform duration-200 hover:scale-105 border border-white/20 focus-ring bg-gradient-to-r from-green-600 to-emerald-700"
+  {...(!item.label && item.ariaLabel
+    ? { "aria-label": item.ariaLabel }
+    : {})}
+>
+  <span className="relative z-10 flex items-center justify-center gap-2">
+    <span aria-hidden="true">{item.icon}</span>
+    {item.label}
+    {item.srHint && <span className="sr-only">{item.srHint}</span>}
+  </span>
+
+  <div
+    className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+    aria-hidden="true"
+  />
+</a>
 ];
 
 const CTA_BASE_CLASS =
