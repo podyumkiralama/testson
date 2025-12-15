@@ -25,7 +25,11 @@ html {
   font-size: 100%;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
+
+  /* Varsayılan tarayıcı scroll barı korunsun */
+  scrollbar-gutter: auto;
 }
+
   /* Varsayılan tarayıcı scroll barı korunsun ve tekrar yüklenme olmasın */
   scrollbar-gutter: auto;
 
