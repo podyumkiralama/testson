@@ -60,3 +60,21 @@
 .nc-ArHomePage-aurora-1 {
   animation-duration: 8s;
 }
+/* content-visibility (OK to keep critical; doesn't need defer) */
+.nc-CadirKiralamaPage-section-1,
+.nc-CadirKiralamaPage-section-2,
+.nc-CadirKiralamaPage-section-3,
+.nc-CadirKiralamaPage-section-4,
+.nc-CadirKiralamaPage-section-5,
+.nc-CadirKiralamaPage-section-6,
+.nc-CadirKiralamaPage-section-7,
+.nc-CadirKiralamaPage-section-8,
+.nc-SitePage-section-1 {
+  content-visibility: auto;
+}
+
+/* maps border (tiny, ama critical'e almak güvenli) */
+.nc-IletisimPage-map-1,
+.nc-ContactPage-map-1 {
+  border: 0;
+}
