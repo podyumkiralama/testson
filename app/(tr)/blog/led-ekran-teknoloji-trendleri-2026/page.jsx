@@ -539,25 +539,6 @@ export default function LedTrends2026Page() {
                   <p className="text-sm text-gray-600 mb-6">
                     Sahne ölçülerinizi ve etkinlik tarihini paylaşın, 2 saat içinde LED ekran senaryosu ve fiyatlandırmayı size iletelim.
                   </p>
-                  <div className="space-y-3">
-                    <a
-                      href="https://wa.me/905453048671"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="WhatsApp ile hızlı teklif isteyin — yeni sekmede açılır"
-                      className="flex items-center justify-center gap-2 w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md hover:shadow-emerald-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500"
-                    >
-                      <span>📱</span> WhatsApp
-                    </a>
-                    <Link
-                      href="/iletisim"
-                      className="flex items-center justify-center gap-2 w-full bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold py-3.5 rounded-xl transition-all border border-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400"
-                    >
-                      <span>✉️</span> Form Doldur
-                    </Link>
-                  </div>
-                </div>
-
                 <nav className="bg-gray-50 rounded-2xl p-6 border border-gray-200" aria-label="İlgili Hizmetler">
                   <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-gray-700">Hizmetlerimiz</h4>
                   <ul className="space-y-1">
