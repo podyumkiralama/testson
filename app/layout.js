@@ -2,7 +2,7 @@
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-
+import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
 import UtilityBar from "@/components/UtilityBar.client";
