@@ -172,14 +172,14 @@ function TrussJsonLd() {
 /* ================== Galeri Görselleri ================== */
 /** /public/img/truss altında olacak şekilde */
 const TRUSS_GALLERY_IMAGES = [
-  { src: "/img/truss/truss-1.webp", alt: "Konser sahnesinde kare truss sistemi ve ışık rigging kurulumu" },
-  { src: "/img/truss/truss-2.webp", alt: "LED ekran askı için kullanılan profesyonel truss taşıyıcı sistem" },
-  { src: "/img/truss/truss-3.webp", alt: "Açık alanda gate (kemer) truss giriş takı kurulumu" },
-  { src: "/img/truss/truss-4.webp", alt: "Fuar stand üst konstrüksiyonunda kullanılan truss sistemi" },
-  { src: "/img/truss/truss-5.webp", alt: "Circle truss ile oluşturulmuş sahne üst konstrüksiyon" },
-  { src: "/img/truss/truss-6.webp", alt: "Kurumsal etkinlikte sahne portalı olarak kullanılan truss kurulumu" },
-  { src: "/img/truss/truss-7.webp", alt: "Truss etkinlik için" },
-  { src: "/img/truss/truss-8.webp", alt: "konser için truss" },
+  { src: "/img/truss/truss-1.webp", alt: "Konser sahnesinde kare truss kurulumu" },
+  { src: "/img/truss/truss-2.webp", alt: "LED ekran askı için truss taşıyıcı sistem" },
+  { src: "/img/truss/truss-3.webp", alt: "Açık alan gate truss giriş takı kurulumu" },
+  { src: "/img/truss/truss-4.webp", alt: "Fuar stand üst konstrüksiyonunda truss sistemi" },
+  { src: "/img/truss/truss-5.webp", alt: "Circle truss ile sahne üst konstrüksiyon" },
+  { src: "/img/truss/truss-6.webp", alt: "Kurumsal etkinlik sahne portalı truss kurulumu" },
+  { src: "/img/truss/truss-7.webp", alt: "Festival sahnesinde geniş açıklıklı truss kurulumu" },
+  { src: "/img/truss/truss-8.webp", alt: "Açık alanda ışık ve ses rigging için truss sistemi" },
 ];
 
 /* ================== FAQ ================== */
@@ -377,7 +377,7 @@ function Gallery() {
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <CaseGallery images={TRUSS_GALLERY_IMAGES} visibleCount={6} priorityCount={2} />
+          <CaseGallery images={TRUSS_GALLERY_IMAGES} visibleCount={8} priorityCount={2} />
         </div>
 
         <div className="text-center mt-12">
