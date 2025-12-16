@@ -4,7 +4,6 @@ import Image from "next/image";
 import { readdir } from "fs/promises"; // Promise tabanlı fs kullanımı
 import { existsSync } from "fs";
 import path from "path";
-import { normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 /* ================== RUNTIME & ISR ================== */
 export const runtime = "nodejs";
