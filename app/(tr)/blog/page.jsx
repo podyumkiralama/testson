@@ -4,7 +4,6 @@ import Image from "next/image";
 import { readdir } from "fs/promises"; // Promise tabanlı fs kullanımı
 import { existsSync } from "fs";
 import path from "path";
-import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 /* ================== RUNTIME & ISR ================== */
@@ -254,7 +253,6 @@ export default async function BlogPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
       <BlogJsonLd posts={posts} baseUrl={baseUrl} />
 
       {/* HERO SECTION */}
