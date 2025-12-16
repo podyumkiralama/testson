@@ -8,7 +8,7 @@ import { normalizeBaseUrl } from "@/lib/seo/breadcrumbs";
 
 /* ================== RUNTIME & ISR ================== */
 export const runtime = "nodejs";
-export const revalidate = 1800; // 30 dakikada bir yenile
+export const revalidate = 1800;
 
 /* ================== SABİTLER ================== */
 const ORIGIN = "https://www.sahneva.com";
@@ -65,7 +65,7 @@ function normalizePostMeta(slug, rawMeta = {}) {
   };
 }
 
-/* ================== BLOG YAZILARINI AL (ASYNC / SAFE) ================== */
+/* ================== BLOG YAZILARINI AL (FINAL / SAFE) ================== */
 async function getBlogPosts() {
   try {
     const blogDir = path.join(process.cwd(), "app", "(tr)", "blog");
@@ -76,7 +76,6 @@ async function getBlogPosts() {
     }
 
     const items = await readdir(blogDir, { withFileTypes: true });
-
     const posts = [];
 
     for (const item of items) {
@@ -84,7 +83,7 @@ async function getBlogPosts() {
 
       const postSlug = item.name;
 
-      // Gizli / sistem klasörlerini atla
+      // gizli/sistem klasörlerini atla
       if (
         postSlug.startsWith(".") ||
         postSlug.startsWith("_") ||
@@ -93,19 +92,15 @@ async function getBlogPosts() {
         continue;
       }
 
-      // ✅ Sadece gerçek post klasörleri: page.js / page.jsx içermeli
+      // sadece gerçek post klasörleri: page.js / page.jsx olmalı
       const pageJsPath = path.join(blogDir, postSlug, "page.js");
       const pageJsxPath = path.join(blogDir, postSlug, "page.jsx");
-
-      if (!existsSync(pageJsPath) && !existsSync(pageJsxPath)) {
-        continue;
-      }
+      if (!existsSync(pageJsPath) && !existsSync(pageJsxPath)) continue;
 
       try {
         const postModule = await import(`./${postSlug}/page`);
         const postMetadata = postModule?.metadata || {};
         const normalized = normalizePostMeta(postSlug, postMetadata);
-
         if (normalized.draft) continue;
 
         posts.push(normalized);
@@ -116,7 +111,6 @@ async function getBlogPosts() {
     }
 
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
     return posts;
   } catch (error) {
     console.error("[Blog] Kritik okuma hatası:", error);
@@ -124,7 +118,7 @@ async function getBlogPosts() {
   }
 }
 
-/* ================== JSON-LD BİLEŞENİ ================== */
+/* ================== JSON-LD (FINAL / NO ITEMLIST) ================== */
 function BlogJsonLd({ posts, baseUrl }) {
   if (!posts?.length) return null;
 
@@ -141,7 +135,6 @@ function BlogJsonLd({ posts, baseUrl }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      // ✅ Blog ana node
       {
         "@type": "Blog",
         "@id": `${blogUrl}#blog`,
@@ -152,7 +145,6 @@ function BlogJsonLd({ posts, baseUrl }) {
         inLanguage: "tr-TR",
       },
 
-      // ✅ Her yazı ayrı BlogPosting node olarak graph'a eklenir
       ...posts.map((post) => {
         const postUrl = `${blogUrl}/${post.slug}`;
         const img = String(post.image || "");
@@ -161,7 +153,7 @@ function BlogJsonLd({ posts, baseUrl }) {
         return {
           "@type": "BlogPosting",
           "@id": `${postUrl}#blogposting`,
-          url: postUrl, // ✅ 'url' uyarısını kapatır
+          url: postUrl, // ✅ "url alanı eksik" uyarısı gider
           headline: post.title,
           description: post.description,
           image: absImg,
@@ -188,7 +180,7 @@ function BlogJsonLd({ posts, baseUrl }) {
   );
 }
 
-/* ================== BLOG KART BİLEŞENİ ================== */
+/* ================== BLOG KART ================== */
 function BlogCard({ post, isFeatured = false }) {
   const formattedDate = new Date(post.date).toLocaleDateString("tr-TR", {
     day: "numeric",
@@ -213,7 +205,6 @@ function BlogCard({ post, isFeatured = false }) {
             priority={isFeatured}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
-
           <span className="absolute top-4 right-4 bg-white/90 backdrop-blur text-blue-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
             {post.category}
           </span>
