@@ -141,6 +141,7 @@ function BlogJsonLd({ posts, baseUrl }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
+      // ✅ Blog ana node
       {
         "@type": "Blog",
         "@id": `${blogUrl}#blog`,
@@ -150,33 +151,29 @@ function BlogJsonLd({ posts, baseUrl }) {
         publisher: { "@id": orgId },
         inLanguage: "tr-TR",
       },
-      {
-        "@type": "ItemList",
-        "@id": `${blogUrl}#posts`,
-        itemListElement: posts.map((post, idx) => {
-          const postUrl = `${blogUrl}/${post.slug}`;
-          const img = String(post.image || "");
-          const absImg = /^https?:\/\//i.test(img) ? img : `${site}${img}`;
 
-          return {
-            "@type": "ListItem",
-            position: idx + 1,
-            url: postUrl,
-            item: {
-              "@type": "BlogPosting",
-              "@id": `${postUrl}#blogposting`,
-              headline: post.title,
-              description: post.description,
-              image: absImg,
-              datePublished: post.date,
-              author: { "@id": editorId },
-              publisher: { "@id": orgId },
-              mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
-              isPartOf: { "@id": `${blogUrl}#blog` },
-            },
-          };
-        }),
-      },
+      // ✅ Her yazı ayrı BlogPosting node olarak graph'a eklenir
+      ...posts.map((post) => {
+        const postUrl = `${blogUrl}/${post.slug}`;
+        const img = String(post.image || "");
+        const absImg = /^https?:\/\//i.test(img) ? img : `${site}${img}`;
+
+        return {
+          "@type": "BlogPosting",
+          "@id": `${postUrl}#blogposting`,
+          url: postUrl, // ✅ 'url' uyarısını kapatır
+          headline: post.title,
+          description: post.description,
+          image: absImg,
+          datePublished: post.date,
+          dateModified: post.date,
+          inLanguage: "tr-TR",
+          author: { "@id": editorId },
+          publisher: { "@id": orgId },
+          mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+          isPartOf: { "@id": `${blogUrl}#blog` },
+        };
+      }),
     ],
   };
 
