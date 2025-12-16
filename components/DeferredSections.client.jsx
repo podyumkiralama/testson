@@ -14,9 +14,6 @@ const CorporateIntro = dynamic(() => import("./CorporateIntro"), { ssr: false })
 const TechCapabilities = dynamic(() => import("./TechCapabilities"), { ssr: false });
 const WhyChooseUs = dynamic(() => import("./WhyChooseUs"), { ssr: false });
 
-// ⚠️ Navbar import'u kaldırıldı: kullanılmıyor (UNUSED bundle)
-/// const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
-
 // Lazy-load görünürlük hook'u
 function useDeferredVisible(options) {
   const [visible, setVisible] = useState(false);
@@ -110,8 +107,8 @@ export function FaqDeferred(props) {
         <Faq {...props} />
       ) : (
         <div
-          className="nc-DeferredSections-wrapper w-full"
-          style={{ "--nc-min-h": "220px" }}
+          className="nc-DeferredSections-wrapper nc-DeferredSections-clip w-full"
+          style={{ "--nc-min-h": "780px" }}
           aria-hidden="true"
         />
       )}
