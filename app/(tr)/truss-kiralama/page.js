@@ -178,6 +178,8 @@ const TRUSS_GALLERY_IMAGES = [
   { src: "/img/truss/truss-4.webp", alt: "Fuar stand üst konstrüksiyonunda kullanılan truss sistemi" },
   { src: "/img/truss/truss-5.webp", alt: "Circle truss ile oluşturulmuş sahne üst konstrüksiyon" },
   { src: "/img/truss/truss-6.webp", alt: "Kurumsal etkinlikte sahne portalı olarak kullanılan truss kurulumu" },
+  { src: "/img/truss/truss-7.webp", alt: "Truss etkinlik için" },
+  { src: "/img/truss/truss-8.webp", alt: "konser için truss" },
 ];
 
 /* ================== FAQ ================== */
