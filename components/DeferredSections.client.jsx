@@ -6,21 +6,16 @@ import { useEffect, useRef, useState } from "react";
 
 // Dinamik componentler
 const ServicesTabs = dynamic(() => import("./ServicesTabs"), { ssr: false });
-const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), {
-  ssr: false,
-});
+const ProjectsGallery = dynamic(() => import("./ProjectsGallery"), { ssr: false });
 const Faq = dynamic(() => import("./Faq"), { ssr: false });
-const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
-const CorporateEvents = dynamic(() => import("./CorporateEvents"), {
-  ssr: false,
-});
-const CorporateIntro = dynamic(() => import("./CorporateIntro"), {
-  ssr: false,
-});
-const TechCapabilities = dynamic(() => import("./TechCapabilities"), {
-  ssr: false,
-});
+
+const CorporateEvents = dynamic(() => import("./CorporateEvents"), { ssr: false });
+const CorporateIntro = dynamic(() => import("./CorporateIntro"), { ssr: false });
+const TechCapabilities = dynamic(() => import("./TechCapabilities"), { ssr: false });
 const WhyChooseUs = dynamic(() => import("./WhyChooseUs"), { ssr: false });
+
+// ⚠️ Navbar import'u kaldırıldı: kullanılmıyor (UNUSED bundle)
+/// const Navbar = dynamic(() => import("./Navbar"), { ssr: false });
 
 // Lazy-load görünürlük hook'u
 function useDeferredVisible(options) {
@@ -33,7 +28,9 @@ function useDeferredVisible(options) {
     const el = ref.current;
     if (!el || typeof window === "undefined") return;
 
-    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
     if (prefersReduce || !("IntersectionObserver" in window)) {
       setVisible(true);
       return;
@@ -62,8 +59,16 @@ export function ServicesTabsDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <ServicesTabs {...props} /> : null}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <ServicesTabs {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "400px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -77,8 +82,16 @@ export function ProjectsGalleryDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <ProjectsGallery {...props} /> : null}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <ProjectsGallery {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "320px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -92,8 +105,16 @@ export function FaqDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <Faq {...props} /> : <div className="min-h-[220px]" />}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <Faq {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "220px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -107,8 +128,16 @@ export function CorporateEventsDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <CorporateEvents {...props} /> : <div className="min-h-[320px]" />}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <CorporateEvents {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "320px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -122,8 +151,16 @@ export function CorporateIntroDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <CorporateIntro {...props} /> : <div className="min-h-[240px]" />}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <CorporateIntro {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "240px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -137,8 +174,16 @@ export function TechCapabilitiesDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <TechCapabilities {...props} /> : <div className="min-h-[360px]" />}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <TechCapabilities {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "360px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
@@ -152,9 +197,16 @@ export function WhyChooseUsDeferred(props) {
   });
 
   return (
-    <section ref={ref}>
-      {visible ? <WhyChooseUs {...props} /> : <div className="min-h-[320px]" />}
+    <section ref={ref} className="w-full min-w-0">
+      {visible ? (
+        <WhyChooseUs {...props} />
+      ) : (
+        <div
+          className="nc-DeferredSections-wrapper w-full"
+          style={{ "--nc-min-h": "320px" }}
+          aria-hidden="true"
+        />
+      )}
     </section>
   );
 }
-
