@@ -386,7 +386,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
       {/* HERO (grid bozulmaz, görsel daha geniş hissi: aspect + scale) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
         {/* ✅ SADECE BURADA: sağ kolon genişledi */}
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_680px]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_760px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -437,31 +437,33 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
           </div>
 
-          <div className="lg:justify-self-end">
+          <div className="lg:justify-self-stretch">
   <Reveal>
-    <div ref={wrapRef} className="w-full" style={{ perspective: 900 }}>
+    <div
+      ref={wrapRef}
+      className="w-full"
+      style={{ perspective: 900 }}
+    >
       <div
         className="transition-transform duration-300 will-change-transform"
         style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
       >
-        <SoftCard className="overflow-hidden">
-          {/* ✅ fixed aspect yok: yükseklikle büyütüyoruz */}
-          <div className="relative w-full h-[240px] sm:h-[320px] lg:h-[420px]">
-            <Image
-              src="/img/nasil-calisiriz/hero-surec.webp"
-              alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-cover"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-          </div>
-        </SoftCard>
+        <ImgFrame
+          src="/img/nasil-calisiriz/hero-surec.webp"
+          alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+          priority
+          /* ✅ daha büyük görünüm */
+          aspectClassName="aspect-[16/9] sm:aspect-[16/10]"
+          /* ✅ görseli genişlet, ama yazıların üstüne binmesin */
+          imgClassName="scale-[1.03] origin-center"
+          sizes="(max-width: 768px) 100vw, 820px"
+          className="w-full"
+        />
       </div>
     </div>
   </Reveal>
 </div>
+
 
         </div>
       </section>
