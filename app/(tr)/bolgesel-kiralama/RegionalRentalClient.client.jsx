@@ -290,75 +290,87 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
       <GlowBg />
 
       {/* HERO */}
-      <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge>Türkiye geneli</Badge>
-              <Badge>Kurulum + operasyon</Badge>
-              <Badge>Hızlı teklif</Badge>
-            </div>
+<section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
+  <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_480px]">
+    {/* Sol (yazı) */}
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-center gap-3">
+        <Badge>Türkiye geneli</Badge>
+        <Badge>Kurulum + operasyon</Badge>
+        <Badge>Hızlı teklif</Badge>
+      </div>
 
-            <div>
-              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                Bölgesel Kiralama
-              </h1>
-              <p className="mt-3 text-base text-white/70 sm:text-lg">
-                Bulunduğunuz şehre göre planlayalım: LED ekran, truss, sahne/podyum ve ses-ışık.
-              </p>
-            </div>
+      <div>
+        <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          Bölgesel Kiralama
+        </h1>
+        <p className="mt-3 text-base text-white/70 sm:text-lg">
+          Bulunduğunuz şehre göre planlayalım: LED ekran, truss, sahne/podyum ve ses-ışık.
+        </p>
+      </div>
 
-            <p className="max-w-3xl text-sm leading-relaxed text-white/75 sm:text-base">
-              Sahneva, şehir bazlı lojistik ve ekip planlamasıyla etkinlik kurulumlarını uçtan uca yönetir.
-              Teklif aşamasında teknik gereksinimleri netleştirir, kurulum ve testleri planlar, etkinlik günü
-              operasyon desteği sağlar ve söküm sonrası alanı düzenli şekilde teslim eder.
-            </p>
+      <p className="max-w-3xl text-sm leading-relaxed text-white/75 sm:text-base">
+        Sahneva, şehir bazlı lojistik ve ekip planlamasıyla etkinlik kurulumlarını uçtan uca yönetir.
+        Teklif aşamasında teknik gereksinimleri netleştirir, kurulum ve testleri planlar, etkinlik günü
+        operasyon desteği sağlar ve söküm sonrası alanı düzenli şekilde teslim eder.
+      </p>
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={CTA_BRIEF}
-                className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              >
-                İletişim / Brief Bırak
-              </Link>
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href={CTA_BRIEF}
+          className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        >
+          İletişim / Brief Bırak
+        </Link>
 
-              <a
-                href={CTA_WHATSAPP}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                aria-label="WhatsApp üzerinden iletişime geç (yeni sekmede açılır)"
-              >
-                WhatsApp’tan Yazın
-              </a>
-            </div>
+        <a
+          href={CTA_WHATSAPP}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          aria-label="WhatsApp üzerinden iletişime geç (yeni sekmede açılır)"
+        >
+          WhatsApp’tan Yazın
+        </a>
+      </div>
 
-            <div className="flex flex-wrap gap-2 text-xs text-white/60">
-              <span>Önerilen paketler:</span>
-              <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>
-              <span aria-hidden="true">•</span>
-              <InlineLink href="/truss-kiralama">truss</InlineLink>
-              <span aria-hidden="true">•</span>
-              <InlineLink href="/podyum-kiralama">sahne/podyum</InlineLink>
-              <span aria-hidden="true">•</span>
-              <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>
-            </div>
+      <div className="flex flex-wrap gap-2 text-xs text-white/60">
+        <span>Önerilen paketler:</span>
+        <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>
+        <span aria-hidden="true">•</span>
+        <InlineLink href="/truss-kiralama">truss</InlineLink>
+        <span aria-hidden="true">•</span>
+        <InlineLink href="/podyum-kiralama">sahne/podyum</InlineLink>
+        <span aria-hidden="true">•</span>
+        <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>
+      </div>
+    </div>
+
+    {/* Sağ (görsel) */}
+    <div className="lg:justify-self-end lg:-mt-2">
+      <Reveal>
+        <SoftCard className="overflow-hidden">
+          <div className="relative aspect-[21/10] w-full">
+            <Image
+              src={`${IMG_DIR}/hero.webp`}
+              alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 480px"
+              className="object-cover object-[50%_35%] transition-transform duration-500 will-change-transform hover:scale-[1.03]"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
           </div>
+        </SoftCard>
 
-          <div className="lg:justify-self-end">
-            <Reveal>
-              <ImgFrame
-                src={`${IMG_DIR}/hero.webp`}
-                alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
-                priority
-              />
-              <p className="mt-3 text-xs text-white/60">
-                Not: Operasyon ve ekip odağı — ekranda/screen görünmez.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+        {/* Not satırını istemiyorsan kaldırabilirsin */}
+        {/* <p className="mt-3 text-xs text-white/60">
+          Not: Operasyon ve ekip odağı — ekranda/screen görünmez.
+        </p> */}
+      </Reveal>
+    </div>
+  </div>
+</section>
 
       {/* STICKY NAV */}
       <StepsNav steps={steps} onGo={scrollToId} navRef={navRef} activeId={activeId} />
