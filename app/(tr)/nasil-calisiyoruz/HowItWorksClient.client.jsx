@@ -273,7 +273,7 @@ function StepSection({ stepNo, label, title, body, imageSrc, imageAlt, reverse }
         <div
           className={
             "grid items-center gap-6 lg:gap-10 " +
-            (reverse ? "lg:grid-cols-[520px_1fr]" : "lg:grid-cols-[1fr_520px]")
+            (reverse ? "lg:grid-cols-[640px_1fr]" : "lg:grid-cols-[1fr_640px]")
           }
         >
           <div className={reverse ? "lg:order-2" : ""}>
@@ -392,7 +392,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
       {/* ✅ HERO: layout aynı, SADECE görsel daha geniş */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_640px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -447,7 +447,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             <Reveal>
               <div
                 ref={wrapRef}
-                className="w-[920px] max-w-full"
+                className="w-full max-w-[760px]"
                 style={{ perspective: 900 }}
               >
                 <div
