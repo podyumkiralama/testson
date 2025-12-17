@@ -438,31 +438,31 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           </div>
 
           <div className="lg:justify-self-end">
-            <Reveal>
-              {/* ✅ SADECE BURADA: max-w kilidi kaldırıldı, görsel alanı tam genişlik */}
-              <div ref={wrapRef} className="w-full max-w-none" style={{ perspective: 900 }}>
-                <div
-                  className="transition-transform duration-300 will-change-transform"
-                  style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
-                >
-                  <ImgFrame
-                    src="/img/nasil-calisiriz/hero-surec.webp"
-                    alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-                    priority
-                    /* ✅ SADECE BURADA: daha dolgun hero oranı */
-                    aspectClassName="aspect-[16/9]"
-                    imgClassName="scale-[1.18] origin-center"
-                    /* ✅ Daha büyük kolona uygun sizes */
-                    sizes="(max-width: 768px) 100vw, 720px"
-                  />
-                </div>
-              </div>
-
-              <p className="mt-3 text-xs text-white/60">
-                Not: Görselde ekran/screen görünmez; operasyon ve ekip odağı.
-              </p>
-            </Reveal>
+  <Reveal>
+    <div ref={wrapRef} className="w-full" style={{ perspective: 900 }}>
+      <div
+        className="transition-transform duration-300 will-change-transform"
+        style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
+      >
+        <SoftCard className="overflow-hidden">
+          {/* ✅ fixed aspect yok: yükseklikle büyütüyoruz */}
+          <div className="relative w-full h-[240px] sm:h-[320px] lg:h-[420px]">
+            <Image
+              src="/img/nasil-calisiriz/hero-surec.webp"
+              alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 760px"
+              className="object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
           </div>
+        </SoftCard>
+      </div>
+    </div>
+  </Reveal>
+</div>
+
         </div>
       </section>
 
