@@ -1,4 +1,3 @@
-//HowItWorksClient.client.jsx
 "use client";
 
 import Image from "next/image";
@@ -71,7 +70,6 @@ function InlineLink({ href, children }) {
   );
 }
 
-/* Scroll reveal (prefers-reduced-motion uyumlu) */
 function Reveal({ children }) {
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
@@ -204,7 +202,6 @@ export default function HowItWorksClient({ stepsData, faqs }) {
   const CTA_BRIEF = "/iletisim";
   const CTA_WHATSAPP = "https://wa.me/905453048671";
 
-  // UI metinlerini zenginleştirelim (iç linkler + daha dolu içerik)
   const stepsUi = stepsData.map((s) => {
     if (s.stepNo === 1) {
       return {
@@ -212,15 +209,14 @@ export default function HowItWorksClient({ stepsData, faqs }) {
         body: (
           <>
             <p className="text-sm leading-relaxed text-white/75">
-              Etkinlik türü, tarih, lokasyon ve ihtiyaçlarınızı iletin:{" "}
+              İhtiyaçlarınızı iletin:{" "}
               <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>,{" "}
               <InlineLink href="/truss-kiralama">truss</InlineLink>,{" "}
               <InlineLink href="/podyum-kiralama">sahne/podyum</InlineLink>,{" "}
               <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-white/75">
-              En hızlı başlangıç: <InlineLink href="/iletisim">iletişim formu</InlineLink>{" "}
-              + kısa brief.
+              <InlineLink href="/iletisim">İletişim formu</InlineLink> ile brief bırakın veya WhatsApp’tan yazın.
             </p>
           </>
         ),
@@ -233,8 +229,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           <p className="text-sm leading-relaxed text-white/75">
             Teklif opsiyonlarına{" "}
             <InlineLink href="/cadir-kiralama">çadır</InlineLink> ve{" "}
-            <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink> gibi
-            kalemler eklenebilir. Alternatif paketleri birlikte netleştiririz.
+            <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink>{" "}
+            eklenebilir. Alternatif paketleri birlikte netleştiririz.
           </p>
         ),
       };
@@ -244,18 +240,16 @@ export default function HowItWorksClient({ stepsData, faqs }) {
         ...s,
         body: (
           <p className="text-sm leading-relaxed text-white/75">
-            Kurulum + test aşamasında{" "}
-            <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink> ve{" "}
-            <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink> testleri tamamlanır,
-            güvenlik kontrolleri yapılır.
+            Kurulum + testte{" "}
+            <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>{" "}
+            ve{" "}
+            <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>{" "}
+            testleri tamamlanır; güvenlik kontrolleri yapılır.
           </p>
         ),
       };
     }
-    return {
-      ...s,
-      body: <p className="text-sm leading-relaxed text-white/75">{s.plainText}</p>,
-    };
+    return { ...s, body: <p className="text-sm leading-relaxed text-white/75">{s.plainText}</p> };
   });
 
   return (
@@ -276,8 +270,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           </h1>
 
           <p className="max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">
-            İhtiyaç → teklif → keşif → kurulum → etkinlik günü → söküm. Süreci adım adım,
-            görselli ve anlaşılır şekilde yönetiyoruz.
+            Süreci adım adım, görselli ve anlaşılır şekilde yönetiyoruz.
           </p>
 
           <div className="flex flex-wrap gap-3">
@@ -298,24 +291,12 @@ export default function HowItWorksClient({ stepsData, faqs }) {
               WhatsApp’tan Yazın
             </a>
           </div>
-
-          <div className="mt-2 flex flex-wrap gap-2 text-sm text-white/70">
-            <span className="text-white/50">Popüler:</span>
-            <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>
-            <span aria-hidden="true">•</span>
-            <InlineLink href="/truss-kiralama">Truss</InlineLink>
-            <span aria-hidden="true">•</span>
-            <InlineLink href="/podyum-kiralama">Sahne/Podyum</InlineLink>
-            <span aria-hidden="true">•</span>
-            <InlineLink href="/ses-isik-sistemleri">Ses-ışık</InlineLink>
-          </div>
         </div>
       </section>
 
-      {/* Sticky steps nav */}
       <StepsNav steps={stepsData} />
 
-      {/* Content enrichment blocks */}
+      {/* Enrichment */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
         <div className="grid gap-4 lg:grid-cols-3">
           <SoftCard className="p-6">
@@ -324,7 +305,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
               <li>• İhtiyaç analizi + teklif</li>
               <li>• Teknik keşif (gerekiyorsa)</li>
               <li>• Kurulum + test + saha operasyonu</li>
-              <li>• Etkinlik sonrası söküm + temiz teslim</li>
+              <li>• Söküm + temiz teslim</li>
             </ul>
           </SoftCard>
 
@@ -333,8 +314,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             <ul className="mt-3 space-y-2 text-sm text-white/75">
               <li>• Tarih / lokasyon / alan ölçüsü</li>
               <li>• Sahne ölçüsü ve yükseklik</li>
-              <li>• LED ekran ölçüsü + içerik akışı</li>
-              <li>• Ses-ışık beklentisi + program</li>
+              <li>• LED ekran ölçüsü + içerik</li>
+              <li>• Ses-ışık + program akışı</li>
             </ul>
           </SoftCard>
 
@@ -344,7 +325,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
               <InlineLink href="/led-ekran-kiralama">LED Ekran Kiralama</InlineLink>
               <InlineLink href="/truss-kiralama">Truss Kiralama</InlineLink>
               <InlineLink href="/podyum-kiralama">Sahne / Podyum</InlineLink>
-              <InlineLink href="/ses-isik-sistemleri">Ses & Işık Sistemleri</InlineLink>
+              <InlineLink href="/ses-isik-sistemleri">Ses & Işık</InlineLink>
             </div>
           </SoftCard>
         </div>
