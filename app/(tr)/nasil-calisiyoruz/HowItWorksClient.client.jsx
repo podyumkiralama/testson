@@ -62,6 +62,7 @@ function ImgFrame({
   className = "",
   imgClassName = "",
   aspectClassName = "aspect-[16/10]",
+  sizes = "(max-width: 768px) 100vw, 560px",
 }) {
   return (
     <SoftCard className={"overflow-hidden " + className}>
@@ -71,7 +72,7 @@ function ImgFrame({
           alt={alt}
           fill
           priority={priority}
-          sizes="(max-width: 768px) 100vw, 920px"
+          sizes={sizes}
           className={
             "object-cover transition-transform duration-500 will-change-transform hover:scale-[1.03] " +
             imgClassName
@@ -136,7 +137,6 @@ function Reveal({ children }) {
   );
 }
 
-/* Controlled scroll */
 function useSmartScroll() {
   const navRef = useRef(null);
 
@@ -155,7 +155,6 @@ function useSmartScroll() {
   return { navRef, scrollToId };
 }
 
-/* Active step tracking */
 function useActiveSection(ids) {
   const [activeId, setActiveId] = useState(ids?.[0] ?? null);
 
@@ -169,6 +168,7 @@ function useActiveSection(ids) {
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+
         if (visible?.target?.id) setActiveId(visible.target.id);
       },
       { rootMargin: "-20% 0px -65% 0px", threshold: [0.1, 0.2, 0.35, 0.5] }
@@ -181,7 +181,6 @@ function useActiveSection(ids) {
   return activeId;
 }
 
-/* Light parallax only on hero image wrapper */
 function useParallax() {
   const reduce = usePrefersReducedMotion();
   const wrapRef = useRef(null);
@@ -203,8 +202,8 @@ function useParallax() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         setT({
-          x: Math.max(-1, Math.min(1, dx)) * 8,
-          y: Math.max(-1, Math.min(1, dy)) * 6,
+          x: Math.max(-1, Math.min(1, dx)) * 6,
+          y: Math.max(-1, Math.min(1, dy)) * 4,
         });
       });
     };
@@ -273,7 +272,7 @@ function StepSection({ stepNo, label, title, body, imageSrc, imageAlt, reverse }
         <div
           className={
             "grid items-center gap-6 lg:gap-10 " +
-            (reverse ? "lg:grid-cols-[640px_1fr]" : "lg:grid-cols-[1fr_640px]")
+            (reverse ? "lg:grid-cols-[520px_1fr]" : "lg:grid-cols-[1fr_520px]")
           }
         >
           <div className={reverse ? "lg:order-2" : ""}>
@@ -328,10 +327,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
   const { navRef, scrollToId } = useSmartScroll();
 
-  const sectionIds = useMemo(
-    () => stepsData.map((s) => `adim-${s.stepNo}`),
-    [stepsData]
-  );
+  const sectionIds = useMemo(() => stepsData.map((s) => `adim-${s.stepNo}`), [stepsData]);
   const activeId = useActiveSection(sectionIds);
 
   const { wrapRef, t } = useParallax();
@@ -362,10 +358,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           ...s,
           body: (
             <p className="text-sm leading-relaxed text-white/75">
-              Teklif opsiyonlarına{" "}
-              <InlineLink href="/cadir-kiralama">çadır</InlineLink> ve{" "}
-              <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink>{" "}
-              eklenebilir. Alternatif paketleri birlikte netleştiririz.
+              Teklif opsiyonlarına <InlineLink href="/cadir-kiralama">çadır</InlineLink> ve{" "}
+              <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink> eklenebilir.
             </p>
           ),
         };
@@ -375,8 +369,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           ...s,
           body: (
             <p className="text-sm leading-relaxed text-white/75">
-              Kurulum + testte{" "}
-              <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink> ve{" "}
+              Kurulum + testte <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink> ve{" "}
               <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink> testleri tamamlanır; güvenlik kontrolleri yapılır.
             </p>
           ),
@@ -390,9 +383,9 @@ export default function HowItWorksClient({ stepsData, faqs }) {
     <>
       <GlowBg />
 
-      {/* ✅ HERO: layout aynı, SADECE görsel daha geniş */}
+      {/* HERO (grid bozulmaz, görsel daha geniş hissi: aspect + scale) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_640px]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -410,7 +403,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
 
             <p className="max-w-3xl text-sm leading-relaxed text-white/75 sm:text-base">
-              İhtiyaç → teklif → keşif → kurulum → etkinlik günü → söküm. Süreci uçtan uca yönetir, sahada teknik ekiple birlikte kontrol ederiz.
+              İhtiyaç → teklif → keşif → kurulum → etkinlik günü → söküm. Süreci uçtan uca yönetir,
+              sahada teknik ekiple birlikte kontrol ederiz.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -442,42 +436,37 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
           </div>
 
-          {/* 🔥 SADECE BU KISIM: görsel genişletme */}
-          <div className="lg:justify-self-end overflow-visible">
-  <Reveal>
-    <div
-      ref={wrapRef}
-      className="relative w-full max-w-[520px]"
-      style={{ perspective: 900 }}
-    >
-      <div
-        className="relative transition-transform duration-300 will-change-transform"
-        style={{
-          transform: `translate3d(${t.x}px, ${t.y}px, 0)`,
-          marginRight: "-180px", // 👈 GÖRSELİ GENİŞ GÖSTEREN SATIR
-        }}
-      >
-        <ImgFrame
-          src="/img/nasil-calisiriz/hero-surec.webp"
-          alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-          priority
-          aspectClassName="aspect-[21/9]"
-        />
-      </div>
-    </div>
-  </Reveal>
-</div>
+          <div className="lg:justify-self-end">
+            <Reveal>
+              <div
+                ref={wrapRef}
+                className="w-full max-w-[520px] sm:max-w-[560px]"
+                style={{ perspective: 900 }}
+              >
+                <div
+                  className="transition-transform duration-300 will-change-transform"
+                  style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
+                >
+                  <ImgFrame
+                    src="/img/nasil-calisiriz/hero-surec.webp"
+                    alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+                    priority
+                    aspectClassName="aspect-[21/9]"
+                    imgClassName="scale-[1.18] origin-center"
+                    sizes="(max-width: 768px) 100vw, 560px"
+                  />
+                </div>
+              </div>
 
+              <p className="mt-3 text-xs text-white/60">
+                Not: Görselde ekran/screen görünmez; operasyon ve ekip odağı.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Sticky steps nav */}
-      <StepsNav
-        steps={stepsData}
-        onGo={scrollToId}
-        navRef={navRef}
-        activeId={activeId}
-      />
+      <StepsNav steps={stepsData} onGo={scrollToId} navRef={navRef} activeId={activeId} />
 
       {/* Enrichment */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
