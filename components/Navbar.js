@@ -396,7 +396,7 @@ export default function Navbar({
           if (index === 0 && firstItemRef) firstItemRef.current = node;
         }}
         className={`
-          group flex items-start gap-3 rounded-xl px-3 py-3
+          group flex items-start gap-3 rounded-xl px-4 py-3.5
           text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
           transition-all duration-200 border border-transparent hover:border-blue-200
           ${FOCUS_RING_CLASS}
@@ -566,7 +566,7 @@ export default function Navbar({
                     onMouseEnter={openNow}
                     onMouseLeave={closeWithDelay}
                   >
-                    <div className="mx-auto max-w-6xl px-4">
+                    <div className="mx-auto max-w-7xl px-4">
                       <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
                         {/* üst bar */}
                         <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
@@ -590,7 +590,7 @@ export default function Navbar({
                         </div>
 
                         {/* içerik */}
-                        <div className="grid gap-6 p-6 lg:grid-cols-[520px_1fr]">
+                        <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr]">
                           {/* sol: büyük görsel */}
                           <Link
                             href="/hizmetler"
@@ -620,7 +620,7 @@ export default function Navbar({
                           </Link>
 
                           {/* sağ: kolonlar */}
-                          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                             {serviceCols.map((col, colIndex) => (
                               <div key={col.title}>
                                 <div className="text-sm font-extrabold text-neutral-900">
