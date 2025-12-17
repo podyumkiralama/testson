@@ -5,11 +5,14 @@ import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 export const metadata = {
   title: "Sık Sorulan Sorular | Sahneva",
   description:
-    "Podyum, LED ekran, ses-ışık ve çadır kiralama; kurulum, elektrik, izinler ve fiyatlandırma hakkında detaylı SSS.",
+    "Podyum, LED ekran, ses-ışık, çadır, truss/rigging, jeneratör ve lojistik; kurulum, elektrik, güvenlik, izinler ve fiyatlandırma hakkında detaylı SSS.",
   alternates: { canonical: "https://www.sahneva.com/sss" },
 };
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sahneva.com").replace(
+  /\/$/,
+  ""
+);
 
 /* ——— VERİ ——— */
 const FAQ_CATEGORIES = [
@@ -23,35 +26,76 @@ const FAQ_CATEGORIES = [
         a: "Evet. Lansman, konferans, bayi toplantısı, miting ve konser gibi geniş yelpazede yüzlerce etkinlik deneyimimiz var.",
       },
       {
-        q: "Ekipmanlarınız güncel mi? Bakımlar nasıl yapılır?",
-        a: "Tüm ekipmanlar periyodik bakımdan geçirilir ve her iş öncesi fonksiyon testleri yapılır. Kritik cihazlarda yedekleme ile çalışırız.",
+        q: "Keşif yapıyor musunuz? Ücretli mi?",
+        a: "Gerekli görülen projelerde ücretsiz keşif yapıyoruz. Mekân ölçümü, elektrik erişimi ve yükleme–boşaltma koşulları yerinde değerlendirilir.",
       },
       {
         q: "Etkinlik günü teknik ekip büyüklüğü nedir?",
         a: "Kapsama göre değişir. Küçük etkinliklerde 2–3 kişi, büyük kurulumlarda sahne, ses, ışık, görüntü ve kamera ekipleri dahil 10+ kişilik kadro görev alır.",
       },
       {
-        q: "Keşif yapıyor musunuz? Ücretli mi?",
-        a: "Gerekli görülen projelerde ücretsiz keşif yapıyoruz. Mekân ölçümü, elektrik erişimi ve yükleme–boşaltma koşulları yerinde değerlendirilir.",
-      },
-      {
-        q: "Fiyatlandırma nasıl belirleniyor?",
-        a: "Fiyat; ekipman kalemi, süre (kurulum + etkinlik + söküm), şehir ve lojistik, gerekli personel ve aksesuarlar üzerinden netleştirilir. İhtiyacınıza göre alternatif paketler sunuyoruz.",
+        q: "Etkinlik günü sorumlular kimler olur?",
+        a: "Her projede bir saha sorumlusu bulunur. Ses, ışık, görüntü/LED, sahne/rigging ve genel koordinasyon ayrı personeller tarafından yönetilir.",
       },
       {
         q: "Türkiye genelinde hizmet veriyor musunuz?",
         a: "Evet. İstanbul merkezli ekibimizle Türkiye’nin tamamında çalışıyoruz. Şehir dışı işler için sevkiyat ve konaklama planını teklif aşamasında şeffaf şekilde paylaşıyoruz.",
       },
       {
-        q: "Rezervasyon ve iptal koşulları nedir?",
-        a: "Rezervasyon avans ödemesi ile kesinleşir. İptallerde tarih yakınlığına göre üretim/lojistik maliyetleri kesilerek iade süreçleri sözleşmede tanımlanır.",
+        q: "Rezervasyon nasıl kesinleşir?",
+        a: "Rezervasyon avans ödemesi ile kesinleşir. Kurulum takvimi, saha planı ve ekip listesi proje kapsamına göre netleştirilir.",
       },
       {
-        q: "Etkinlik günü sorumlular kimler olur?",
-        a: "Her projede bir saha sorumlusu bulunur. Ses, ışık, görüntü, sahne/rigging ve genel koordinasyon ayrı personeller tarafından yönetilir.",
+        q: "Ne kadar önceden rezervasyon yapmalıyım?",
+        a: "Yoğun sezonlarda (bahar–yaz, fuar/konser dönemleri) mümkün olduğunca erken rezervasyon öneririz. Büyük kurulumlarda tarih yaklaştıkça ekipman ve ekip planlaması zorlaşabilir.",
+      },
+      {
+        q: "Organizasyon/etkinlik planlamasını da siz mi yapıyorsunuz?",
+        a: "Sahneva ağırlıklı olarak etkinliğin teknik altyapı ve kurulum hizmetlerini (podyum/sahne, truss, LED, ses-ışık, çadır, enerji vb.) sağlar. Etkinlik yönetimi gerekiyorsa proje bazlı çözüm sunabiliriz.",
+      },
+      {
+        q: "Fiyatlandırma nasıl belirleniyor?",
+        a: "Fiyat; ekipman kalemi, süre (kurulum + etkinlik + söküm), şehir ve lojistik, gerekli personel ve aksesuarlar üzerinden netleştirilir. İhtiyacınıza göre alternatif paketler sunuyoruz.",
+      },
+      {
+        q: "Son dakika değişiklik yapabilir miyim?",
+        a: "Müsaitliğe göre çoğu değişikliği yönetebiliriz. Büyük ölçekli projelerde final adet/ölçülerin etkinlik tarihine yaklaşmadan önce netleşmesi gerekir; üretim/lojistik etkilenirse ek maliyet doğabilir.",
+      },
+      {
+        q: "İptal koşulları nedir?",
+        a: "İptallerde tarih yakınlığına göre üretim/lojistik maliyetleri kesilerek iade süreçleri sözleşmede tanımlanır.",
       },
     ],
   },
+
+  {
+    id: "lojistik",
+    icon: "🚚",
+    title: "Lojistik & Planlama",
+    items: [
+      {
+        q: "Teslimat ve kurulum nasıl planlanır?",
+        a: "Kurulum saatleri mekân erişimi, yükleme alanı, asansör/merdiven durumu ve etkinlik akışına göre planlanır. Keşif veya teknik brifing sonrası net saat paylaşırız.",
+      },
+      {
+        q: "Yükleme–boşaltma alanı yoksa ne olur?",
+        a: "Alternatif park/yükleme noktası belirlenir. Mesafe uzunsa taşıma ekibi ve süre planı güncellenir.",
+      },
+      {
+        q: "Kat/mesafe varsa taşıma ekibi gerekir mi?",
+        a: "Evet, özellikle ağır ekipmanlarda (truss, LED kasalar, sahne parçaları) ek taşıma personeli gerekebilir. Proje öncesi netleştiririz.",
+      },
+      {
+        q: "Kurulum için kaç saat önce sahada olmalısınız?",
+        a: "Kurulum süresi ekipman türü ve ölçülere göre değişir. Standart podyum 1–2 saat, orta ölçek LED 1–3 saat, büyük sahne-truss kurulumları daha uzun sürebilir.",
+      },
+      {
+        q: "Şehir dışı sevkiyat nasıl oluyor?",
+        a: "Planlı sevkiyat yapılır. Yol, konaklama ve kurulum/söküm saatleri teklif aşamasında paylaşılır.",
+      },
+    ],
+  },
+
   {
     id: "podyum",
     icon: "🪜",
@@ -91,6 +135,31 @@ const FAQ_CATEGORIES = [
       },
     ],
   },
+
+  {
+    id: "truss",
+    icon: "🧱",
+    title: "Truss & Rigging",
+    items: [
+      {
+        q: "Truss kurulumu güvenli mi? Kim kuruyor?",
+        a: "Truss/rigging kurulumunu eğitimli ekibimiz yapar. Yük planı, bağlantı elemanları, denge ve sabitleme kontrolleri kurulumda uygulanır.",
+      },
+      {
+        q: "Truss’a LED ekran, ışık veya hoparlör asılabilir mi?",
+        a: "Evet. Asım yapılacak ekipmanın ağırlığına göre uygun truss tipi ve askı noktaları planlanır; gerekli motor/rigging ekipmanları proje bazlı belirlenir.",
+      },
+      {
+        q: "İç mekânda tavana asım gerekir mi?",
+        a: "Mekân yapısına bağlıdır. Bazı projelerde zeminden truss, bazı projelerde tavandan asım gerekir. Uygunluk keşifte netleştirilir.",
+      },
+      {
+        q: "Zemine ankraj/dübel gerekir mi?",
+        a: "Gerekli durumlarda ankraj uygulanabilir; zemin (beton/asfalt/toprak) tipine göre yöntem belirlenir. Mekân izinleri organizer/mekân yönetimi ile birlikte netleştirilir.",
+      },
+    ],
+  },
+
   {
     id: "led",
     icon: "📺",
@@ -134,6 +203,7 @@ const FAQ_CATEGORIES = [
       },
     ],
   },
+
   {
     id: "ses-isik",
     icon: "🎤",
@@ -152,6 +222,14 @@ const FAQ_CATEGORIES = [
         a: "LED PAR, spot, wash ve efekt armatürleriyle mekâna uygun ışık planı hazırlanır; DMX ile sahnelenir.",
       },
       {
+        q: "Gündüz etkinliklerinde ışık gerekli mi?",
+        a: "Gündüz ışık etkisi daha subtil olsa da sahne/arka plan vurgusu için güçlü spotlar ve mimari aydınlatma çözümleri uygulanabilir.",
+      },
+      {
+        q: "Işık parlaklığı etkinlik boyunca ayarlanabilir mi?",
+        a: "Evet. Birçok ekipman DMX üzerinden dim edilebilir; konuşma, sahne şovu ve final anlarına göre ışık senaryosu yönetilir.",
+      },
+      {
         q: "Konferans için kaç mikrofon gerekir?",
         a: "Konuşmacı sayısı ve oturma düzenine göre el, yaka (lav), kürsü ve ortam mikrofonları kombine edilir.",
       },
@@ -164,15 +242,16 @@ const FAQ_CATEGORIES = [
         a: "Tüm kablolar rampa ve bantla sabitlenir. Güç hatları kaçak akım rölesi ile korunur.",
       },
       {
-        q: "Işıkta marka renklerine uygun sahneleme yapılabilir mi?",
-        a: "Evet. Gobo, renk paleti ve akış senaryosu kurumsal kimliğe göre programlanır.",
-      },
-      {
         q: "DJ/orkestra ile çalışırken koordinasyon nasıl?",
         a: "Prova saatleri planlanır; reji, DJ ve ışık operatörü ortak cue list üzerinden ilerler.",
       },
+      {
+        q: "Işıkta marka renklerine uygun sahneleme yapılabilir mi?",
+        a: "Evet. Gobo, renk paleti ve akış senaryosu kurumsal kimliğe göre programlanır.",
+      },
     ],
   },
+
   {
     id: "cadir",
     icon: "🎪",
@@ -183,20 +262,24 @@ const FAQ_CATEGORIES = [
         a: "Evet. Taşıma, kurulum ve söküm ekibimiz tarafından yapılır; güvenlik ankrajları ve ağırlıklandırma dâhildir.",
       },
       {
+        q: "Çadırlar yağmur ve rüzgâra dayanıklı mı?",
+        a: "Evet. Doğru ankraj, ağırlıklandırma, gergi ve yan kapamalarla rüzgâr–yağış senaryolarına dayanım sağlanır.",
+      },
+      {
         q: "Boyut ve zemin koşulları nedir?",
-        a: "Farklı açıklıklarda çadır seçenekleri vardır. Zemin beton, asfalt veya düz toprak olabilir; seviye şap ile dengelenir.",
-      },
-      {
-        q: "Isıtma/soğutma ve aydınlatma sağlıyor musunuz?",
-        a: "İsteğe bağlı klima/ısıtıcı ve genel aydınlatma sağlanır. Acil çıkış ve güvenlik şartları sağlanır.",
-      },
-      {
-        q: "Rüzgârlı ve yağışlı havalarda çadır güvenli mi?",
-        a: "Doğru ankraj, ağırlıklandırma, gergi ve yan kapamalarla rüzgâr–yağış senaryolarına dayanım sağlanır.",
+        a: "Farklı açıklıklarda çadır seçenekleri vardır. Zemin beton, asfalt veya düz toprak olabilir; seviye ve sabitleme keşifte netleştirilir.",
       },
       {
         q: "Zemin kaplama ve yürüyüş yolu yapılır mı?",
         a: "Evet. Modüler platform, halı kaplama ve rampalı erişim seçenekleri sunuyoruz.",
+      },
+      {
+        q: "Isıtma/soğutma ve aydınlatma sağlıyor musunuz?",
+        a: "İsteğe bağlı klima/ısıtıcı ve genel aydınlatma sağlanır. Acil çıkış ve güvenlik şartları proje bazlı planlanır.",
+      },
+      {
+        q: "Çadır ölçüsünü sonradan değiştirebilir miyim?",
+        a: "Müsaitliğe bağlı olarak değişiklik yapılabilir. Büyük değişikliklerde lojistik/kurulum planı güncellenir.",
       },
       {
         q: "Kiralama süresi uzatılabilir mi?",
@@ -204,6 +287,35 @@ const FAQ_CATEGORIES = [
       },
     ],
   },
+
+  {
+    id: "enerji",
+    icon: "⚡",
+    title: "Enerji & Jeneratör",
+    items: [
+      {
+        q: "Jeneratör kiralama hizmeti veriyor musunuz?",
+        a: "Evet. Şebeke yetersizse veya açık alanda güvenli enerji gerekiyorsa sessiz jeneratör çözümleri sunuyoruz.",
+      },
+      {
+        q: "Jeneratör gücü nasıl belirleniyor?",
+        a: "LED ekran, ses-ışık, reji ve diğer yüklerin toplam tüketimi hesaplanır; güvenlik payı ile uygun kVA seçilir.",
+      },
+      {
+        q: "Jeneratör nereye konumlandırılır?",
+        a: "Havalandırma ve güvenlik için dış alanda, mümkünse etkinlik alanından uzak ve ses etkisi minimize edilecek şekilde konumlandırılır.",
+      },
+      {
+        q: "Dağıtım ve elektrik panolarını da siz mi kuruyorsunuz?",
+        a: "Evet. Güç dağıtımı, panolar, kablo güzergâhı ve devre planı teknik ekibimiz tarafından güvenli şekilde uygulanır.",
+      },
+      {
+        q: "Arıza olursa acil çözüm var mı?",
+        a: "Proje büyüklüğüne göre yedekleme/alternatif çözüm planlanabilir. Kritik projelerde risk azaltma için ek opsiyonlar sunarız.",
+      },
+    ],
+  },
+
   {
     id: "sozlesme",
     icon: "🧾",
@@ -212,10 +324,6 @@ const FAQ_CATEGORIES = [
       {
         q: "Keşif ve fiyatlandırma nasıl ilerler?",
         a: "İhtiyaçlar alındıktan sonra gerekirse ücretsiz keşif yapılır; net fiyat ve zaman planı sunulur.",
-      },
-      {
-        q: "Teslimat bölgeleri ve zamanlama?",
-        a: "Türkiye genelinde çalışıyoruz. İstanbul içi aynı gün kurulum mümkün; şehir dışına planlı sevkiyat yapılır.",
       },
       {
         q: "Faturalandırma ve sözleşme süreçleri?",
@@ -227,7 +335,11 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Sigorta ve sorumluluk kapsamı nedir?",
-        a: "Saha güvenliği ve ekipman kullanımı Sahneva prosedürlerine uygun yapılır.",
+        a: "Saha güvenliği ve ekipman kullanımı Sahneva prosedürlerine uygun yapılır. Proje bazlı sorumluluk çerçevesi sözleşmede belirtilir.",
+      },
+      {
+        q: "İptal / tarih değişikliği olursa ne olur?",
+        a: "Tarih yakınlığına göre üretim/lojistik maliyetleri etkilenebilir. İptal ve tarih değişikliği koşulları sözleşmede net şekilde tanımlanır.",
       },
     ],
   },
@@ -246,6 +358,7 @@ function injectLinks(text) {
     { key: "LED ekran", href: "/led-ekran-kiralama" },
     { key: "ses–ışık", href: "/ses-isik-sistemleri" },
     { key: "ses-ışık", href: "/ses-isik-sistemleri" },
+    { key: "truss", href: "/truss-kiralama" }, // varsa
     { key: "sahne", href: "/sahne-kiralama" },
     { key: "çadır", href: "/cadir-kiralama" },
     { key: "teklif", href: "/iletisim" },
@@ -266,7 +379,11 @@ function CategoryChips() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-8">
       {FAQ_CATEGORIES.map((c) => (
-        <a key={c.id} href={`#${c.id}`} className="faq-chip px-3 py-2 rounded-full text-sm">
+        <a
+          key={c.id}
+          href={`#${c.id}`}
+          className="faq-chip px-3 py-2 rounded-full text-sm"
+        >
           <span className="mr-1">{c.icon}</span>
           {c.title}
         </a>
@@ -278,41 +395,35 @@ function CategoryChips() {
 function FaqSection({ id, icon, title, items }) {
   return (
     <section id={id} className="scroll-mt-28 mb-8 rounded-2xl faq-glass p-5 md:p-7">
-      
-        <h2 className="flex items-center gap-2 text-xl md:text-2xl font-bold mb-5">
-          <span className="text-lg md:text-xl">{icon}</span>
-          {title}
-        </h2>
-      
+      <h2 className="flex items-center gap-2 text-xl md:text-2xl font-bold mb-5">
+        <span className="text-lg md:text-xl">{icon}</span>
+        {title}
+      </h2>
 
-      
-        <div className="space-y-3">
-          {items.map((it) => (
-
-              <details key={it.q} className="faq-card group rounded-xl bg-white p-4">
-                <summary
-                  className="cursor-pointer select-none list-none font-semibold leading-7 flex items-center justify-between"
-                  role="button"
-                >
-                  <span className="pr-3">{it.q}</span>
-                  <svg
-                    className="ml-2 h-5 w-5 text-slate-500 transition-transform group-open:rotate-90"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M8 4l8 8-8 8" />
-                  </svg>
-                </summary>
-                <div className="faq-anim mt-3 text-neutral/90 leading-relaxed">
-                  {injectLinks(it.a)}
-                </div>
-              </details>
-            
-          ))}
-        </div>
-      
+      <div className="space-y-3">
+        {items.map((it) => (
+          <details key={it.q} className="faq-card group rounded-xl bg-white p-4">
+            <summary
+              className="cursor-pointer select-none list-none font-semibold leading-7 flex items-center justify-between"
+              role="button"
+            >
+              <span className="pr-3">{it.q}</span>
+              <svg
+                className="ml-2 h-5 w-5 text-slate-500 transition-transform group-open:rotate-90"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M8 4l8 8-8 8" />
+              </svg>
+            </summary>
+            <div className="faq-anim mt-3 text-neutral/90 leading-relaxed">
+              {injectLinks(it.a)}
+            </div>
+          </details>
+        ))}
+      </div>
     </section>
   );
 }
@@ -337,6 +448,7 @@ export default function FaqPage() {
     inLanguage: "tr-TR",
     mainEntity,
   };
+
   const baseUrl = SITE_URL;
   const breadcrumbItems = [
     { name: "Ana Sayfa", url: `${baseUrl}/` },
@@ -346,6 +458,7 @@ export default function FaqPage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbItems} baseUrl={baseUrl} />
+
       {/* JSON-LD – SSR ile direkt HTML içinde */}
       <script
         type="application/ld+json"
@@ -353,15 +466,11 @@ export default function FaqPage() {
       />
 
       <div className="container py-10 md:py-14">
-        
-          <h1 className="text-3xl md:text-[34px] font-extrabold tracking-tight text-center mb-6">
-            Sık Sorulan Sorular
-          </h1>
-        
+        <h1 className="text-3xl md:text-[34px] font-extrabold tracking-tight text-center mb-6">
+          Sık Sorulan Sorular
+        </h1>
 
-        
-          <CategoryChips />
-        
+        <CategoryChips />
 
         <div className="space-y-6">
           {FAQ_CATEGORIES.map((c) => (
@@ -369,25 +478,23 @@ export default function FaqPage() {
           ))}
         </div>
 
-        
-          <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="tel:+905453048671"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 font-semibold text-white hover:opacity-95"
-            >
-              📞 Hemen Teklif Al
-            </a>
-            <a
-              href="https://wa.me/905453048671"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 font-semibold hover:bg-neutral-50"
-              aria-label="WhatsApp’tan Sor — yeni sekmede açılır"
-            >
-              💬 WhatsApp’tan Sor
-            </a>
-          </div>
-        
+        <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="tel:+905453048671"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 font-semibold text-white hover:opacity-95"
+          >
+            📞 Hemen Teklif Al
+          </a>
+          <a
+            href="https://wa.me/905453048671"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 font-semibold hover:bg-neutral-50"
+            aria-label="WhatsApp’tan Sor — yeni sekmede açılır"
+          >
+            💬 WhatsApp’tan Sor
+          </a>
+        </div>
       </div>
     </>
   );
