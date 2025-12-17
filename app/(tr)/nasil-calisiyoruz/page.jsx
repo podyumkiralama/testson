@@ -21,7 +21,7 @@ export const metadata = {
     type: "website",
     url: PAGE_URL,
     title: "Nasıl Çalışıyoruz? | Sahneva Organizasyon",
-    description: "İhtiyaç analizi → teklif → teknik keşif → kurulum → etkinlik günü → söküm.",
+    description: "İhtiyaç → teklif → keşif → kurulum → etkinlik günü → söküm.",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Sahneva nasıl çalışır?" }],
     siteName: "Sahneva",
     locale: "tr_TR",
@@ -34,7 +34,7 @@ export const metadata = {
   },
 };
 
-/* ================== JSON-LD (ONLY PLAIN DATA) ================== */
+/* ================== JSON-LD ================== */
 function JsonLd({ stepsData, faqs }) {
   const orgId = `${SITE}/#org`;
   const webId = `${SITE}/#website`;
@@ -46,7 +46,14 @@ function JsonLd({ stepsData, faqs }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "WebSite", "@id": webId, url: SITE, name: "Sahneva Organizasyon", publisher: { "@id": orgId }, inLanguage: "tr-TR" },
+      {
+        "@type": "WebSite",
+        "@id": webId,
+        url: SITE,
+        name: "Sahneva Organizasyon",
+        publisher: { "@id": orgId },
+        inLanguage: "tr-TR",
+      },
       {
         "@type": "WebPage",
         "@id": pageId,
@@ -188,7 +195,7 @@ export default function HowItWorksPage() {
     },
     {
       q: "Keşif yapmak zorunlu mu?",
-      a: "Her işte zorunlu değildir. Ancak büyük LED ekran kurulumları, truss sistemleri ve enerji altyapısı kritik projelerde keşif önerilir.",
+      a: "Her işte zorunlu değildir. Ancak büyük truss kurulumları ve enerji altyapısı kritik projelerde keşif önerilir.",
     },
     {
       q: "Kurulum etkinlikten kaç saat önce yapılır?",
@@ -196,7 +203,7 @@ export default function HowItWorksPage() {
     },
     {
       q: "Aynı anda birden fazla hizmet alabilir miyim?",
-      a: "Evet. Sahne, truss, LED ekran, ses-ışık, çadır ve oturma düzeni gibi kalemleri tek projede paketleyebiliriz.",
+      a: "Evet. Sahne, truss, ses-ışık, çadır ve oturma düzeni gibi kalemleri tek projede paketleyebiliriz.",
     },
   ];
 
