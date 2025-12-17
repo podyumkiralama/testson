@@ -568,31 +568,31 @@ export default function Navbar({
                         </div>
 
                         {/* İçerik */}
-                        <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr]">
+                        <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr] items-stretch">
                           {/* Sol görsel */}
-                          <Link
-                            href="/hizmetler"
-                            onClick={() => setServicesOpen(false)}
-                            className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS}`}
-                          >
-                            <div className="relative aspect-[16/9]">
-                              <Image
-                                src="/img/nav/hizmetler-mega.webp"
-                                alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
-                                fill
-                                sizes="(max-width: 1024px) 100vw, 460px"
-                                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                            </div>
+                         <Link
+  href="/hizmetler"
+  onClick={() => setServicesOpen(false)}
+  className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS} h-full`}
+>
+  <div className="relative h-full min-h-[420px]">
+    <Image
+      src="/img/nav/hizmetler-mega.webp"
+      alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
+      fill
+      sizes="(max-width: 1024px) 100vw, 460px"
+      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+  </div>
 
-                            <div className="absolute bottom-4 left-4 right-4">
-                              <div className="text-3xl font-black text-white">Hizmetler</div>
-                              <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
-                                Tüm hizmetleri incele <span aria-hidden="true">›</span>
-                              </div>
-                            </div>
-                          </Link>
+  <div className="absolute bottom-4 left-4 right-4">
+    <div className="text-3xl font-black text-white">Hizmetler</div>
+    <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
+      Tüm hizmetleri incele <span aria-hidden="true">›</span>
+    </div>
+  </div>
+</Link>
 
                           {/* Sağ kolonlar: ARIA MENU */}
                           <div
