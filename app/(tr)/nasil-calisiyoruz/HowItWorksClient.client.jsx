@@ -44,24 +44,6 @@ function SoftCard({ children, className = "" }) {
   );
 }
 
-function ImgFrame({ src, alt, priority = false }) {
-  return (
-    <SoftCard className="overflow-hidden">
-      <div className="relative aspect-[16/10] w-full">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes="(max-width: 768px) 100vw, 520px"
-          className="object-cover transition-transform duration-500 will-change-transform hover:scale-[1.03]"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-      </div>
-    </SoftCard>
-  );
-}
-
 function InlineLink({ href, children }) {
   return (
     <Link
@@ -73,23 +55,55 @@ function InlineLink({ href, children }) {
   );
 }
 
+function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "" }) {
+  return (
+    <SoftCard className={"overflow-hidden " + className}>
+      <div className="relative aspect-[16/10] w-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, 720px"
+          className={
+            "object-cover transition-transform duration-500 will-change-transform " +
+            "hover:scale-[1.03] " +
+            imgClassName
+          }
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+      </div>
+    </SoftCard>
+  );
+}
+
+/* Reduced motion aware */
+function usePrefersReducedMotion() {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!m) return;
+    const onChange = () => setReduce(!!m.matches);
+    onChange();
+    m.addEventListener?.("change", onChange);
+    return () => m.removeEventListener?.("change", onChange);
+  }, []);
+  return reduce;
+}
+
+/* Reveal on viewport enter */
 function Reveal({ children }) {
+  const reduce = usePrefersReducedMotion();
   const ref = useRef(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     if (reduce) {
       setShown(true);
       return;
     }
+    const el = ref.current;
+    if (!el) return;
 
     const io = new IntersectionObserver(
       ([e]) => {
@@ -103,7 +117,7 @@ function Reveal({ children }) {
 
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [reduce]);
 
   return (
     <div
@@ -118,7 +132,7 @@ function Reveal({ children }) {
   );
 }
 
-/* ✅ Hash jump bug fix: native anchor yerine kontrollü scroll */
+/* ✅ Controlled scroll to avoid layout glitches */
 function useSmartScroll() {
   const navRef = useRef(null);
 
@@ -127,7 +141,7 @@ function useSmartScroll() {
     if (!el) return;
 
     const navH = navRef.current?.offsetHeight ?? 0;
-    const extra = 12; // nefes payı
+    const extra = 12;
     const y = el.getBoundingClientRect().top + window.scrollY - navH - extra;
 
     window.history.replaceState(null, "", `#${id}`);
@@ -137,24 +151,114 @@ function useSmartScroll() {
   return { navRef, scrollToId };
 }
 
-function StepsNav({ steps, onGo, navRef }) {
+/* ✅ Active step tracking (highlight) */
+function useActiveSection(ids) {
+  const reduce = usePrefersReducedMotion();
+  const [activeId, setActiveId] = useState(ids?.[0] ?? null);
+
+  useEffect(() => {
+    if (!ids?.length) return;
+
+    // Reduced motion users still benefit from accurate active state
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!els.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        // pick most visible intersecting section
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+
+        if (visible?.target?.id) setActiveId(visible.target.id);
+      },
+      {
+        // top offset: sticky nav space
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0.1, 0.2, 0.35, 0.5],
+      }
+    );
+
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [ids, reduce]);
+
+  return activeId;
+}
+
+/* ✅ Hero parallax (very light) */
+function useParallax() {
+  const reduce = usePrefersReducedMotion();
+  const wrapRef = useRef(null);
+  const [t, setT] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (reduce) return;
+    const el = wrapRef.current;
+    if (!el) return;
+
+    let raf = 0;
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = (e.clientX - cx) / (r.width / 2);
+      const dy = (e.clientY - cy) / (r.height / 2);
+
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setT({
+          x: Math.max(-1, Math.min(1, dx)) * 8, // px
+          y: Math.max(-1, Math.min(1, dy)) * 6,
+        });
+      });
+    };
+
+    const onLeave = () => setT({ x: 0, y: 0 });
+
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    };
+  }, [reduce]);
+
+  return { wrapRef, t };
+}
+
+function StepsNav({ steps, onGo, navRef, activeId }) {
   return (
     <div className="mx-auto max-w-6xl px-4" ref={navRef}>
       <div className="sticky top-2 z-20 rounded-2xl border border-white/10 bg-[#0B1120]/70 backdrop-blur supports-[backdrop-filter]:bg-[#0B1120]/50">
         <div className="flex flex-wrap items-center gap-2 p-3">
           <span className="mr-2 text-xs font-semibold text-white/70">Adımlar:</span>
 
-          {steps.map((s) => (
-            <button
-              key={s.stepNo}
-              type="button"
-              onClick={() => onGo(`adim-${s.stepNo}`)}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-              aria-label={`Adım ${s.stepNo}: ${s.title}`}
-            >
-              {s.stepNo}
-            </button>
-          ))}
+          {steps.map((s) => {
+            const id = `adim-${s.stepNo}`;
+            const isActive = activeId === id;
+            return (
+              <button
+                key={s.stepNo}
+                type="button"
+                onClick={() => onGo(id)}
+                aria-current={isActive ? "step" : undefined}
+                className={
+                  "rounded-xl border px-3 py-2 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 " +
+                  (isActive
+                    ? "border-white/25 bg-white/15 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                    : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10")
+                }
+                title={s.title}
+              >
+                {s.stepNo}
+              </button>
+            );
+          })}
 
           <button
             type="button"
@@ -163,6 +267,22 @@ function StepsNav({ steps, onGo, navRef }) {
           >
             FAQ
           </button>
+        </div>
+
+        {/* mini active label */}
+        <div className="px-3 pb-3">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white/70">
+            {activeId?.startsWith("adim-") ? (
+              <>
+                Aktif:{" "}
+                <span className="font-semibold text-white">
+                  Adım {activeId.replace("adim-", "")}
+                </span>
+              </>
+            ) : (
+              <>Aktif: <span className="font-semibold text-white">Başlangıç</span></>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -232,6 +352,14 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
   const { navRef, scrollToId } = useSmartScroll();
 
+  const sectionIds = useMemo(
+    () => stepsData.map((s) => `adim-${s.stepNo}`),
+    [stepsData]
+  );
+  const activeId = useActiveSection(sectionIds);
+
+  const { wrapRef, t } = useParallax();
+
   const stepsUi = useMemo(() => {
     return stepsData.map((s) => {
       if (s.stepNo === 1) {
@@ -247,8 +375,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
                 <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-white/75">
-                <InlineLink href="/iletisim">İletişim formu</InlineLink> ile brief bırakın
-                veya WhatsApp’tan yazın.
+                <InlineLink href="/iletisim">İletişim formu</InlineLink> ile brief bırakın veya WhatsApp’tan yazın.
               </p>
             </>
           ),
@@ -274,8 +401,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             <p className="text-sm leading-relaxed text-white/75">
               Kurulum + testte{" "}
               <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink> ve{" "}
-              <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink> testleri tamamlanır;
-              güvenlik kontrolleri yapılır.
+              <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink> testleri tamamlanır; güvenlik kontrolleri yapılır.
             </p>
           ),
         };
@@ -288,9 +414,9 @@ export default function HowItWorksClient({ stepsData, faqs }) {
     <>
       <GlowBg />
 
-      {/* HERO (görsel eklendi + hafif animasyon hissi) */}
+      {/* HERO (geniş + parallax + daha iyi hiyerarşi) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -298,28 +424,18 @@ export default function HowItWorksClient({ stepsData, faqs }) {
               <Badge>Teknik ekip + operasyon</Badge>
             </div>
 
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-              Nasıl Çalışıyoruz?
-            </h1>
-
-            <p className="max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">
-              Süreci adım adım, görselli ve anlaşılır şekilde yönetiyoruz.
-            </p>
-
-            {/* “hero adımlar” burada da var: tıklayınca artık daralma/boşluk yapmaz */}
-            <div className="flex flex-wrap gap-2">
-              {stepsData.slice(0, 8).map((s) => (
-                <button
-                  key={`hero-step-${s.stepNo}`}
-                  type="button"
-                  onClick={() => scrollToId(`adim-${s.stepNo}`)}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                  aria-label={`Adım ${s.stepNo}: ${s.title}`}
-                >
-                  {s.stepNo}
-                </button>
-              ))}
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+                Nasıl Çalışıyoruz?
+              </h1>
+              <p className="mt-3 text-base text-white/70 sm:text-lg">
+                Sahneva’da etkinlikler nasıl planlanır, kurulur ve yönetilir?
+              </p>
             </div>
+
+            <p className="max-w-3xl text-sm leading-relaxed text-white/75 sm:text-base">
+              İhtiyaç → teklif → keşif → kurulum → etkinlik günü → söküm. Süreci uçtan uca yönetir, sahada teknik ekiple birlikte kontrol ederiz.
+            </p>
 
             <div className="flex flex-wrap gap-3">
               <Link
@@ -339,15 +455,38 @@ export default function HowItWorksClient({ stepsData, faqs }) {
                 WhatsApp’tan Yazın
               </a>
             </div>
+
+            <div className="flex flex-wrap gap-2 text-xs text-white/60">
+              <span>Hızlı linkler:</span>
+              <InlineLink href="/truss-kiralama">Truss</InlineLink>
+              <span aria-hidden="true">•</span>
+              <InlineLink href="/podyum-kiralama">Sahne/Podyum</InlineLink>
+              <span aria-hidden="true">•</span>
+              <InlineLink href="/ses-isik-sistemleri">Ses-Işık</InlineLink>
+            </div>
           </div>
 
           <div className="lg:justify-self-end">
             <Reveal>
-              <ImgFrame
-                src="/img/how-it-works/hero-surec.webp"
-                alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-                priority
-              />
+              <div
+                ref={wrapRef}
+                className="w-full max-w-[720px]"
+                style={{ perspective: 900 }}
+              >
+                <div
+                  className="transition-transform duration-300 will-change-transform"
+                  style={{
+                    transform: `translate3d(${t.x}px, ${t.y}px, 0)`,
+                  }}
+                >
+                  <ImgFrame
+                    src="/img/nasil-calisiriz/hero-surec.webp"
+                    alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+                    priority
+                  />
+                </div>
+              </div>
+
               <p className="mt-3 text-xs text-white/60">
                 Not: Görselde ekran/screen görünmez; operasyon ve ekip odağı.
               </p>
@@ -356,10 +495,15 @@ export default function HowItWorksClient({ stepsData, faqs }) {
         </div>
       </section>
 
-      {/* Sticky steps nav (fixli) */}
-      <StepsNav steps={stepsData} onGo={scrollToId} navRef={navRef} />
+      {/* Sticky steps nav (tek yerde adımlar + aktif adım highlight) */}
+      <StepsNav
+        steps={stepsData}
+        onGo={scrollToId}
+        navRef={navRef}
+        activeId={activeId}
+      />
 
-      {/* Enrichment (hareket + hover) */}
+      {/* Enrichment */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
         <div className="grid gap-4 lg:grid-cols-3">
           <Reveal>
@@ -380,8 +524,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
               <ul className="mt-3 space-y-2 text-sm text-white/75">
                 <li>• Tarih / lokasyon / alan ölçüsü</li>
                 <li>• Sahne ölçüsü ve yükseklik</li>
-                <li>• LED ekran ölçüsü + içerik</li>
-                <li>• Ses-ışık + program akışı</li>
+                <li>• İçerik akışı / program</li>
+                <li>• Enerji ve erişim koşulları</li>
               </ul>
             </SoftCard>
           </Reveal>
