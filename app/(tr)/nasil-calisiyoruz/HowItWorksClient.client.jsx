@@ -443,31 +443,31 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           </div>
 
           {/* 🔥 SADECE BU KISIM: görsel genişletme */}
-          <div className="lg:justify-self-end">
-            <Reveal>
-              <div
-                ref={wrapRef}
-                className="w-full max-w-[760px]"
-                style={{ perspective: 900 }}
-              >
-                <div
-                  className="transition-transform duration-300 will-change-transform"
-                  style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
-                >
-                  <ImgFrame
-                    src="/img/nasil-calisiriz/hero-surec.webp"
-                    alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-                    priority
-                    aspectClassName="aspect-[22/10]"
-                  />
-                </div>
-              </div>
+          <div className="lg:justify-self-end overflow-visible">
+  <Reveal>
+    <div
+      ref={wrapRef}
+      className="relative w-full max-w-[520px]"
+      style={{ perspective: 900 }}
+    >
+      <div
+        className="relative transition-transform duration-300 will-change-transform"
+        style={{
+          transform: `translate3d(${t.x}px, ${t.y}px, 0)`,
+          marginRight: "-180px", // 👈 GÖRSELİ GENİŞ GÖSTEREN SATIR
+        }}
+      >
+        <ImgFrame
+          src="/img/nasil-calisiriz/hero-surec.webp"
+          alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+          priority
+          aspectClassName="aspect-[21/9]"
+        />
+      </div>
+    </div>
+  </Reveal>
+</div>
 
-              <p className="mt-3 text-xs text-white/60">
-                Not: Görselde ekran/screen görünmez; operasyon ve ekip odağı.
-              </p>
-            </Reveal>
-          </div>
         </div>
       </section>
 
