@@ -289,7 +289,7 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
     <>
       <GlowBg />
 
-      {/* HERO */}
+     {/* HERO */}
 <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
   <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_480px]">
     {/* Sol (yazı) */}
@@ -362,11 +362,6 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
           </div>
         </SoftCard>
-
-        {/* Not satırını istemiyorsan kaldırabilirsin */}
-        {/* <p className="mt-3 text-xs text-white/60">
-          Not: Operasyon ve ekip odağı — ekranda/screen görünmez.
-        </p> */}
       </Reveal>
     </div>
   </div>
