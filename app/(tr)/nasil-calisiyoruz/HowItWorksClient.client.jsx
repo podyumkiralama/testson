@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 function GlowBg() {
   return (
@@ -35,6 +35,7 @@ function SoftCard({ children, className = "" }) {
     <div
       className={
         "rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.03)] " +
+        "transition-transform duration-300 hover:-translate-y-1 hover:bg-white/[0.045] " +
         className
       }
     >
@@ -43,7 +44,7 @@ function SoftCard({ children, className = "" }) {
   );
 }
 
-function ImgFrame({ src, alt }) {
+function ImgFrame({ src, alt, priority = false }) {
   return (
     <SoftCard className="overflow-hidden">
       <div className="relative aspect-[16/10] w-full">
@@ -51,9 +52,11 @@ function ImgFrame({ src, alt }) {
           src={src}
           alt={alt}
           fill
+          priority={priority}
           sizes="(max-width: 768px) 100vw, 520px"
-          className="object-cover"
+          className="object-cover transition-transform duration-500 will-change-transform hover:scale-[1.03]"
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </div>
     </SoftCard>
   );
@@ -95,7 +98,7 @@ function Reveal({ children }) {
           io.disconnect();
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
     );
 
     io.observe(el);
@@ -115,28 +118,51 @@ function Reveal({ children }) {
   );
 }
 
-function StepsNav({ steps }) {
+/* ✅ Hash jump bug fix: native anchor yerine kontrollü scroll */
+function useSmartScroll() {
+  const navRef = useRef(null);
+
+  const scrollToId = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const navH = navRef.current?.offsetHeight ?? 0;
+    const extra = 12; // nefes payı
+    const y = el.getBoundingClientRect().top + window.scrollY - navH - extra;
+
+    window.history.replaceState(null, "", `#${id}`);
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  return { navRef, scrollToId };
+}
+
+function StepsNav({ steps, onGo, navRef }) {
   return (
-    <div className="mx-auto max-w-6xl px-4">
+    <div className="mx-auto max-w-6xl px-4" ref={navRef}>
       <div className="sticky top-2 z-20 rounded-2xl border border-white/10 bg-[#0B1120]/70 backdrop-blur supports-[backdrop-filter]:bg-[#0B1120]/50">
         <div className="flex flex-wrap items-center gap-2 p-3">
           <span className="mr-2 text-xs font-semibold text-white/70">Adımlar:</span>
+
           {steps.map((s) => (
-            <a
+            <button
               key={s.stepNo}
-              href={`#adim-${s.stepNo}`}
+              type="button"
+              onClick={() => onGo(`adim-${s.stepNo}`)}
               className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
               aria-label={`Adım ${s.stepNo}: ${s.title}`}
             >
               {s.stepNo}
-            </a>
+            </button>
           ))}
-          <a
-            href="#faq"
+
+          <button
+            type="button"
+            onClick={() => onGo("faq")}
             className="ml-auto rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
             FAQ
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -146,7 +172,7 @@ function StepsNav({ steps }) {
 function StepSection({ stepNo, label, title, body, imageSrc, imageAlt, reverse }) {
   const id = `adim-${stepNo}`;
   return (
-    <section id={id} className="scroll-mt-24" aria-labelledby={`${id}-title`}>
+    <section id={id} className="scroll-mt-28" aria-labelledby={`${id}-title`}>
       <Reveal>
         <div
           className={
@@ -170,7 +196,9 @@ function StepSection({ stepNo, label, title, body, imageSrc, imageAlt, reverse }
           </div>
 
           <div className={reverse ? "lg:order-1" : ""}>
-            <ImgFrame src={imageSrc} alt={imageAlt} />
+            <Reveal>
+              <ImgFrame src={imageSrc} alt={imageAlt} />
+            </Reveal>
           </div>
         </div>
       </Reveal>
@@ -180,7 +208,7 @@ function StepSection({ stepNo, label, title, body, imageSrc, imageAlt, reverse }
 
 function FaqItem({ q, a }) {
   return (
-    <details className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+    <details className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:bg-white/[0.045]">
       <summary className="cursor-pointer list-none select-none">
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-base font-semibold text-white">{q}</h3>
@@ -202,132 +230,173 @@ export default function HowItWorksClient({ stepsData, faqs }) {
   const CTA_BRIEF = "/iletisim";
   const CTA_WHATSAPP = "https://wa.me/905453048671";
 
-  const stepsUi = stepsData.map((s) => {
-    if (s.stepNo === 1) {
-      return {
-        ...s,
-        body: (
-          <>
+  const { navRef, scrollToId } = useSmartScroll();
+
+  const stepsUi = useMemo(() => {
+    return stepsData.map((s) => {
+      if (s.stepNo === 1) {
+        return {
+          ...s,
+          body: (
+            <>
+              <p className="text-sm leading-relaxed text-white/75">
+                İhtiyaçlarınızı iletin:{" "}
+                <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>,{" "}
+                <InlineLink href="/truss-kiralama">truss</InlineLink>,{" "}
+                <InlineLink href="/podyum-kiralama">sahne/podyum</InlineLink>,{" "}
+                <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-white/75">
+                <InlineLink href="/iletisim">İletişim formu</InlineLink> ile brief bırakın
+                veya WhatsApp’tan yazın.
+              </p>
+            </>
+          ),
+        };
+      }
+      if (s.stepNo === 3) {
+        return {
+          ...s,
+          body: (
             <p className="text-sm leading-relaxed text-white/75">
-              İhtiyaçlarınızı iletin:{" "}
-              <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>,{" "}
-              <InlineLink href="/truss-kiralama">truss</InlineLink>,{" "}
-              <InlineLink href="/podyum-kiralama">sahne/podyum</InlineLink>,{" "}
-              <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>.
+              Teklif opsiyonlarına{" "}
+              <InlineLink href="/cadir-kiralama">çadır</InlineLink> ve{" "}
+              <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink>{" "}
+              eklenebilir. Alternatif paketleri birlikte netleştiririz.
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-white/75">
-              <InlineLink href="/iletisim">İletişim formu</InlineLink> ile brief bırakın veya WhatsApp’tan yazın.
+          ),
+        };
+      }
+      if (s.stepNo === 6) {
+        return {
+          ...s,
+          body: (
+            <p className="text-sm leading-relaxed text-white/75">
+              Kurulum + testte{" "}
+              <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink> ve{" "}
+              <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink> testleri tamamlanır;
+              güvenlik kontrolleri yapılır.
             </p>
-          </>
-        ),
-      };
-    }
-    if (s.stepNo === 3) {
-      return {
-        ...s,
-        body: (
-          <p className="text-sm leading-relaxed text-white/75">
-            Teklif opsiyonlarına{" "}
-            <InlineLink href="/cadir-kiralama">çadır</InlineLink> ve{" "}
-            <InlineLink href="/masa-sandalye-kiralama">masa-sandalye</InlineLink>{" "}
-            eklenebilir. Alternatif paketleri birlikte netleştiririz.
-          </p>
-        ),
-      };
-    }
-    if (s.stepNo === 6) {
-      return {
-        ...s,
-        body: (
-          <p className="text-sm leading-relaxed text-white/75">
-            Kurulum + testte{" "}
-            <InlineLink href="/ses-isik-sistemleri">ses-ışık</InlineLink>{" "}
-            ve{" "}
-            <InlineLink href="/led-ekran-kiralama">LED ekran</InlineLink>{" "}
-            testleri tamamlanır; güvenlik kontrolleri yapılır.
-          </p>
-        ),
-      };
-    }
-    return { ...s, body: <p className="text-sm leading-relaxed text-white/75">{s.plainText}</p> };
-  });
+          ),
+        };
+      }
+      return { ...s, body: <p className="text-sm leading-relaxed text-white/75">{s.plainText}</p> };
+    });
+  }, [stepsData]);
 
   return (
     <>
       <GlowBg />
 
-      {/* HERO */}
+      {/* HERO (görsel eklendi + hafif animasyon hissi) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-3">
-            <Badge>Sahneva Organizasyon</Badge>
-            <Badge>Uçtan uca kurulum</Badge>
-            <Badge>Teknik ekip + operasyon</Badge>
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge>Sahneva Organizasyon</Badge>
+              <Badge>Uçtan uca kurulum</Badge>
+              <Badge>Teknik ekip + operasyon</Badge>
+            </div>
+
+            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+              Nasıl Çalışıyoruz?
+            </h1>
+
+            <p className="max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">
+              Süreci adım adım, görselli ve anlaşılır şekilde yönetiyoruz.
+            </p>
+
+            {/* “hero adımlar” burada da var: tıklayınca artık daralma/boşluk yapmaz */}
+            <div className="flex flex-wrap gap-2">
+              {stepsData.slice(0, 8).map((s) => (
+                <button
+                  key={`hero-step-${s.stepNo}`}
+                  type="button"
+                  onClick={() => scrollToId(`adim-${s.stepNo}`)}
+                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  aria-label={`Adım ${s.stepNo}: ${s.title}`}
+                >
+                  {s.stepNo}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href={CTA_BRIEF}
+                className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              >
+                İletişim / Brief Bırak
+              </Link>
+
+              <a
+                href={CTA_WHATSAPP}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                aria-label="WhatsApp üzerinden iletişime geç (yeni sekmede açılır)"
+              >
+                WhatsApp’tan Yazın
+              </a>
+            </div>
           </div>
 
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-            Nasıl Çalışıyoruz?
-          </h1>
-
-          <p className="max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Süreci adım adım, görselli ve anlaşılır şekilde yönetiyoruz.
-          </p>
-
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href={CTA_BRIEF}
-              className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-            >
-              İletişim / Brief Bırak
-            </Link>
-
-            <a
-              href={CTA_WHATSAPP}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              aria-label="WhatsApp üzerinden iletişime geç (yeni sekmede açılır)"
-            >
-              WhatsApp’tan Yazın
-            </a>
+          <div className="lg:justify-self-end">
+            <Reveal>
+              <ImgFrame
+                src="/img/how-it-works/hero-surec.webp"
+                alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+                priority
+              />
+              <p className="mt-3 text-xs text-white/60">
+                Not: Görselde ekran/screen görünmez; operasyon ve ekip odağı.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      <StepsNav steps={stepsData} />
+      {/* Sticky steps nav (fixli) */}
+      <StepsNav steps={stepsData} onGo={scrollToId} navRef={navRef} />
 
-      {/* Enrichment */}
+      {/* Enrichment (hareket + hover) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
         <div className="grid gap-4 lg:grid-cols-3">
-          <SoftCard className="p-6">
-            <h2 className="text-base font-semibold text-white">Neler Dahil?</h2>
-            <ul className="mt-3 space-y-2 text-sm text-white/75">
-              <li>• İhtiyaç analizi + teklif</li>
-              <li>• Teknik keşif (gerekiyorsa)</li>
-              <li>• Kurulum + test + saha operasyonu</li>
-              <li>• Söküm + temiz teslim</li>
-            </ul>
-          </SoftCard>
+          <Reveal>
+            <SoftCard className="p-6">
+              <h2 className="text-base font-semibold text-white">Neler Dahil?</h2>
+              <ul className="mt-3 space-y-2 text-sm text-white/75">
+                <li>• İhtiyaç analizi + teklif</li>
+                <li>• Teknik keşif (gerekiyorsa)</li>
+                <li>• Kurulum + test + saha operasyonu</li>
+                <li>• Söküm + temiz teslim</li>
+              </ul>
+            </SoftCard>
+          </Reveal>
 
-          <SoftCard className="p-6">
-            <h2 className="text-base font-semibold text-white">Brief’te Neler Soruyoruz?</h2>
-            <ul className="mt-3 space-y-2 text-sm text-white/75">
-              <li>• Tarih / lokasyon / alan ölçüsü</li>
-              <li>• Sahne ölçüsü ve yükseklik</li>
-              <li>• LED ekran ölçüsü + içerik</li>
-              <li>• Ses-ışık + program akışı</li>
-            </ul>
-          </SoftCard>
+          <Reveal>
+            <SoftCard className="p-6">
+              <h2 className="text-base font-semibold text-white">Brief’te Neler Soruyoruz?</h2>
+              <ul className="mt-3 space-y-2 text-sm text-white/75">
+                <li>• Tarih / lokasyon / alan ölçüsü</li>
+                <li>• Sahne ölçüsü ve yükseklik</li>
+                <li>• LED ekran ölçüsü + içerik</li>
+                <li>• Ses-ışık + program akışı</li>
+              </ul>
+            </SoftCard>
+          </Reveal>
 
-          <SoftCard className="p-6">
-            <h2 className="text-base font-semibold text-white">Hızlı İç Linkler</h2>
-            <div className="mt-3 grid gap-2 text-sm">
-              <InlineLink href="/led-ekran-kiralama">LED Ekran Kiralama</InlineLink>
-              <InlineLink href="/truss-kiralama">Truss Kiralama</InlineLink>
-              <InlineLink href="/podyum-kiralama">Sahne / Podyum</InlineLink>
-              <InlineLink href="/ses-isik-sistemleri">Ses & Işık</InlineLink>
-            </div>
-          </SoftCard>
+          <Reveal>
+            <SoftCard className="p-6">
+              <h2 className="text-base font-semibold text-white">Hızlı İç Linkler</h2>
+              <div className="mt-3 grid gap-2 text-sm">
+                <InlineLink href="/led-ekran-kiralama">LED Ekran Kiralama</InlineLink>
+                <InlineLink href="/truss-kiralama">Truss Kiralama</InlineLink>
+                <InlineLink href="/podyum-kiralama">Sahne / Podyum</InlineLink>
+                <InlineLink href="/ses-isik-sistemleri">Ses & Işık</InlineLink>
+              </div>
+            </SoftCard>
+          </Reveal>
         </div>
       </section>
 
