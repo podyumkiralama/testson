@@ -7,7 +7,7 @@ const SITE =
 
 const PAGE_PATH = "/nasil-calisiyoruz";
 const PAGE_URL = `${SITE}${PAGE_PATH}`;
-const OG_IMAGE = `${SITE}/img/og/how-it-works-og.webp`;
+const OG_IMAGE = `${SITE}/img/og/nasil-calisiriz-og.webp`;
 
 export const metadata = {
   title: "Nasıl Çalışıyoruz? | Sahneva Organizasyon",
@@ -119,7 +119,7 @@ export default function HowItWorksPage() {
       title: "İhtiyaç formu / ilk iletişim",
       plainText:
         "Etkinlik türü, tarih, lokasyon ve ihtiyaçlar paylaşılır. Danışman geri dönüş yapar ve süreç başlar.",
-      imageSrc: "/img/how-it-works/01-ilk-iletisim.webp",
+      imageSrc: "/img/nasil-calisiriz/01-ilk-iletisim.webp",
       imageAlt: "Sahneva ile ilk iletişim ve ihtiyaçların belirlenmesi",
     },
     {
@@ -128,7 +128,7 @@ export default function HowItWorksPage() {
       title: "Proje ihtiyaçları netleşir",
       plainText:
         "Bütçe, alan ölçüleri ve teknik gereksinimler netleştirilir; uygun çözüm taslağı hazırlanır.",
-      imageSrc: "/img/how-it-works/02-uzman-gorusmesi.webp",
+      imageSrc: "/img/nasil-calisiriz/02-uzman-gorusmesi.webp",
       imageAlt: "Danışmanla ihtiyaç analizi ve planlama",
     },
     {
@@ -137,7 +137,7 @@ export default function HowItWorksPage() {
       title: "Teklif / öneri paketi",
       plainText:
         "Size özel teklif ve opsiyonlar sunulur, alternatif paketler ve revizyonlar yapılır.",
-      imageSrc: "/img/how-it-works/03-teklif.webp",
+      imageSrc: "/img/nasil-calisiriz/03-teklif.webp",
       imageAlt: "Teklif ve opsiyonların hazırlanması",
     },
     {
@@ -146,7 +146,7 @@ export default function HowItWorksPage() {
       title: "Rezervasyon ve planlama",
       plainText:
         "Onay sonrası ekipman ve ekip planlaması rezervasyona alınır; kurulum takvimi netleşir.",
-      imageSrc: "/img/how-it-works/04-onay-rezervasyon.webp",
+      imageSrc: "/img/nasil-calisiriz/04-onay-rezervasyon.webp",
       imageAlt: "Onay sonrası rezervasyon ve ekip planlaması",
     },
     {
@@ -155,7 +155,7 @@ export default function HowItWorksPage() {
       title: "Keşif / teknik koordinasyon",
       plainText:
         "Saha erişimi, enerji ve zemin koşulları kontrol edilir; gerekiyorsa keşif yapılır.",
-      imageSrc: "/img/how-it-works/05-teknik-kesif.webp",
+      imageSrc: "/img/nasil-calisiriz/05-teknik-kesif.webp",
       imageAlt: "Teknik keşif ve saha koordinasyonu",
     },
     {
@@ -164,7 +164,7 @@ export default function HowItWorksPage() {
       title: "Kurulum ve testler",
       plainText:
         "Etkinlikten 1-2 gün önce kurulum yapılır ve tüm sistemler test edilir.",
-      imageSrc: "/img/how-it-works/06-kurulum.webp",
+      imageSrc: "/img/nasil-calisiriz/06-kurulum.webp",
       imageAlt: "Sahada kurulum ve test süreci",
     },
     {
@@ -173,7 +173,7 @@ export default function HowItWorksPage() {
       title: "Etkinlik günü yönetimi",
       plainText:
         "Operasyon ekibi sahada süreci yönetir; yayın, görüntü ve ses akışı takip edilir.",
-      imageSrc: "/img/how-it-works/07-etkinlik-gunu.webp",
+      imageSrc: "/img/nasil-calisiriz/07-etkinlik-gunu.webp",
       imageAlt: "Etkinlik günü operasyon ve teknik yönetim",
     },
     {
@@ -182,7 +182,7 @@ export default function HowItWorksPage() {
       title: "Söküm ve temiz teslim",
       plainText:
         "Etkinlik sonrası söküm yapılır, ekipman toplanır ve alan düzenli şekilde teslim edilir.",
-      imageSrc: "/img/how-it-works/08-sokum.webp",
+      imageSrc: "/img/nasil-calisiriz/08-sokum.webp",
       imageAlt: "Söküm ve ekipmanların güvenli şekilde toplanması",
     },
   ];
