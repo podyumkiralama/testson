@@ -352,13 +352,14 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
         <SoftCard className="overflow-hidden">
           <div className="relative aspect-[21/10] w-full">
             <Image
-              src={`${IMG_DIR}/hero.webp`}
-              alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 480px"
-              className="object-cover object-[50%_35%] transition-transform duration-500 will-change-transform hover:scale-[1.03]"
-            />
+  src="/img/bolgesel-kiralama/hero.webp"
+  alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
+  fill
+  priority
+  sizes="(max-width: 768px) 100vw, 480px"
+  className="object-cover object-[50%_35%] transition-transform duration-500 will-change-transform hover:scale-[1.03]"
+/>
+
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
           </div>
         </SoftCard>
