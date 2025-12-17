@@ -55,7 +55,14 @@ function InlineLink({ href, children }) {
   );
 }
 
-function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "", aspectClassName = "aspect-[16/10]" }) {
+function ImgFrame({
+  src,
+  alt,
+  priority = false,
+  className = "",
+  imgClassName = "",
+  aspectClassName = "aspect-[16/10]",
+}) {
   return (
     <SoftCard className={"overflow-hidden " + className}>
       <div className={"relative w-full " + aspectClassName}>
@@ -64,10 +71,9 @@ function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "
           alt={alt}
           fill
           priority={priority}
-          sizes="(max-width: 768px) 100vw, 720px"
+          sizes="(max-width: 768px) 100vw, 920px"
           className={
-            "object-cover transition-transform duration-500 will-change-transform " +
-            "hover:scale-[1.03] " +
+            "object-cover transition-transform duration-500 will-change-transform hover:scale-[1.03] " +
             imgClassName
           }
         />
@@ -77,7 +83,6 @@ function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "
   );
 }
 
-/* Reduced motion aware */
 function usePrefersReducedMotion() {
   const [reduce, setReduce] = useState(false);
   useEffect(() => {
@@ -91,7 +96,6 @@ function usePrefersReducedMotion() {
   return reduce;
 }
 
-/* Reveal on viewport enter */
 function Reveal({ children }) {
   const reduce = usePrefersReducedMotion();
   const ref = useRef(null);
@@ -132,7 +136,7 @@ function Reveal({ children }) {
   );
 }
 
-/* ✅ Controlled scroll to avoid layout glitches */
+/* Controlled scroll */
 function useSmartScroll() {
   const navRef = useRef(null);
 
@@ -151,45 +155,33 @@ function useSmartScroll() {
   return { navRef, scrollToId };
 }
 
-/* ✅ Active step tracking (highlight) */
+/* Active step tracking */
 function useActiveSection(ids) {
-  const reduce = usePrefersReducedMotion();
   const [activeId, setActiveId] = useState(ids?.[0] ?? null);
 
   useEffect(() => {
     if (!ids?.length) return;
-
-    // Reduced motion users still benefit from accurate active state
-    const els = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
     if (!els.length) return;
 
     const io = new IntersectionObserver(
       (entries) => {
-        // pick most visible intersecting section
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
-
         if (visible?.target?.id) setActiveId(visible.target.id);
       },
-      {
-        // top offset: sticky nav space
-        rootMargin: "-20% 0px -65% 0px",
-        threshold: [0.1, 0.2, 0.35, 0.5],
-      }
+      { rootMargin: "-20% 0px -65% 0px", threshold: [0.1, 0.2, 0.35, 0.5] }
     );
 
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [ids, reduce]);
+  }, [ids]);
 
   return activeId;
 }
 
-/* ✅ Hero parallax (very light) */
+/* Light parallax only on hero image wrapper */
 function useParallax() {
   const reduce = usePrefersReducedMotion();
   const wrapRef = useRef(null);
@@ -211,7 +203,7 @@ function useParallax() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         setT({
-          x: Math.max(-1, Math.min(1, dx)) * 8, // px
+          x: Math.max(-1, Math.min(1, dx)) * 8,
           y: Math.max(-1, Math.min(1, dy)) * 6,
         });
       });
@@ -250,7 +242,7 @@ function StepsNav({ steps, onGo, navRef, activeId }) {
                 className={
                   "rounded-xl border px-3 py-2 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 " +
                   (isActive
-                    ? "border-white/25 bg-white/15 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                    ? "border-white/25 bg-white/15 text-white"
                     : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10")
                 }
                 title={s.title}
@@ -267,22 +259,6 @@ function StepsNav({ steps, onGo, navRef, activeId }) {
           >
             FAQ
           </button>
-        </div>
-
-        {/* mini active label */}
-        <div className="px-3 pb-3">
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white/70">
-            {activeId?.startsWith("adim-") ? (
-              <>
-                Aktif:{" "}
-                <span className="font-semibold text-white">
-                  Adım {activeId.replace("adim-", "")}
-                </span>
-              </>
-            ) : (
-              <>Aktif: <span className="font-semibold text-white">Başlangıç</span></>
-            )}
-          </div>
         </div>
       </div>
     </div>
@@ -414,9 +390,9 @@ export default function HowItWorksClient({ stepsData, faqs }) {
     <>
       <GlowBg />
 
-      {/* HERO (geniş + parallax + daha iyi hiyerarşi) */}
+      {/* ✅ HERO: layout aynı, SADECE görsel daha geniş */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.6fr]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -466,20 +442,23 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
           </div>
 
-          <div className="lg:justify-self-end lg:translate-x-12">
+          {/* 🔥 SADECE BU KISIM: görsel genişletme */}
+          <div className="lg:justify-self-end">
             <Reveal>
-              <div className="w-full" style={{ perspective: 1200 }}>
+              <div
+                ref={wrapRef}
+                className="w-[920px] max-w-full"
+                style={{ perspective: 900 }}
+              >
                 <div
                   className="transition-transform duration-300 will-change-transform"
-                  style={{
-                    transform: `translate3d(${t.x}px, ${t.y}px, 0)`,
-                  }}
+                  style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
                 >
                   <ImgFrame
                     src="/img/nasil-calisiriz/hero-surec.webp"
                     alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
                     priority
-                    aspectClassName="aspect-[24/10]"
+                    aspectClassName="aspect-[22/10]"
                   />
                 </div>
               </div>
@@ -492,7 +471,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
         </div>
       </section>
 
-      {/* Sticky steps nav (tek yerde adımlar + aktif adım highlight) */}
+      {/* Sticky steps nav */}
       <StepsNav
         steps={stepsData}
         onGo={scrollToId}
@@ -501,7 +480,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
       />
 
       {/* Enrichment */}
-      <section className="mx-auto max-w-[1400px] px-4 pb-16 pt-20">
+      <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
         <div className="grid gap-4 lg:grid-cols-3">
           <Reveal>
             <SoftCard className="p-6">
