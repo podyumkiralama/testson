@@ -11,7 +11,7 @@ const OG_IMAGE = `${SITE}/img/og/bolgesel-kiralama-og.webp`;
 export const metadata = {
   title: "Bölgesel Kiralama | Sahneva Organizasyon",
   description:
-    "Sahneva ile Türkiye genelinde LED ekran, truss, sahne/podyum ve ses-ışık sistemleri kiralama. Şehrinizi seçin, hızlı teklif alın.",
+    "Türkiye genelinde LED ekran, truss, sahne/podyum ve ses-ışık sistemleri kiralama. Şehrinizi seçin, hızlı teklif alın; kurulum, test ve söküm dahil.",
   alternates: {
     canonical: PAGE_URL,
     languages: { "tr-TR": PAGE_URL, "x-default": PAGE_URL },
@@ -21,7 +21,7 @@ export const metadata = {
     url: PAGE_URL,
     title: "Bölgesel Kiralama | Sahneva Organizasyon",
     description:
-      "Türkiye genelinde etkinlik ekipmanı kiralama: LED ekran, truss, sahne/podyum, ses-ışık. Şehrinizi seçin.",
+      "Türkiye genelinde etkinlik ekipmanı kiralama: LED ekran, truss, sahne/podyum, ses-ışık. Kurulum + operasyon + söküm dahil.",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Sahneva Bölgesel Kiralama" }],
     siteName: "Sahneva",
     locale: "tr_TR",
@@ -35,13 +35,14 @@ export const metadata = {
   },
 };
 
-function JsonLd({ regions, services, faqs }) {
+function JsonLd({ services, faqs, steps }) {
   const orgId = `${SITE}/#org`;
   const webId = `${SITE}/#website`;
   const pageId = `${PAGE_URL}#webpage`;
   const breadcrumbId = `${PAGE_URL}#breadcrumb`;
   const catalogId = `${PAGE_URL}#offerCatalog`;
   const faqId = `${PAGE_URL}#faq`;
+  const howtoId = `${PAGE_URL}#howto`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -60,7 +61,7 @@ function JsonLd({ regions, services, faqs }) {
         url: PAGE_URL,
         name: "Bölgesel Kiralama",
         description:
-          "Türkiye genelinde etkinlik ekipmanı kiralama: LED ekran, truss, sahne/podyum, ses-ışık. Şehrinizi seçin ve hızlı teklif alın.",
+          "Türkiye genelinde etkinlik ekipmanı kiralama: LED ekran, truss, sahne/podyum, ses-ışık. Kurulum, test ve söküm dahil.",
         isPartOf: { "@id": webId },
         about: { "@id": orgId },
         inLanguage: "tr-TR",
@@ -75,7 +76,6 @@ function JsonLd({ regions, services, faqs }) {
         ],
       },
 
-      // Basit bir OfferCatalog (fiyat vermeden, hizmet katalogu)
       {
         "@type": "OfferCatalog",
         "@id": catalogId,
@@ -87,11 +87,25 @@ function JsonLd({ regions, services, faqs }) {
             "@type": "Service",
             name: s.title,
             url: `${SITE}${s.href}`,
-            areaServed: {
-              "@type": "Country",
-              name: "Türkiye",
-            },
+            areaServed: { "@type": "Country", name: "Türkiye" },
           },
+        })),
+      },
+
+      // Mini HowTo: sayfa içi adımlar
+      {
+        "@type": "HowTo",
+        "@id": howtoId,
+        name: "Bölgesel kiralama süreci nasıl ilerler?",
+        description:
+          "Brief, teklif, lojistik planlama, kurulum/test, etkinlik operasyonu ve söküm adımlarıyla uçtan uca süreç.",
+        inLanguage: "tr-TR",
+        step: steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.title,
+          text: s.desc,
+          url: `${PAGE_URL}#${s.id}`,
         })),
       },
 
@@ -137,6 +151,15 @@ export default function Page() {
     { title: "Masa & Sandalye Kiralama", href: "/masa-sandalye-kiralama" },
   ];
 
+  // Sticky nav adımları (sayfa bölümleri)
+  const steps = [
+    { id: "hizmetler", title: "Hizmetler", desc: "Kiralama kalemlerini seçin ve paketleyin." },
+    { id: "surec", title: "Süreç", desc: "Brief → teklif → lojistik → kurulum/test → operasyon → söküm." },
+    { id: "bolgeler", title: "Bölgeler", desc: "Şehre göre planlama ve takvim netleşir." },
+    { id: "planlama", title: "Planlama", desc: "Enerji, zemin, yükseklik, güvenlik ve erişim kontrol listesi." },
+    { id: "sss", title: "FAQ", desc: "Bölgesel kiralama hakkında sık sorulanlar." },
+  ];
+
   const faqs = [
     {
       q: "Bölgesel kiralama ne demek?",
@@ -154,12 +177,20 @@ export default function Page() {
       q: "Aynı projede birden fazla hizmet alabilir miyim?",
       a: "Evet. LED ekran + truss + sahne/podyum + ses-ışık gibi kalemleri tek paket halinde planlayabiliriz.",
     },
+    {
+      q: "Kurulum ne zaman yapılır?",
+      a: "Proje büyüklüğüne göre 24–48 saat önce kurulum ve test planlanır. Bazı küçük kurulumlar aynı gün tamamlanabilir.",
+    },
+    {
+      q: "Güvenlik ve iş sağlığı süreçleri nasıl yönetiliyor?",
+      a: "Kurulumda zemin/ankraj, yükseklik güvenliği, kablolama ve geçiş yolları kontrol edilir. Proje tipine göre ek önlemler planlanır.",
+    },
   ];
 
   return (
     <main className="relative overflow-hidden">
-      <JsonLd regions={regions} services={services} faqs={faqs} />
-      <RegionalRentalClient regions={regions} services={services} faqs={faqs} />
+      <JsonLd services={services} faqs={faqs} steps={steps} />
+      <RegionalRentalClient regions={regions} services={services} faqs={faqs} steps={steps} />
     </main>
   );
 }
