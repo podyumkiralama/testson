@@ -109,8 +109,8 @@ export default function Navbar({
 
   const mobileMenuId = "mobile_menu";
   const servicesBtnId = "nav-services-button";
-  const servicesMenuId = "nav-services-menu"; // role="menu"
-  const servicesPanelId = "nav-services-mega-panel"; // panel wrapper
+  const servicesMenuId = "nav-services-menu"; // ✅ role="menu" bunun üzerinde
+  const servicesPanelId = "nav-services-mega-panel"; // ✅ görsel panel wrapper id
 
   const active = useCallback(
     (href) => pathname === href || (href !== "/" && pathname?.startsWith(href)),
@@ -145,6 +145,7 @@ export default function Navbar({
     hoverTimer.current = setTimeout(() => setServicesOpen(false), 200);
   }, []);
 
+  // ===== Keyboard nav for menuitems (ARIA menu pattern) =====
   const focusServiceItem = useCallback((index) => {
     const items = serviceItemRefs.current.filter(Boolean);
     if (!items.length) return;
@@ -227,6 +228,7 @@ export default function Navbar({
     [focusServiceItem]
   );
 
+  // When servicesOpen -> focus first item
   useEffect(() => {
     if (!servicesOpen) return;
     requestAnimationFrame(() => {
@@ -234,6 +236,7 @@ export default function Navbar({
     });
   }, [servicesOpen]);
 
+  // ESC global (mobile + mega)
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key !== "Escape") return;
@@ -257,6 +260,7 @@ export default function Navbar({
     return () => document.removeEventListener("keydown", handleEscape);
   }, [mobileOpen, servicesOpen]);
 
+  // route change -> close
   useEffect(() => {
     if (mobileOpen || servicesOpen || mobileServicesOpen) {
       setMobileOpen(false);
@@ -265,6 +269,7 @@ export default function Navbar({
     }
   }, [pathname]);
 
+  // body scroll lock for mobile
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -286,6 +291,7 @@ export default function Navbar({
     return undefined;
   }, [mobileOpen]);
 
+  // outside click close for mega menu
   useEffect(() => {
     if (!servicesOpen) return;
 
@@ -306,6 +312,7 @@ export default function Navbar({
     };
   }, [servicesOpen]);
 
+  // focus trap for mobile menu
   useEffect(() => {
     if (!mobileOpen) return;
 
@@ -399,7 +406,10 @@ export default function Navbar({
         role="menuitem"
         tabIndex={isOpen ? 0 : -1}
       >
-        <span className="mt-0.5 text-lg opacity-80 group-hover:opacity-100" aria-hidden="true">
+        <span
+          className="mt-0.5 text-lg opacity-80 group-hover:opacity-100"
+          aria-hidden="true"
+        >
           {icon}
         </span>
         <div className="min-w-0 flex-1">
@@ -482,6 +492,7 @@ export default function Navbar({
               <NavLink href="/hakkimizda">Hakkımızda</NavLink>
               <NavLink href="/blog">Blog</NavLink>
 
+              {/* Hizmetler */}
               <div className="relative" onMouseEnter={openNow} onMouseLeave={closeWithDelay}>
                 <button
                   id={servicesBtnId}
@@ -524,8 +535,10 @@ export default function Navbar({
                   </span>
                 </button>
 
+                {/* hover köprüsü */}
                 <span aria-hidden="true" className="absolute left-0 right-0 top-full h-3" onMouseEnter={openNow} />
 
+                {/* Mega panel (kapalıyken DOM’da yok) */}
                 {servicesOpen && (
                   <div
                     id={servicesPanelId}
@@ -535,6 +548,7 @@ export default function Navbar({
                   >
                     <div className="mx-auto max-w-7xl px-4">
                       <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
+                        {/* Üst bar */}
                         <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
                           <div className="flex items-center gap-3">
                             <span className="text-sm font-extrabold text-neutral-900">Hizmetler</span>
@@ -553,88 +567,34 @@ export default function Navbar({
                           </button>
                         </div>
 
+                        {/* İçerik */}
                         <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr]">
-                          {/* SOL BLOK: büyük görsel + alt 2 promo kart */}
-                          <div className="flex flex-col gap-4">
-                            <Link
-                              href="/hizmetler"
-                              onClick={() => setServicesOpen(false)}
-                              className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS}`}
-                            >
-                              <div className="relative aspect-[16/9]">
-                                <Image
-                                  src="/img/nav/hizmetler-mega.webp"
-                                  alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
-                                  fill
-                                  sizes="(max-width: 1024px) 100vw, 460px"
-                                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                              </div>
-
-                              <div className="absolute bottom-4 left-4 right-4">
-                                <div className="text-3xl font-black text-white">Hizmetler</div>
-                                <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
-                                  Tüm hizmetleri incele <span aria-hidden="true">›</span>
-                                </div>
-                              </div>
-                            </Link>
-
-                            {/* PROMO KARTLAR */}
-                            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                              <Link
-                                href="/iletisim"
-                                onClick={() => setServicesOpen(false)}
-                                className={`group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white ${FOCUS_RING_CLASS}`}
-                              >
-                                <div className="relative h-28">
-                                  <Image
-                                    src="/img/nav/promo-teklif.webp"
-                                    alt="Teklif al ve iletişime geç"
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 460px"
-                                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                                  />
-                                  <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
-                                </div>
-                                <div className="p-4">
-                                  <div className="text-sm font-extrabold text-neutral-900 group-hover:text-blue-700">
-                                    Teklif Al
-                                  </div>
-                                  <div className="mt-1 text-xs font-medium text-neutral-600">
-                                    Etkinliğiniz için hızlı fiyat ve planlama desteği.
-                                  </div>
-                                </div>
-                              </Link>
-
-                              <Link
-                                href="/projeler"
-                                onClick={() => setServicesOpen(false)}
-                                className={`group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white ${FOCUS_RING_CLASS}`}
-                              >
-                                <div className="relative h-28">
-                                  <Image
-                                    src="/img/nav/promo-projeler.webp"
-                                    alt="Sahneva projeleri ve referanslar"
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 460px"
-                                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                                  />
-                                  <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
-                                </div>
-                                <div className="p-4">
-                                  <div className="text-sm font-extrabold text-neutral-900 group-hover:text-blue-700">
-                                    Projeler
-                                  </div>
-                                  <div className="mt-1 text-xs font-medium text-neutral-600">
-                                    Kurulum örnekleri ve referans çalışmaları.
-                                  </div>
-                                </div>
-                              </Link>
+                          {/* Sol görsel */}
+                          <Link
+                            href="/hizmetler"
+                            onClick={() => setServicesOpen(false)}
+                            className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS}`}
+                          >
+                            <div className="relative aspect-[16/9]">
+                              <Image
+                                src="/img/nav/hizmetler-mega.webp"
+                                alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 460px"
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
                             </div>
-                          </div>
 
-                          {/* SAĞ BLOK: ARIA MENU */}
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <div className="text-3xl font-black text-white">Hizmetler</div>
+                              <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
+                                Tüm hizmetleri incele <span aria-hidden="true">›</span>
+                              </div>
+                            </div>
+                          </Link>
+
+                          {/* Sağ kolonlar: ARIA MENU */}
                           <div
                             id={servicesMenuId}
                             role="menu"
@@ -646,22 +606,30 @@ export default function Navbar({
                               const headingId = `services-col-${colIndex}-heading`;
                               return (
                                 <div key={col.title} role="group" aria-labelledby={headingId}>
-                                  <div id={headingId} className="text-sm font-extrabold text-neutral-900">
+                                  <div
+                                    id={headingId}
+                                    className="text-sm font-extrabold text-neutral-900"
+                                  >
                                     {col.title}
                                   </div>
 
                                   <div className="mt-3 space-y-2">
                                     {col.items.map((service) => {
-                                      const index = SERVICE_LINKS.findIndex((s) => s.href === service.href);
+                                      const index = SERVICE_LINKS.findIndex(
+                                        (s) => s.href === service.href
+                                      );
                                       const isFirstFocusable =
-                                        colIndex === 0 && service.href === col.items?.[0]?.href;
+                                        colIndex === 0 &&
+                                        service.href === col.items?.[0]?.href;
 
                                       return (
                                         <ServiceLink
                                           key={service.href}
                                           index={index < 0 ? 0 : index}
                                           isOpen={servicesOpen}
-                                          firstItemRef={isFirstFocusable ? firstServiceItemRef : null}
+                                          firstItemRef={
+                                            isFirstFocusable ? firstServiceItemRef : null
+                                          }
                                           {...service}
                                         />
                                       );
@@ -672,7 +640,7 @@ export default function Navbar({
                             })}
                           </div>
                         </div>
-                        {/* alt bar removed */}
+                        {/* alt bar intentionally removed */}
                       </div>
                     </div>
                   </div>
@@ -693,6 +661,7 @@ export default function Navbar({
               </a>
             </div>
 
+            {/* Mobile toggle */}
             <button
               type="button"
               ref={toggleButtonRef}
@@ -707,7 +676,9 @@ export default function Navbar({
                 border-neutral-200 hover:bg-neutral-50 transition-all duration-200
                 min-h-[44px] min-w-[44px] transform hover:scale-105 ${FOCUS_RING_CLASS}
               `}
-              aria-label={mobileOpen ? headerStrings.mobileToggleCloseLabel : headerStrings.mobileToggleOpenLabel}
+              aria-label={
+                mobileOpen ? headerStrings.mobileToggleCloseLabel : headerStrings.mobileToggleOpenLabel
+              }
               aria-expanded={mobileOpen ? "true" : "false"}
               aria-controls={mobileMenuId}
             >
@@ -792,6 +763,7 @@ export default function Navbar({
               Blog
             </Link>
 
+            {/* Mobile services accordion */}
             <div className="py-1">
               <button
                 id="mobile-services-button"
@@ -907,6 +879,7 @@ export default function Navbar({
         </nav>
       </div>
 
+      {/* Mobile Backdrop */}
       <div
         className={`
           lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300
