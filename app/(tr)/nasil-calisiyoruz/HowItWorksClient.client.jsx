@@ -383,10 +383,10 @@ export default function HowItWorksClient({ stepsData, faqs }) {
     <>
       <GlowBg />
 
-      {/* HERO (grid bozulmaz, görsel daha geniş hissi: aspect + scale) */}
+      {/* HERO */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        {/* ✅ SADECE BURADA: sağ kolon genişledi */}
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_760px]">
+        {/* ✅ Yazı biraz geniş, görsel biraz dar */}
+        <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_680px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -438,33 +438,28 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           </div>
 
           <div className="lg:justify-self-stretch">
-  <Reveal>
-    <div
-      ref={wrapRef}
-      className="w-full"
-      style={{ perspective: 900 }}
-    >
-      <div
-        className="transition-transform duration-300 will-change-transform"
-        style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
-      >
-        <ImgFrame
-          src="/img/nasil-calisiriz/hero-surec.webp"
-          alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
-          priority
-          /* ✅ daha büyük görünüm */
-          aspectClassName="aspect-[16/3] sm:aspect-[16/9]"
-          /* ✅ görseli genişlet, ama yazıların üstüne binmesin */
-          imgClassName="scale-[1.03] origin-center"
-          sizes="(max-width: 768px) 100vw, 820px"
-          className="w-full"
-        />
-      </div>
-    </div>
-  </Reveal>
-</div>
-
-
+            <Reveal>
+              <div ref={wrapRef} className="w-full" style={{ perspective: 900 }}>
+                {/* ✅ Görsel az yukarı (12px), parallax korunur */}
+                <div
+                  className="transition-transform duration-300 will-change-transform"
+                  style={{ transform: `translate3d(${t.x}px, calc(${t.y}px - 12px), 0)` }}
+                >
+                  <ImgFrame
+                    src="/img/nasil-calisiriz/hero-surec.webp"
+                    alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
+                    priority
+                    /* aynı oran kalsın */
+                    aspectClassName="aspect-[16/3] sm:aspect-[16/9]"
+                    /* ✅ görsel çok az küçüldü (daha temiz) */
+                    imgClassName="scale-[1.015] origin-center"
+                    sizes="(max-width: 768px) 100vw, 820px"
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
