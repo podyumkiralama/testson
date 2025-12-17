@@ -385,7 +385,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
       {/* HERO (grid bozulmaz, görsel daha geniş hissi: aspect + scale) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_520px]">
+        {/* ✅ SADECE BURADA: sağ kolon genişledi */}
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_680px]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -438,11 +439,8 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
           <div className="lg:justify-self-end">
             <Reveal>
-              <div
-                ref={wrapRef}
-                className="w-full max-w-[520px] sm:max-w-[560px]"
-                style={{ perspective: 900 }}
-              >
+              {/* ✅ SADECE BURADA: max-w kilidi kaldırıldı, görsel alanı tam genişlik */}
+              <div ref={wrapRef} className="w-full max-w-none" style={{ perspective: 900 }}>
                 <div
                   className="transition-transform duration-300 will-change-transform"
                   style={{ transform: `translate3d(${t.x}px, ${t.y}px, 0)` }}
@@ -451,9 +449,11 @@ export default function HowItWorksClient({ stepsData, faqs }) {
                     src="/img/nasil-calisiriz/hero-surec.webp"
                     alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
                     priority
-                    aspectClassName="aspect-[21/9]"
+                    /* ✅ SADECE BURADA: daha dolgun hero oranı */
+                    aspectClassName="aspect-[16/9]"
                     imgClassName="scale-[1.18] origin-center"
-                    sizes="(max-width: 768px) 100vw, 560px"
+                    /* ✅ Daha büyük kolona uygun sizes */
+                    sizes="(max-width: 768px) 100vw, 720px"
                   />
                 </div>
               </div>
