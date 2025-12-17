@@ -81,9 +81,12 @@ export default function Navbar({
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const computedHeadingId = headingIdProp ?? `navbar-heading-${instanceId}`;
-  const computedDescriptionId = descriptionIdProp ?? `navbar-description-${instanceId}`;
-  const resolvedAriaLabel = ariaLabel ?? (ariaLabelledby ? undefined : headerStrings.navLabel);
-  const resolvedAriaLabelledby = ariaLabel || ariaLabelledby ? ariaLabelledby : computedHeadingId;
+  const computedDescriptionId =
+    descriptionIdProp ?? `navbar-description-${instanceId}`;
+  const resolvedAriaLabel =
+    ariaLabel ?? (ariaLabelledby ? undefined : headerStrings.navLabel);
+  const resolvedAriaLabelledby =
+    ariaLabel || ariaLabelledby ? ariaLabelledby : computedHeadingId;
   const resolvedAriaDescribedby = ariaDescribedby ?? computedDescriptionId;
   const navRole = roleOverride;
   const shouldRenderHeading = !resolvedAriaLabel && !ariaLabelledby;
@@ -106,8 +109,6 @@ export default function Navbar({
 
   /**
    * Aktif link helper
-   * @param {string} href - Linkin yolu
-   * @returns {boolean}
    */
   const active = useCallback(
     (href) => pathname === href || (href !== "/" && pathname?.startsWith(href)),
@@ -118,18 +119,18 @@ export default function Navbar({
   const whatsappBtnClass = useMemo(
     () =>
       `ml-2 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-white text-sm font-bold
-        bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
-        transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
-        min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
+       bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
+       transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
+       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
     []
   );
 
   const mobileWhatsappBtnClass = useMemo(
     () =>
       `inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-white text-sm font-bold
-        bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
-        transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
-        min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
+       bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
+       transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
+       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
     []
   );
 
@@ -410,8 +411,12 @@ export default function Navbar({
           {icon}
         </span>
         <div className="min-w-0 flex-1">
-          <div className="font-extrabold text-neutral-900 group-hover:text-blue-700">{label}</div>
-          <div className="mt-0.5 text-xs font-medium text-neutral-600">{description}</div>
+          <div className="font-extrabold text-neutral-900 group-hover:text-blue-700">
+            {label}
+          </div>
+          <div className="mt-0.5 text-xs font-medium text-neutral-600">
+            {description}
+          </div>
         </div>
         <span className="ml-2 text-neutral-400 group-hover:text-blue-600" aria-hidden="true">
           ›
@@ -427,9 +432,11 @@ export default function Navbar({
     return [
       {
         title: "Sahne & Görüntü",
-        items: [byHref("/sahne-kiralama"), byHref("/podyum-kiralama"), byHref("/led-ekran-kiralama")].filter(
-          Boolean
-        ),
+        items: [
+          byHref("/sahne-kiralama"),
+          byHref("/podyum-kiralama"),
+          byHref("/led-ekran-kiralama"),
+        ].filter(Boolean),
       },
       {
         title: "Teknik Altyapı",
@@ -523,138 +530,160 @@ export default function Navbar({
                   <span className="flex items-center gap-2">
                     Hizmetler
                     <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        servicesOpen ? "rotate-180" : ""
+                      }`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </span>
                 </button>
 
                 {/* hover köprüsü */}
-                <span aria-hidden="true" className="absolute left-0 right-0 top-full h-3" onMouseEnter={openNow} />
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 right-0 top-full h-3"
+                  onMouseEnter={openNow}
+                />
 
-                {/* MEGA PANEL */}
-                <div
-  id={servicesMenuId}
-  role="dialog"
-  aria-modal="false"
-  aria-label="Hizmetler mega menüsü"
-  aria-hidden={!servicesOpen}
-  data-open={servicesOpen ? "true" : undefined}
-  className={`
-    fixed inset-x-0 top-[76px] z-[70]
-    transition-all duration-200
-    ${servicesOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"}
-  `}
-  onMouseEnter={openNow}
-  onMouseLeave={closeWithDelay}
->
-  <div className="mx-auto max-w-6xl px-4">
-    <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-110px)] overflow-y-auto">
- 
-                    {/* üst bar */}
-                    <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-extrabold text-neutral-900">Hizmetler</span>
-                        <span className="text-xs font-semibold text-neutral-500">
-                          Sahneva’nın tüm kiralama çözümleri
-                        </span>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => setServicesOpen(false)}
-                        className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
-                        aria-label="Mega menüyü kapat"
-                      >
-                        ✕
-                      </button>
-                    </div>
-
-                    {/* içerik */}
-                    <div className="grid gap-6 p-6 lg:grid-cols-[520px_1fr]">
-                      {/* sol: büyük görsel */}
-                      <Link
-                        href="/hizmetler"
-                        onClick={() => setServicesOpen(false)}
-                        className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS}`}
-                      >
-                        <div className="relative aspect-[16/9]">
-                          <Image
-                            src="/img/nav/hizmetler-mega.webp"
-                            alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 520px"
-                            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                        </div>
-
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <div className="text-3xl font-black text-white">Hizmetler</div>
-                          <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
-                            Tüm hizmetleri incele <span aria-hidden="true">›</span>
+                {/* MEGA PANEL (kapalıyken DOM'da YOK -> aria-hidden / odak hatası biter) */}
+                {servicesOpen && (
+                  <div
+                    id={servicesMenuId}
+                    role="dialog"
+                    aria-modal="false"
+                    aria-label="Hizmetler mega menüsü"
+                    className="fixed inset-x-0 top-[80px] z-[70]"
+                    onMouseEnter={openNow}
+                    onMouseLeave={closeWithDelay}
+                  >
+                    <div className="mx-auto max-w-6xl px-4">
+                      <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
+                        {/* üst bar */}
+                        <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm font-extrabold text-neutral-900">
+                              Hizmetler
+                            </span>
+                            <span className="text-xs font-semibold text-neutral-500">
+                              Sahneva’nın tüm kiralama çözümleri
+                            </span>
                           </div>
+
+                          <button
+                            type="button"
+                            onClick={() => setServicesOpen(false)}
+                            className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
+                            aria-label="Mega menüyü kapat"
+                          >
+                            ✕
+                          </button>
                         </div>
-                      </Link>
 
-                      {/* sağ: kolonlar */}
-                      <div className="grid gap-6 sm:grid-cols-2 xlg:grid-cols-3">
-                        {serviceCols.map((col, colIndex) => (
-                          <div key={col.title}>
-                            <div className="text-sm font-extrabold text-neutral-900">{col.title}</div>
-                            <div className="mt-3 space-y-2">
-                              {col.items.map((service) => {
-                                const index = SERVICE_LINKS.findIndex((s) => s.href === service.href);
-                                const isFirstFocusable = colIndex === 0 && service.href === col.items?.[0]?.href;
-
-                                return (
-                                  <ServiceLink
-                                    key={service.href}
-                                    index={index < 0 ? 0 : index}
-                                    isOpen={servicesOpen}
-                                    firstItemRef={isFirstFocusable ? firstServiceItemRef : null}
-                                    {...service}
-                                  />
-                                );
-                              })}
+                        {/* içerik */}
+                        <div className="grid gap-6 p-6 lg:grid-cols-[520px_1fr]">
+                          {/* sol: büyük görsel */}
+                          <Link
+                            href="/hizmetler"
+                            onClick={() => setServicesOpen(false)}
+                            className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS}`}
+                          >
+                            <div className="relative aspect-[16/9]">
+                              <Image
+                                src="/img/nav/hizmetler-mega.webp"
+                                alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 520px"
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
                             </div>
+
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <div className="text-3xl font-black text-white">
+                                Hizmetler
+                              </div>
+                              <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
+                                Tüm hizmetleri incele{" "}
+                                <span aria-hidden="true">›</span>
+                              </div>
+                            </div>
+                          </Link>
+
+                          {/* sağ: kolonlar */}
+                          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                            {serviceCols.map((col, colIndex) => (
+                              <div key={col.title}>
+                                <div className="text-sm font-extrabold text-neutral-900">
+                                  {col.title}
+                                </div>
+                                <div className="mt-3 space-y-2">
+                                  {col.items.map((service) => {
+                                    const index = SERVICE_LINKS.findIndex(
+                                      (s) => s.href === service.href
+                                    );
+                                    const isFirstFocusable =
+                                      colIndex === 0 &&
+                                      service.href === col.items?.[0]?.href;
+
+                                    return (
+                                      <ServiceLink
+                                        key={service.href}
+                                        index={index < 0 ? 0 : index}
+                                        isOpen={servicesOpen}
+                                        firstItemRef={
+                                          isFirstFocusable ? firstServiceItemRef : null
+                                        }
+                                        {...service}
+                                      />
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </div>
+                        </div>
 
-                    {/* alt bar */}
-                    <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-neutral-200">
-                      <span className="text-xs text-neutral-500">İpucu: ESC ile kapatabilirsiniz.</span>
+                        {/* alt bar */}
+                        <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-neutral-200">
+                          <span className="text-xs text-neutral-500">
+                            İpucu: ESC ile kapatabilirsiniz.
+                          </span>
 
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href="/iletisim"
-                          onClick={() => setServicesOpen(false)}
-                          className={`inline-flex items-center justify-center rounded-xl bg-blue-700 px-4 py-2 text-xs font-extrabold text-white hover:bg-blue-800 ${FOCUS_RING_CLASS}`}
-                        >
-                          Teklif / İletişim
-                        </Link>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href="/iletisim"
+                              onClick={() => setServicesOpen(false)}
+                              className={`inline-flex items-center justify-center rounded-xl bg-blue-700 px-4 py-2 text-xs font-extrabold text-white hover:bg-blue-800 ${FOCUS_RING_CLASS}`}
+                            >
+                              Teklif / İletişim
+                            </Link>
 
-                        <a
-                          href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mega_menu_whatsapp`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => setServicesOpen(false)}
-                          className={`inline-flex items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 py-2 text-xs font-extrabold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
-                          aria-label="WhatsApp Destek – yeni sekmede açılır"
-                        >
-                          WhatsApp
-                        </a>
+                            <a
+                              href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mega_menu_whatsapp`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setServicesOpen(false)}
+                              className={`inline-flex items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 py-2 text-xs font-extrabold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
+                              aria-label="WhatsApp Destek – yeni sekmede açılır"
+                            >
+                              WhatsApp
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <NavLink href="/iletisim">İletişim</NavLink>
@@ -689,7 +718,11 @@ export default function Navbar({
                 border-neutral-200 hover:bg-neutral-50 transition-all duration-200
                 min-h-[44px] min-w-[44px] transform hover:scale-105 ${FOCUS_RING_CLASS}
               `}
-              aria-label={mobileOpen ? headerStrings.mobileToggleCloseLabel : headerStrings.mobileToggleOpenLabel}
+              aria-label={
+                mobileOpen
+                  ? headerStrings.mobileToggleCloseLabel
+                  : headerStrings.mobileToggleOpenLabel
+              }
               aria-expanded={mobileOpen ? "true" : "false"}
               aria-controls={mobileMenuId}
             >
@@ -728,7 +761,11 @@ export default function Navbar({
         className={`
           lg:hidden fixed z-50 left-0 right-0 top-16 bg-white border-t border-neutral-200
           shadow-2xl overflow-hidden transition-all duration-300 ease-in-out
-          ${mobileOpen ? "max-h-[85vh] opacity-100 pointer-events-auto visible" : "max-h-0 opacity-0 pointer-events-none invisible"}
+          ${
+            mobileOpen
+              ? "max-h-[85vh] opacity-100 pointer-events-auto visible"
+              : "max-h-0 opacity-0 pointer-events-none invisible"
+          }
         `}
       >
         <h2 id={MOBILE_MENU_HEADING_ID} className="sr-only">
@@ -757,9 +794,7 @@ export default function Navbar({
               `}
               aria-current={active("/hakkimizda") ? "page" : undefined}
             >
-              <span className="text-lg" aria-hidden="true">
-                👥
-              </span>
+              <span className="text-lg" aria-hidden="true">👥</span>
               Hakkımızda
             </Link>
 
@@ -774,9 +809,7 @@ export default function Navbar({
               `}
               aria-current={active("/blog") ? "page" : undefined}
             >
-              <span className="text-lg" aria-hidden="true">
-                📝
-              </span>
+              <span className="text-lg" aria-hidden="true">📝</span>
               Blog
             </Link>
 
@@ -796,9 +829,7 @@ export default function Navbar({
                 `}
               >
                 <span className="flex items-center gap-3">
-                  <span className="text-lg" aria-hidden="true">
-                    🎯
-                  </span>
+                  <span className="text-lg" aria-hidden="true">🎯</span>
                   <span>Hizmetler</span>
                 </span>
                 <svg
@@ -825,7 +856,11 @@ export default function Navbar({
                 data-inert={mobileServicesOpen ? undefined : true}
                 className={`
                   overflow-hidden transition-all duration-300 ease-in-out
-                  ${mobileServicesOpen ? "max-h-[600px] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}
+                  ${
+                    mobileServicesOpen
+                      ? "max-h-[600px] opacity-100 py-2"
+                      : "max-h-0 opacity-0 py-0"
+                  }
                 `}
               >
                 <div className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1">
@@ -848,7 +883,9 @@ export default function Navbar({
                       </span>
                       <div className="flex-1 min-w-0">
                         <div className="font-bold text-neutral-900">{label}</div>
-                        <div className="text-xs text-neutral-600 mt-0.5 font-medium">{description}</div>
+                        <div className="text-xs text-neutral-600 mt-0.5 font-medium">
+                          {description}
+                        </div>
                       </div>
                     </Link>
                   ))}
@@ -867,18 +904,14 @@ export default function Navbar({
               `}
               aria-current={active("/iletisim") ? "page" : undefined}
             >
-              <span className="text-lg" aria-hidden="true">
-                📞
-              </span>
+              <span className="text-lg" aria-hidden="true">📞</span>
               İletişim
             </Link>
 
             {/* Mobil WhatsApp CTA */}
             <div className="mt-4 rounded-2xl border border-green-700/20 bg-gradient-to-r from-emerald-700 to-green-600 p-4 shadow-xl">
               <div className="flex items-start gap-3">
-                <span aria-hidden="true" className="text-2xl">
-                  💬
-                </span>
+                <span aria-hidden="true" className="text-2xl">💬</span>
                 <div className="space-y-1 text-white">
                   <h3 className="text-lg font-extrabold">WhatsApp Destek</h3>
                   <p className="text-sm font-medium text-emerald-50">
@@ -894,9 +927,7 @@ export default function Navbar({
                 className={`${mobileWhatsappBtnClass} mt-4`}
                 onClick={() => setMobileOpen(false)}
               >
-                <span aria-hidden="true" className="text-base">
-                  🚀
-                </span>
+                <span aria-hidden="true" className="text-base">🚀</span>
                 <span>WhatsApp Destek</span>
               </a>
             </div>
