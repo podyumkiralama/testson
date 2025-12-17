@@ -39,6 +39,12 @@ const SERVICE_LINKS = [
     description: "Alüminyum truss, portal ve üst yapı çözümleri",
   },
   {
+  href: "/kurumsal-organizasyon",
+  label: "Kurumsal Organizasyon",
+  icon: "🏢",
+  description: "Kurumsal etkinlik planlama ve uçtan uca organizasyon yönetimi",
+},
+  {
     href: "/cadir-kiralama",
     label: "Çadır Kiralama",
     icon: "⛺",
@@ -447,6 +453,11 @@ export default function Navbar({
         title: "Alan & Donanım",
         items: [byHref("/cadir-kiralama"), byHref("/masa-sandalye-kiralama")].filter(Boolean),
       },
+      {
+  title: "Organizasyon",
+  items: [byHref("/kurumsal-organizasyon")].filter(Boolean),
+},
+
     ];
   }, []);
 
