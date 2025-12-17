@@ -539,26 +539,23 @@ export default function Navbar({
 
                 {/* MEGA PANEL */}
                 <div
-                  id={servicesMenuId}
-                  role="dialog"
-                  aria-modal="false"
-                  aria-label="Hizmetler mega menüsü"
-                  aria-hidden={!servicesOpen}
-                  data-open={servicesOpen ? "true" : undefined}
-                  className={`
-                    absolute left-1/2 top-full mt-3 -translate-x-1/2
-                    w-[min(1200px,calc(100vw-2rem))] z-[70]
-                    transition-all duration-200
-                    ${
-                      servicesOpen
-                        ? "opacity-100 translate-y-0 pointer-events-auto"
-                        : "opacity-0 translate-y-2 pointer-events-none"
-                    }
-                  `}
-                  onMouseEnter={openNow}
-                  onMouseLeave={closeWithDelay}
-                >
-                  <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden">
+  id={servicesMenuId}
+  role="dialog"
+  aria-modal="false"
+  aria-label="Hizmetler mega menüsü"
+  aria-hidden={!servicesOpen}
+  data-open={servicesOpen ? "true" : undefined}
+  className={`
+    fixed inset-x-0 top-[76px] z-[70]
+    transition-all duration-200
+    ${servicesOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"}
+  `}
+  onMouseEnter={openNow}
+  onMouseLeave={closeWithDelay}
+>
+  <div className="mx-auto max-w-6xl px-4">
+    <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-110px)] overflow-y-auto">
+ 
                     {/* üst bar */}
                     <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
                       <div className="flex items-center gap-3">
@@ -606,7 +603,7 @@ export default function Navbar({
                       </Link>
 
                       {/* sağ: kolonlar */}
-                      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-6 sm:grid-cols-2 xlg:grid-cols-3">
                         {serviceCols.map((col, colIndex) => (
                           <div key={col.title}>
                             <div className="text-sm font-extrabold text-neutral-900">{col.title}</div>
