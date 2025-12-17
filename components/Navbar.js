@@ -401,7 +401,7 @@ export default function Navbar({
           if (index === 0 && firstItemRef) firstItemRef.current = node;
         }}
         className={`
-          group flex items-start gap-3 rounded-xl px-4 py-3.5
+          group flex items-start gap-3 rounded-xl px-5 py-4
           text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
           transition-all duration-200 border border-transparent hover:border-blue-200
           ${FOCUS_RING_CLASS}
@@ -549,116 +549,127 @@ export default function Navbar({
                 {/* hover köprüsü */}
                 <span aria-hidden="true" className="absolute left-0 right-0 top-full h-3" onMouseEnter={openNow} />
 
-                {/* Mega panel (kapalıyken DOM’da yok) */}
-                {servicesOpen && (
+{/* Mega panel (kapalıyken DOM’da yok) */}
+{servicesOpen && (
+  <div
+    id={servicesPanelId}
+    className="fixed inset-x-0 top-[80px] z-[70]"
+    onMouseEnter={openNow}
+    onMouseLeave={closeWithDelay}
+  >
+    <div className="mx-auto max-w-7xl px-4">
+      <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
+        {/* Üst bar */}
+        <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-extrabold text-neutral-900">Hizmetler</span>
+            <span className="text-xs font-semibold text-neutral-500">
+              Sahneva’nın tüm kiralama çözümleri
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setServicesOpen(false)}
+            className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
+            aria-label="Mega menüyü kapat"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* İçerik */}
+        <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr] items-stretch">
+          {/* Sol görsel */}
+          <Link
+            href="/hizmetler"
+            onClick={() => setServicesOpen(false)}
+            className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS} h-full`}
+          >
+            <div className="relative h-full min-h-[420px]">
+              <Image
+                src="/img/nav/hizmetler-mega.webp"
+                alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
+                fill
+                sizes="(max-width: 1024px) 100vw, 460px"
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            </div>
+
+            <div className="absolute bottom-4 left-4 right-4">
+              <div className="text-3xl font-black text-white">Hizmetler</div>
+              <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
+                Tüm hizmetleri incele <span aria-hidden="true">›</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Sağ kolonlar: ARIA MENU */}
+          <div
+            id={servicesMenuId}
+            role="menu"
+            aria-label="Hizmetler menüsü"
+            aria-orientation="vertical"
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {serviceCols.map((col, colIndex) => {
+              const headingId = `services-col-${colIndex}-heading`;
+              const isTechnical = col.title === "Teknik Altyapı";
+
+              return (
+                <div key={col.title} role="group" aria-labelledby={headingId}>
                   <div
-                    id={servicesPanelId}
-                    className="fixed inset-x-0 top-[80px] z-[70]"
-                    onMouseEnter={openNow}
-                    onMouseLeave={closeWithDelay}
+                    id={headingId}
+                    className="text-sm font-extrabold text-neutral-900"
                   >
-                    <div className="mx-auto max-w-7xl px-4">
-                      <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
-                        {/* Üst bar */}
-                        <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm font-extrabold text-neutral-900">Hizmetler</span>
-                            <span className="text-xs font-semibold text-neutral-500">
-                              Sahneva’nın tüm kiralama çözümleri
-                            </span>
-                          </div>
+                    {col.title}
+                  </div>
 
-                          <button
-                            type="button"
-                            onClick={() => setServicesOpen(false)}
-                            className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
-                            aria-label="Mega menüyü kapat"
-                          >
-                            ✕
-                          </button>
-                        </div>
+                  {/* 🔥 Kurumsal Organizasyon – Teknik Altyapı üstüne blok */}
+                  {isTechnical && (
+                    <div className="mt-2 mb-3">
+                      <ServiceLink
+                        index={SERVICE_LINKS.findIndex(
+                          (s) => s.href === "/kurumsal-organizasyon"
+                        )}
+                        isOpen={servicesOpen}
+                        {...SERVICE_LINKS.find(
+                          (s) => s.href === "/kurumsal-organizasyon"
+                        )}
+                      />
+                    </div>
+                  )}
 
-                        {/* İçerik */}
-                        <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr] items-stretch">
-                          {/* Sol görsel */}
-                         <Link
-  href="/hizmetler"
-  onClick={() => setServicesOpen(false)}
-  className={`group relative overflow-hidden rounded-2xl border border-neutral-200 ${FOCUS_RING_CLASS} h-full`}
->
-  <div className="relative h-full min-h-[420px]">
-    <Image
-      src="/img/nav/hizmetler-mega.webp"
-      alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
-      fill
-      sizes="(max-width: 1024px) 100vw, 460px"
-      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
-    />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-  </div>
+                  {/* Normal servisler */}
+                  <div className="mt-2 space-y-2">
+                    {col.items.map((service) => {
+                      const index = SERVICE_LINKS.findIndex(
+                        (s) => s.href === service.href
+                      );
 
-  <div className="absolute bottom-4 left-4 right-4">
-    <div className="text-3xl font-black text-white">Hizmetler</div>
-    <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
-      Tüm hizmetleri incele <span aria-hidden="true">›</span>
+                      return (
+                        <ServiceLink
+                          key={service.href}
+                          index={index}
+                          isOpen={servicesOpen}
+                          {...service}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* alt bar intentionally removed */}
+      </div>
     </div>
   </div>
-</Link>
+)}
 
-                          {/* Sağ kolonlar: ARIA MENU */}
-                          <div
-                            id={servicesMenuId}
-                            role="menu"
-                            aria-label="Hizmetler menüsü"
-                            aria-orientation="vertical"
-                            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-                          >
-                            {serviceCols.map((col, colIndex) => {
-                              const headingId = `services-col-${colIndex}-heading`;
-                              return (
-                                <div key={col.title} role="group" aria-labelledby={headingId}>
-                                  <div
-                                    id={headingId}
-                                    className="text-sm font-extrabold text-neutral-900"
-                                  >
-                                    {col.title}
-                                  </div>
-
-                                  <div className="mt-3 space-y-2">
-                                    {col.items.map((service) => {
-                                      const index = SERVICE_LINKS.findIndex(
-                                        (s) => s.href === service.href
-                                      );
-                                      const isFirstFocusable =
-                                        colIndex === 0 &&
-                                        service.href === col.items?.[0]?.href;
-
-                                      return (
-                                        <ServiceLink
-                                          key={service.href}
-                                          index={index < 0 ? 0 : index}
-                                          isOpen={servicesOpen}
-                                          firstItemRef={
-                                            isFirstFocusable ? firstServiceItemRef : null
-                                          }
-                                          {...service}
-                                        />
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                        {/* alt bar intentionally removed */}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <NavLink href="/iletisim">İletişim</NavLink>
 
               <a
                 href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=desktop_whatsapp`}
