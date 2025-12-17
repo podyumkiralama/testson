@@ -453,7 +453,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
           alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
           priority
           /* ✅ daha büyük görünüm */
-          aspectClassName="aspect-[16/5] sm:aspect-[16/7]"
+          aspectClassName="aspect-[16/3] sm:aspect-[16/9]"
           /* ✅ görseli genişlet, ama yazıların üstüne binmesin */
           imgClassName="scale-[1.03] origin-center"
           sizes="(max-width: 768px) 100vw, 820px"
