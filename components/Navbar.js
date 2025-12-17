@@ -51,6 +51,13 @@ const SERVICE_LINKS = [
     icon: "🎪",
     description: "Portatif ve modüler sahne sistemleri",
   },
+  {
+  href: "/truss-kiralama",
+  label: "Truss Kiralama",
+  icon: "🧩",
+  description: "Alüminyum truss, portal ve sahne üst yapı çözümleri",
+},
+
 ];
 
 const NAVBAR_WHATSAPP_MESSAGE = encodeURIComponent(
@@ -439,9 +446,9 @@ export default function Navbar({
         ].filter(Boolean),
       },
       {
-        title: "Teknik Altyapı",
-        items: [byHref("/ses-isik-sistemleri")].filter(Boolean),
-      },
+  title: "Teknik Altyapı",
+  items: [byHref("/ses-isik-sistemleri"), byHref("/truss-kiralama")].filter(Boolean),
+},
       {
         title: "Alan & Donanım",
         items: [byHref("/cadir-kiralama"), byHref("/masa-sandalye-kiralama")].filter(Boolean),
