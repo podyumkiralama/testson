@@ -416,7 +416,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
       {/* HERO (geniş + parallax + daha iyi hiyerarşi) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.15fr]">
+        <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.6fr]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -466,9 +466,9 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
           </div>
 
-          <div className="lg:justify-self-end lg:translate-x-2">
+          <div className="lg:justify-self-end lg:translate-x-12">
             <Reveal>
-              <div className="w-full max-w-none" style={{ perspective: 900 }}>
+              <div className="w-full" style={{ perspective: 1200 }}>
                 <div
                   className="transition-transform duration-300 will-change-transform"
                   style={{
@@ -479,7 +479,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
                     src="/img/nasil-calisiriz/hero-surec.webp"
                     alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
                     priority
-                    aspectClassName="aspect-[21/10]"
+                    aspectClassName="aspect-[24/10]"
                   />
                 </div>
               </div>
@@ -501,7 +501,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
       />
 
       {/* Enrichment */}
-      <section className="mx-auto max-w-6xl px-4 pb-10 pt-6">
+      <section className="mx-auto max-w-[1400px] px-4 pb-16 pt-20">
         <div className="grid gap-4 lg:grid-cols-3">
           <Reveal>
             <SoftCard className="p-6">
