@@ -289,9 +289,10 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
     <>
       <GlowBg />
 
-     {/* HERO */}
+    {/* HERO */}
 <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-  <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_480px]">
+  {/* ✅ Burada büyüttük: sağ kolon 680px */}
+  <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_680px]">
     {/* Sol (yazı) */}
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center gap-3">
@@ -347,19 +348,20 @@ export default function RegionalRentalClient({ regions, services, faqs, steps })
     </div>
 
     {/* Sağ (görsel) */}
-    <div className="lg:justify-self-end lg:-mt-2">
+    {/* ✅ Görseli “dolu” göstermek için: aspect + sizes + az yukarı */}
+    <div className="lg:justify-self-stretch lg:-mt-2 w-full">
       <Reveal>
         <SoftCard className="overflow-hidden">
-          <div className="relative aspect-[21/10] w-full">
+          <div className="relative aspect-[16/3] sm:aspect-[16/9] w-full">
             <Image
-  src="/img/bolgesel-kiralama/hero.webp"
-  alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
-  fill
-  priority
-  sizes="(max-width: 768px) 100vw, 480px"
-  className="object-cover object-[50%_35%] transition-transform duration-500 will-change-transform hover:scale-[1.03]"
-/>
-
+              src="/img/bolgesel-kiralama/hero.webp"
+              alt="Sahneva bölgesel kiralama: ekip, planlama ve operasyon"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 820px"
+              className="object-cover object-[50%_35%] transition-transform duration-500 will-change-transform hover:scale-[1.03]"
+              style={{ transform: "translate3d(0, -12px, 0)" }}
+            />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
           </div>
         </SoftCard>
