@@ -1,5 +1,5 @@
 // app/(tr)/nasil-calisiyoruz/page.jsx
-import HowItWorksClient from "@/components/HowItWorksClient.client";
+import HowItWorksClient from "./HowItWorksClient.client";
 
 /* ================== SEO METADATA ================== */
 const SITE =
