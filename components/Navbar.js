@@ -660,39 +660,6 @@ export default function Navbar({
                           </div>
                         </div>
 
-                        {/* alt bar */}
-                        <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-neutral-200">
-                          <span className="text-xs text-neutral-500">
-                            İpucu: ESC ile kapatabilirsiniz.
-                          </span>
-
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href="/iletisim"
-                              onClick={() => setServicesOpen(false)}
-                              className={`inline-flex items-center justify-center rounded-xl bg-blue-700 px-4 py-2 text-xs font-extrabold text-white hover:bg-blue-800 ${FOCUS_RING_CLASS}`}
-                            >
-                              Teklif / İletişim
-                            </Link>
-
-                            <a
-                              href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=mega_menu_whatsapp`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => setServicesOpen(false)}
-                              className={`inline-flex items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 py-2 text-xs font-extrabold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
-                              aria-label="WhatsApp Destek – yeni sekmede açılır"
-                            >
-                              WhatsApp
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               <NavLink href="/iletisim">İletişim</NavLink>
 
               {/* Desktop WhatsApp CTA */}
