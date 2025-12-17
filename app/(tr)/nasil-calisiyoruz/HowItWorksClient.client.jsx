@@ -55,10 +55,10 @@ function InlineLink({ href, children }) {
   );
 }
 
-function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "" }) {
+function ImgFrame({ src, alt, priority = false, className = "", imgClassName = "", aspectClassName = "aspect-[16/10]" }) {
   return (
     <SoftCard className={"overflow-hidden " + className}>
-      <div className="relative aspect-[16/10] w-full">
+      <div className={"relative w-full " + aspectClassName}>
         <Image
           src={src}
           alt={alt}
@@ -416,7 +416,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
 
       {/* HERO (geniş + parallax + daha iyi hiyerarşi) */}
       <section className="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pb-14 sm:pt-20">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.15fr]">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-3">
               <Badge>Sahneva Organizasyon</Badge>
@@ -466,13 +466,9 @@ export default function HowItWorksClient({ stepsData, faqs }) {
             </div>
           </div>
 
-          <div className="lg:justify-self-end">
+          <div className="lg:justify-self-end lg:translate-x-2">
             <Reveal>
-              <div
-                ref={wrapRef}
-                className="w-full max-w-[720px]"
-                style={{ perspective: 900 }}
-              >
+              <div className="w-full max-w-none" style={{ perspective: 900 }}>
                 <div
                   className="transition-transform duration-300 will-change-transform"
                   style={{
@@ -483,6 +479,7 @@ export default function HowItWorksClient({ stepsData, faqs }) {
                     src="/img/nasil-calisiriz/hero-surec.webp"
                     alt="Sahneva etkinlik süreci: planlama, kurulum ve operasyon"
                     priority
+                    aspectClassName="aspect-[21/10]"
                   />
                 </div>
               </div>
