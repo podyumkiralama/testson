@@ -21,7 +21,8 @@ const CTA_BUTTONS = [
     label: "Hemen Ara",
     icon: "📞",
     srHint: "",
-    ariaLabel: "Hemen Ara — Telefon ile arayın",
+    ariaLabel: "Hemen Ara — 0 545 304 86 71 numaralı telefonu arayın",
+    gradient: "from-blue-600 to-purple-600",
   },
   {
     href: "https://wa.me/905453048671?text=Merhaba%2C+web+sitenizden+ula%C5%9F%C4%B1yorum.+Sahne+kiralama+ve+LED+ekran+fiyatlar%C4%B1+hakk%C4%B1nda+detayl%C4%B1+teklif+almak+istiyorum.&utm_source=homepage&utm_medium=hero_cta&utm_campaign=whatsapp",
@@ -36,8 +37,8 @@ const CTA_BUTTONS = [
   },
 ];
 
-// ✅ Mobilde transform/scale yok → sadece opacity + shadow (daha hızlı)
-// ✅ Desktop'ta istersen md:hover:scale-105 ile hafif geri getiriyoruz
+// ✅ Mobil: transform/scale yok → sadece opacity + shadow
+// ✅ Desktop: md:hover:scale-105 ile premium his
 const CTA_BASE_CLASS = `
   w-full sm:w-auto min-w-[180px] min-h-[44px]
   text-center group relative text-white font-bold text-base px-6 py-3 rounded-xl
@@ -104,14 +105,8 @@ function CTAButton({
 function CTAGroup() {
   return (
     <div className="mt-6 flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3">
-      {CTA_BUTTONS.map(({ srHint, gradient, ariaLabel, ...cta }) => (
-        <CTAButton
-          key={cta.href}
-          gradient={gradient}
-          srHint={srHint}
-          ariaLabel={ariaLabel}
-          {...cta}
-        />
+      {CTA_BUTTONS.map((cta) => (
+        <CTAButton key={cta.href} {...cta} />
       ))}
     </div>
   );
@@ -153,13 +148,19 @@ export default function HeroSection() {
       </div>
 
       {/* İçerik */}
-      <div className="relative z-10 container py-10 sm:py-12 content-visibility-auto contain-intrinsic-size-[800px]">
+      <div className="relative z-10 container py-10 sm:py-12">
         <div className="max-w-3xl mx-auto text-center px-4 sm:px-0">
-          <p className="inline-flex items-center gap-3 bg-black/50 rounded-full px-4 py-2 border border-white/10 text-xs md:text-sm text-slate-100">
-            <span className="w-2 h-2 bg-green-400 rounded-full" aria-hidden="true" />
+          {/* Badge */}
+          <p className="inline-flex items-center gap-3 bg-black/50 rounded-full px-4 py-2 border border-white/10 text-xs md:text-sm text-slate-100 md:backdrop-blur-sm">
+            {/* ✅ animasyon mobilde yok */}
+            <span
+              className="w-2 h-2 bg-green-400 rounded-full md:animate-pulse motion-reduce:animate-none"
+              aria-hidden="true"
+            />
             Sahneva Organizasyon • Türkiye Geneli Profesyonel Hizmet
           </p>
 
+          {/* Başlık */}
           <h1
             id="hero-title"
             className="
@@ -168,27 +169,31 @@ export default function HeroSection() {
             "
           >
             Türkiye genelinde
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-400 block">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-400 block pb-2">
               Sahne &amp; LED Ekran Kiralama
             </span>
           </h1>
 
           <KeywordPills id="hero-keywords" />
 
+          {/* Açıklama */}
           <p
             id="hero-description"
-            className="text-slate-100 text-sm sm:text-base md:text-lg mt-2 md:mt-4 max-w-xl mx-auto"
+            className="text-slate-100 text-sm sm:text-base md:text-lg mt-2 md:mt-4 max-w-xl mx-auto md:drop-shadow-md"
           >
-            500+ başarılı proje, %98 müşteri memnuniyeti ve Türkiye geneli hızlı kurulum ile
-            etkinliğinizde yanınızdayız.
+            500+ başarılı proje, %98 müşteri memnuniyeti ve Türkiye geneli hızlı
+            kurulum ile etkinliğinizde yanınızdayız.
           </p>
 
           <CTAGroup />
         </div>
       </div>
 
-      {/* Scroll cue: mobilde kapalı */}
-      <div className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2" aria-hidden="true">
+      {/* Scroll cue (mobilde kapalı) */}
+      <div
+        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2"
+        aria-hidden="true"
+      >
         <div className="animate-bounce motion-reduce:animate-none">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/70 rounded-full mt-2" />
