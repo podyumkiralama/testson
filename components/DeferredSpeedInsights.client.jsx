@@ -1,12 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { useEffect, useState } from "react";
-
-const SpeedInsights = dynamic(() => import("@vercel/speed-insights/next").then((mod) => mod.SpeedInsights), {
-  ssr: false,
-  loading: () => null,
-});
 
 const SLOW_CONNECTION_TYPES = new Set(["slow-2g", "2g"]);
 
