@@ -14,8 +14,9 @@ import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 
 import {
   BASE_SITE_URL,
-  LOCAL_BUSINESS_ID,
+  ORGANIZATION_ID,
   WEBSITE_ID,
+  LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 
 /* ================== JSON-LD: GLOBAL GRAPH ================== */
