@@ -2,12 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 
-const StickyVideoRailLazy = dynamic(() => import("./StickyVideoRail"), {
-  ssr: false,
-  loading: () => null,
-});
+import StickyVideoRailLazy from "./StickyVideoRail";
 
 export default function StickyVideoRailClient() {
   const [shouldRender, setShouldRender] = useState(false);

@@ -2,12 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 
-const UtilityBar = dynamic(() => import("./UtilityBar"), {
-  ssr: false,
-  loading: () => null,
-});
+import UtilityBar from "./UtilityBar";
 
 export default function UtilityBarClient() {
   const [shouldRender, setShouldRender] = useState(false);
