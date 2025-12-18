@@ -9,7 +9,7 @@ const PAGE_URL = `${SITE}${PAGE_PATH}`;
 const OG_IMAGE = `${SITE}/img/og/bolgesel-kiralama-og.webp`;
 
 export const metadata = {
-  title: "Bölgesel Kiralama | Sahneva Organizasyon",
+  title: "Bölgesel Kiralama",
   description:
     "Türkiye genelinde LED ekran, truss, sahne/podyum ve ses-ışık sistemleri kiralama. Şehrinizi seçin, hızlı teklif alın; kurulum, test ve söküm dahil.",
   alternates: {
