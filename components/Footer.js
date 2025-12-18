@@ -130,7 +130,7 @@ export default function Footer({
   const computedDescriptionId =
     ariaDescribedby ?? descriptionIdProp ?? `site-footer-desc-${instanceId}`;
   const hasAccessibleName = Boolean(ariaLabel || computedHeadingId);
-  const computedRole = roleOverride ?? (hasAccessibleName ? "contentinfo" : undefined);
+  const computedRole = roleOverride;
   const ariaLabelledbyValue = ariaLabel ? undefined : computedHeadingId;
 
   return (
