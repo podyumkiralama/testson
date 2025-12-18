@@ -15,7 +15,7 @@ const TechCapabilities = dynamic(() => import("./TechCapabilities"), { ssr: fals
 const WhyChooseUs = dynamic(() => import("./WhyChooseUs"), { ssr: false });
 
 // Lazy-load görünürlük hook'u
-function useDeferredVisible(options) {
+function useDeferredVisible({ rootMargin, threshold, idleTimeout }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef(null);
 
@@ -25,6 +25,9 @@ function useDeferredVisible(options) {
     const el = ref.current;
     if (!el || typeof window === "undefined") return;
 
+    let idleHandle = null;
+    let timeoutHandle = null;
+
     const prefersReduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
@@ -33,27 +36,48 @@ function useDeferredVisible(options) {
       return;
     }
 
+    if (idleTimeout) {
+      if (typeof window.requestIdleCallback === "function") {
+        idleHandle = window.requestIdleCallback(
+          () => setVisible(true),
+          { timeout: idleTimeout }
+        );
+      } else {
+        timeoutHandle = window.setTimeout(() => setVisible(true), idleTimeout);
+      }
+    }
+
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         setVisible(true);
         observer.disconnect();
       }
-    }, options);
+    }, { rootMargin, threshold });
 
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [visible, options]);
+    return () => {
+      observer.disconnect();
+      if (idleHandle && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
+  }, [visible, rootMargin, threshold, idleTimeout]);
 
   return [ref, visible];
 }
 
 /* ───────────────── ServicesTabs (temiz wrapper) ───────────────── */
 
-export function ServicesTabsDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function ServicesTabsDeferred({
+  rootMargin = "140px 0px",
+  threshold = 0.12,
+  idleTimeout = 2600,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -72,11 +96,13 @@ export function ServicesTabsDeferred(props) {
 
 /* ───────────────── ProjectsGallery (temiz wrapper) ───────────────── */
 
-export function ProjectsGalleryDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "400px 0px",
-    threshold: 0.05,
-  });
+export function ProjectsGalleryDeferred({
+  rootMargin = "220px 0px",
+  threshold = 0.08,
+  idleTimeout = 3400,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -95,11 +121,13 @@ export function ProjectsGalleryDeferred(props) {
 
 /* ───────────────── FAQ (temiz wrapper) ───────────────── */
 
-export function FaqDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function FaqDeferred({
+  rootMargin = "140px 0px",
+  threshold = 0.12,
+  idleTimeout = 3600,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -118,11 +146,13 @@ export function FaqDeferred(props) {
 
 /* ───────────────── Corporate Events (temiz wrapper) ───────────────── */
 
-export function CorporateEventsDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function CorporateEventsDeferred({
+  rootMargin = "160px 0px",
+  threshold = 0.12,
+  idleTimeout = 2600,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -141,11 +171,13 @@ export function CorporateEventsDeferred(props) {
 
 /* ───────────────── Corporate Intro (temiz wrapper) ───────────────── */
 
-export function CorporateIntroDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function CorporateIntroDeferred({
+  rootMargin = "160px 0px",
+  threshold = 0.12,
+  idleTimeout = 3200,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -164,11 +196,13 @@ export function CorporateIntroDeferred(props) {
 
 /* ───────────────── Tech Capabilities (temiz wrapper) ───────────────── */
 
-export function TechCapabilitiesDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function TechCapabilitiesDeferred({
+  rootMargin = "160px 0px",
+  threshold = 0.12,
+  idleTimeout = 3200,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">
@@ -187,11 +221,13 @@ export function TechCapabilitiesDeferred(props) {
 
 /* ───────────────── Why Choose Us (temiz wrapper) ───────────────── */
 
-export function WhyChooseUsDeferred(props) {
-  const [ref, visible] = useDeferredVisible({
-    rootMargin: "200px 0px",
-    threshold: 0.1,
-  });
+export function WhyChooseUsDeferred({
+  rootMargin = "160px 0px",
+  threshold = 0.12,
+  idleTimeout = 3200,
+  ...props
+}) {
+  const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
     <section ref={ref} className="w-full min-w-0">

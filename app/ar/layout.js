@@ -25,7 +25,7 @@ export const metadata = {
 
 export default function ArabicLayout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-neutral-900">
+    <div className="min-h-[100svh] min-h-screen flex flex-col bg-white text-neutral-900">
       <DocumentDirection lang="ar" dir={content.direction} />
       <SiteHeader
         locale="ar"
