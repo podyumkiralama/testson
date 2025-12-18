@@ -9,21 +9,24 @@ import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
-import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
+import { SITE_URL } from "@/lib/seo/seoConfig";
 
-/* ================== METADATA ================== */
+/* ================== METADATA (GLOBAL ONLY) ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   applicationName: "Sahneva Organizasyon",
   manifest: "/manifest.json",
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    siteName: "Sahneva Organizasyon",
-    images: [{ url: getOgImageUrl(), width: 1200, height: 630 }],
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
-  twitter: { card: "summary_large_image", images: [getOgImageUrl()] },
 };
 
 /* ================== ROOT LAYOUT ================== */
@@ -31,14 +34,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="tr" dir="ltr" suppressHydrationWarning>
       <body className="min-h-[100svh] flex flex-col bg-white text-neutral-900 antialiased">
-        {/* Skip links */}
+        {/* Skip links (WCAG) */}
         <SkipLinks />
 
         {/* A11y helpers */}
         <NewTabAccessibility />
 
         {/* Header */}
-        <header id="_main_header" className="relative z-50">
+        <header
+          id="_main_header"
+          className="relative z-50"
+          aria-label="Sahneva site başlığı ve ana gezinme"
+        >
           <Navbar />
           <StickyVideoRailclient />
         </header>
@@ -54,11 +61,11 @@ export default function RootLayout({ children }) {
         </main>
 
         {/* Footer */}
-        <div id="_main_footer">
+        <footer id="_main_footer">
           <Footer />
-        </div>
+        </footer>
 
-        {/* Perf / Consent */}
+        {/* Performance & consent */}
         <DeferredSpeedInsights />
         <AnalyticsConsentWrapper />
       </body>
