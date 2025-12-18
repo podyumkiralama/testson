@@ -1,16 +1,14 @@
 // app/layout.jsx
 import "../styles/globals.css";
 
+import dynamic from "next/dynamic";
+
 import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
-import DocumentDirection from "@/components/i18n/DocumentDirection.client";
+import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
 import UtilityBar from "@/components/UtilityBar.client";
 import Navbar from "@/components/Navbar";
-import StickyVideoRailclient from "@/components/StickyVideoRail.client";
-import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Footer from "@/components/Footer";
-import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
@@ -21,6 +19,46 @@ import {
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
+
+const DocumentDirection = dynamic(
+  () => import("@/components/i18n/DocumentDirection.client"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
+const NewTabAccessibility = dynamic(
+  () => import("@/components/NewTabAccessibility.client"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
+const StickyVideoRailclient = dynamic(
+  () => import("@/components/StickyVideoRail.client"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
+const DeferredSpeedInsights = dynamic(
+  () => import("@/components/DeferredSpeedInsights.client"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
+const AnalyticsConsentWrapper = dynamic(
+  () => import("@/components/AnalyticsConsentWrapper.client"),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
@@ -163,13 +201,7 @@ export default function RootLayout({ children }) {
         <NonCriticalStylesheet />
 
         {/* JSON-LD (single script) */}
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(globalJsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
+        <DeferredJsonLd id="global-schema" data={globalJsonLd} />
 
         <header
           id="_main_header"
@@ -185,7 +217,7 @@ export default function RootLayout({ children }) {
           id="_main_content"
           aria-label="Sahneva ana içerik"
           tabIndex={-1}
-          className="flex-1 pt-16 lg:pt-20 focus:outline-none scroll-mt-24"
+          className="flex-1 pt-12 lg:pt-16 focus:outline-none scroll-mt-24"
         >
           <div className="overflow-x-hidden">{children}</div>
         </main>
