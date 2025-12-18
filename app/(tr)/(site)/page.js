@@ -382,11 +382,11 @@ export default function HomePage() {
         <h2 id="hizmetler-title" className="sr-only">
           Hizmetler
         </h2>
-        <ServicesTabsDeferred idleTimeout={1800} rootMargin="260px" />
+        <ServicesTabsDeferred idleTimeout={2400} rootMargin="160px" />
       </section>
 
       {/* 4) PROJELER */}
-      <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
+      <ProjectsGalleryDeferred idleTimeout={3600} rootMargin="220px" />
 
       {/* 5) TECH CAPABILITIES (below-the-fold) */}
       <div className="bg-slate-900 py-16" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
