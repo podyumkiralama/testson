@@ -1,3 +1,5 @@
+// next.config.mjs
+
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 const ONE_MONTH_IN_SECONDS = ONE_DAY_IN_SECONDS * 30;
 const ONE_YEAR_IN_SECONDS = ONE_DAY_IN_SECONDS * 365;
@@ -82,8 +84,9 @@ const securityHeaders = (() => {
     { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
     {
       key: "Permissions-Policy",
+      // ✅ fullscreen'i tamamen kapatma → video/harita embed'lerinde tam ekran bozulmasın
       value:
-        "camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), fullscreen=()",
+        "camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), fullscreen=(self)",
     },
     {
       key: "Strict-Transport-Security",
@@ -118,7 +121,7 @@ const nextConfig = {
   images: {
     deviceSizes: [320, 420, 640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/avif", "image/webp"], // ✅ AVIF öncelikli
     minimumCacheTTL: ONE_MONTH_IN_SECONDS,
     remotePatterns: [],
     dangerouslyAllowSVG: false,
@@ -137,6 +140,7 @@ const nextConfig = {
 
   env: {
     SITE_URL: siteUrl,
+    NEXT_PUBLIC_SITE_URL: siteUrl, // ✅ projede karışmasın diye public alias
     NEXT_PUBLIC_APP_ENV: process.env.NODE_ENV ?? "development",
   },
 
@@ -164,22 +168,26 @@ const nextConfig = {
 
   async headers() {
     return [
+      // ✅ site geneli security headers
       { source: "/(.*)", headers: securityHeaders },
+
+      // ✅ Next static chunk’lar: uzun cache + immutable (robots tag zorunlu değil ama zarar vermez)
       {
         source: "/_next/static/(.*)",
-        headers: [
-          ...longTermCacheHeaders,
-          { key: "X-Robots-Tag", value: "noindex, nofollow" },
-        ],
+        headers: [...longTermCacheHeaders],
       },
+
+      // ✅ public asset’ler: uzun cache
       {
         source: "/(.*)\\.(ico|png|jpg|jpeg|webp|avif|svg|gif|woff2|css|js)",
         headers: longTermCacheHeaders,
       },
-      {
-        source: "/_next/(.*)",
-        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
-      },
+
+      // (opsiyonel) _next altına robots tag koymak istiyorsan aç:
+      // {
+      //   source: "/_next/(.*)",
+      //   headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      // },
     ];
   },
 };
