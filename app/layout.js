@@ -155,7 +155,7 @@ export default function RootLayout({ children }) {
       className={inter.className}
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
+      <body className="min-h-[100svh] min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         <SkipLinks />
         <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
         <NewTabAccessibility />
