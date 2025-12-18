@@ -2,13 +2,13 @@
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
-import Navbar from "@/components/Navbar";
-import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
+import UtilityBarClient from "@/components/UtilityBar.client";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
@@ -20,7 +20,7 @@ import {
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
-import UtilityBar from "@/components/UtilityBar.client";
+
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
@@ -36,15 +36,15 @@ export const viewport = {
 export const metadata = {
   metadataBase: new URL(SITE_URL),
 
+  applicationName: "Sahneva Organizasyon",
+
   title: {
-    default: HOME_PAGE_TITLE,
+    default: HOME_PAGE_TITLE || "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
     template: "%s | Sahneva",
   },
 
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
-
-  applicationName: "Sahneva",
 
   manifest: "/manifest.json",
 
@@ -55,9 +55,8 @@ export const metadata = {
       { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
       { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
   },
 
   openGraph: {
@@ -160,12 +159,10 @@ export default function RootLayout({ children }) {
       className={inter.className}
       suppressHydrationWarning
     >
-      <body className="min-h-[100svh] min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
+      <body className="min-h-[100svh] flex flex-col bg-white text-neutral-900 antialiased">
         <SkipLinks />
         <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
         <NewTabAccessibility />
-
-        <NonCriticalStylesheet />
 
         {/* GLOBAL JSON-LD */}
         <script
@@ -176,32 +173,27 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <header
-          id="_main_header"
-          aria-label="Sahneva site başlığı ve ana gezinme"
-          className="w-full relative z-50"
-        >
-          
+        <header className="relative z-50" aria-label="Sahneva site başlığı ve ana gezinme">
           <Navbar />
-          {process.env.NODE_ENV === "production" ? (
-            <StickyVideoRailclient />
-          ) : null}
+          {process.env.NODE_ENV === "production" ? <StickyVideoRailclient /> : null}
         </header>
 
         <main
           id="_main_content"
-          aria-label="Sahneva ana içerik"
           tabIndex={-1}
-          className="flex-1 pt-16 lg:pt-20 focus:outline-none scroll-mt-24"
+          aria-label="Sahneva ana içerik"
+          className="flex-1 pt-16 lg:pt-20 focus:outline-none"
         >
-          <div className="overflow-x-hidden">{children}</div>
+          {children}
         </main>
 
-        <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
+        <Footer />
+
+        {/* ⬇️ SABİT: EN SON, SCROLL / IDLE GATE ARKASINDA */}
+        <UtilityBarClient />
 
         <DeferredSpeedInsights />
         <AnalyticsConsentWrapper />
-       <UtilityBar />
       </body>
     </html>
   );
