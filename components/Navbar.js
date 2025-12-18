@@ -6,9 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback, useMemo, useId } from "react";
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
-
-const FOCUS_RING_CLASS =
-  "focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white";
+import { FOCUS_RING_CLASS } from "@/lib/ui/focusRing";
 
 const MOTION_SAFE = "motion-reduce:transition-none motion-reduce:transform-none";
 
