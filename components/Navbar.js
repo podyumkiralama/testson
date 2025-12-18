@@ -72,6 +72,37 @@ const SERVICE_LINKS = [
   },
 ];
 
+/**
+ * Bizi Araştırın (desktop dropdown + mobil accordion)
+ * Sıra: İletişim > Nasıl Çalışıyoruz > Bölgesel Kiralama > SSS
+ */
+const ABOUT_LINKS = [
+  {
+    href: "/iletisim",
+    label: "İletişim",
+    icon: "📞",
+    description: "Hızlı teklif ve iletişim kanalları",
+  },
+  {
+    href: "/nasil-calisiyoruz",
+    label: "Nasıl Çalışıyoruz",
+    icon: "⚙️",
+    description: "Süreç, kurulum ve operasyon akışı",
+  },
+  {
+    href: "/bolgesel-kiralama",
+    label: "Bölgesel Kiralama",
+    icon: "🗺️",
+    description: "Türkiye geneli kurulum ve lojistik",
+  },
+  {
+    href: "/sss",
+    label: "SSS",
+    icon: "❓",
+    description: "Sık sorulan sorular ve yanıtlar",
+  },
+];
+
 export default function Navbar({
   ariaLabel,
   ariaLabelledby,
@@ -90,8 +121,11 @@ export default function Navbar({
   };
 
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
 
   const computedHeadingId = headingIdProp ?? `navbar-heading-${instanceId}`;
   const computedDescriptionId =
@@ -112,19 +146,25 @@ export default function Navbar({
   const toggleButtonRef = useRef(null);
   const servicesButtonRef = useRef(null);
 
+  const aboutButtonRef = useRef(null);
+
   const firstServiceItemRef = useRef(null);
   const serviceItemRefs = useRef([]);
 
   const mobileMenuOpenedRef = useRef(false);
 
   const mobileMenuId = "mobile_menu";
+
   const servicesBtnId = "nav-services-button";
   const servicesMenuId = "nav-services-menu";
   const servicesPanelId = "nav-services-mega-panel";
 
+  const aboutBtnId = "nav-about-button";
+  const aboutMenuId = "nav-about-menu";
+  const aboutPanelId = "nav-about-panel";
+
   const active = useCallback(
-    (href) =>
-      pathname === href || (href !== "/" && pathname?.startsWith(href)),
+    (href) => pathname === href || (href !== "/" && pathname?.startsWith(href)),
     [pathname]
   );
 
@@ -156,12 +196,11 @@ export default function Navbar({
     hoverTimer.current = setTimeout(() => setServicesOpen(false), 200);
   }, []);
 
-  // ===== Keyboard nav for ARIA menuitems =====
+  // ===== Keyboard nav for ARIA menuitems (Services) =====
   const focusServiceItem = useCallback((index) => {
     const items = serviceItemRefs.current.filter(Boolean);
     if (!items.length) return;
-    const normalizedIndex =
-      ((index % items.length) + items.length) % items.length;
+    const normalizedIndex = ((index % items.length) + items.length) % items.length;
     items[normalizedIndex]?.focus();
   }, []);
 
@@ -248,36 +287,42 @@ export default function Navbar({
     });
   }, [servicesOpen]);
 
-  // ESC global (mobile + mega)
+  // ESC global (mobile + mega + about)
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key !== "Escape") return;
 
       const wasMobileOpen = mobileOpen;
       const wasServicesOpen = servicesOpen;
+      const wasAboutOpen = aboutOpen;
 
       setMobileOpen(false);
       setServicesOpen(false);
+      setAboutOpen(false);
       setMobileServicesOpen(false);
+      setMobileAboutOpen(false);
 
-      if (wasMobileOpen || wasServicesOpen) {
+      if (wasMobileOpen || wasServicesOpen || wasAboutOpen) {
         requestAnimationFrame(() => {
           if (wasMobileOpen) toggleButtonRef.current?.focus();
           else if (wasServicesOpen) servicesButtonRef.current?.focus();
+          else if (wasAboutOpen) aboutButtonRef.current?.focus();
         });
       }
     };
 
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [mobileOpen, servicesOpen]);
+  }, [mobileOpen, servicesOpen, aboutOpen]);
 
-  // route change -> close
+  // route change -> close all
   useEffect(() => {
-    if (mobileOpen || servicesOpen || mobileServicesOpen) {
+    if (mobileOpen || servicesOpen || aboutOpen || mobileServicesOpen || mobileAboutOpen) {
       setMobileOpen(false);
       setServicesOpen(false);
+      setAboutOpen(false);
       setMobileServicesOpen(false);
+      setMobileAboutOpen(false);
     }
   }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -303,7 +348,7 @@ export default function Navbar({
     return undefined;
   }, [mobileOpen]);
 
-  // outside click close for mega menu
+  // outside click close for mega menu (services)
   useEffect(() => {
     if (!servicesOpen) return;
 
@@ -324,6 +369,27 @@ export default function Navbar({
     };
   }, [servicesOpen]);
 
+  // outside click close for about dropdown
+  useEffect(() => {
+    if (!aboutOpen) return;
+
+    const handleClickOutside = (e) => {
+      const panel = document.getElementById(aboutPanelId);
+      const btn = aboutButtonRef.current;
+      if (!panel || !btn) return;
+      if (panel.contains(e.target) || btn.contains(e.target)) return;
+      setAboutOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [aboutOpen]);
+
   // focus trap for mobile menu
   useEffect(() => {
     if (!mobileOpen) return;
@@ -334,9 +400,7 @@ export default function Navbar({
     const focusableSelectors =
       'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-    const focusable = Array.from(
-      menuNode.querySelectorAll(focusableSelectors)
-    ).filter(
+    const focusable = Array.from(menuNode.querySelectorAll(focusableSelectors)).filter(
       (el) =>
         el instanceof HTMLElement &&
         el.tabIndex !== -1 &&
@@ -420,10 +484,7 @@ export default function Navbar({
         role="menuitem"
         tabIndex={isOpen ? 0 : -1}
       >
-        <span
-          className="mt-0.5 text-lg opacity-80 group-hover:opacity-100"
-          aria-hidden="true"
-        >
+        <span className="mt-0.5 text-lg opacity-80 group-hover:opacity-100" aria-hidden="true">
           {icon}
         </span>
         <div className="min-w-0 flex-1">
@@ -434,10 +495,7 @@ export default function Navbar({
             {description}
           </div>
         </div>
-        <span
-          className="ml-2 text-neutral-400 group-hover:text-blue-600"
-          aria-hidden="true"
-        >
+        <span className="ml-2 text-neutral-400 group-hover:text-blue-600" aria-hidden="true">
           ›
         </span>
       </Link>
@@ -450,7 +508,11 @@ export default function Navbar({
     return [
       {
         title: "Sahne & Görüntü",
-        items: [byHref("/sahne-kiralama"), byHref("/podyum-kiralama"), byHref("/led-ekran-kiralama")].filter(Boolean),
+        items: [
+          byHref("/sahne-kiralama"),
+          byHref("/podyum-kiralama"),
+          byHref("/led-ekran-kiralama"),
+        ].filter(Boolean),
       },
       {
         title: "Teknik Altyapı",
@@ -458,7 +520,10 @@ export default function Navbar({
       },
       {
         title: "Alan & Donanım",
-        items: [byHref("/cadir-kiralama"), byHref("/masa-sandalye-kiralama")].filter(Boolean),
+        items: [
+          byHref("/cadir-kiralama"),
+          byHref("/masa-sandalye-kiralama"),
+        ].filter(Boolean),
       },
     ];
   }, []);
@@ -489,7 +554,8 @@ export default function Navbar({
         )}
         {shouldRenderDescription && (
           <p id={computedDescriptionId} className="sr-only">
-            {headerStrings.navLabel} bağlantıları arasında gezinmek için tab tuşunu kullanabilirsiniz.
+            {headerStrings.navLabel} bağlantıları arasında gezinmek için tab tuşunu
+            kullanabilirsiniz.
           </p>
         )}
 
@@ -629,8 +695,7 @@ export default function Navbar({
                                 Hizmetler
                               </div>
                               <div className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-white/90">
-                                Tüm hizmetleri incele{" "}
-                                <span aria-hidden="true">›</span>
+                                Tüm hizmetleri incele <span aria-hidden="true">›</span>
                               </div>
                             </div>
                           </Link>
@@ -688,9 +753,7 @@ export default function Navbar({
                                           index={index}
                                           isOpen={servicesOpen}
                                           firstItemRef={
-                                            isFirstFocusable
-                                              ? firstServiceItemRef
-                                              : null
+                                            isFirstFocusable ? firstServiceItemRef : null
                                           }
                                           {...service}
                                         />
@@ -710,7 +773,106 @@ export default function Navbar({
                 )}
               </div>
 
-              <NavLink href="/iletisim">İletişim</NavLink>
+              {/* Bizi Araştırın */}
+              <div className="relative">
+                <button
+                  id={aboutBtnId}
+                  type="button"
+                  ref={aboutButtonRef}
+                  className={`
+                    relative text-[15px] font-bold px-4 py-2.5 rounded-xl transition-all duration-200 group border
+                    ${
+                      aboutOpen
+                        ? "text-blue-700 bg-blue-50 border-blue-200"
+                        : "text-neutral-800 hover:text-blue-700 hover:bg-neutral-50 border-transparent hover:border-neutral-200"
+                    }
+                    ${FOCUS_RING_CLASS}
+                  `}
+                  aria-haspopup="menu"
+                  aria-expanded={aboutOpen ? "true" : "false"}
+                  aria-controls={aboutMenuId}
+                  onClick={() => setAboutOpen((s) => !s)}
+                >
+                  <span className="flex items-center gap-2">
+                    Bizi Araştırın
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        aboutOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                {aboutOpen && (
+                  <div
+                    id={aboutPanelId}
+                    className="absolute right-0 top-full mt-3 z-[80] w-[340px]"
+                    role="menu"
+                    aria-label="Bizi Araştırın menüsü"
+                  >
+                    <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden">
+                      <div className="px-6 py-4 border-b border-neutral-200">
+                        <div className="text-sm font-extrabold text-neutral-900">
+                          Bizi Araştırın
+                        </div>
+                        <div className="text-xs font-semibold text-neutral-500 mt-1">
+                          Süreç, iletişim ve bilgi sayfaları
+                        </div>
+                      </div>
+
+                      <div id={aboutMenuId} className="p-3 space-y-2">
+                        {ABOUT_LINKS.map(({ href, label, icon, description }) => (
+                          <Link
+                            key={href}
+                            href={href}
+                            role="menuitem"
+                            className={`
+                              group flex items-start gap-3 rounded-xl px-4 py-3
+                              text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
+                              transition-all duration-200 border border-transparent hover:border-blue-200
+                              ${FOCUS_RING_CLASS}
+                            `}
+                            onClick={() => setAboutOpen(false)}
+                            aria-current={active(href) ? "page" : undefined}
+                          >
+                            <span
+                              className="mt-0.5 text-lg opacity-80 group-hover:opacity-100"
+                              aria-hidden="true"
+                            >
+                              {icon}
+                            </span>
+                            <div className="min-w-0 flex-1">
+                              <div className="font-extrabold text-neutral-900 group-hover:text-blue-700">
+                                {label}
+                              </div>
+                              <div className="mt-0.5 text-xs font-medium text-neutral-600">
+                                {description}
+                              </div>
+                            </div>
+                            <span
+                              className="ml-2 text-neutral-400 group-hover:text-blue-600"
+                              aria-hidden="true"
+                            >
+                              ›
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <a
                 href={`https://wa.me/905453048671?text=${NAVBAR_WHATSAPP_MESSAGE}&utm_source=navbar&utm_medium=desktop_whatsapp`}
@@ -732,7 +894,10 @@ export default function Navbar({
               ref={toggleButtonRef}
               onClick={() =>
                 setMobileOpen((s) => {
-                  if (!s) setMobileServicesOpen(false);
+                  if (!s) {
+                    setMobileServicesOpen(false);
+                    setMobileAboutOpen(false);
+                  }
                   return !s;
                 })
               }
@@ -799,8 +964,7 @@ export default function Navbar({
         </h2>
 
         <p id={MOBILE_MENU_DESCRIPTION_ID} className="sr-only">
-          {headerStrings.navLabel} menüsü. Bağlantıları gezmek için tab tuşunu
-          kullanabilirsiniz.
+          {headerStrings.navLabel} menüsü. Bağlantıları gezmek için tab tuşunu kullanabilirsiniz.
         </p>
 
         <nav
@@ -899,10 +1063,7 @@ export default function Navbar({
                       aria-current={active(href) ? "page" : undefined}
                       tabIndex={mobileServicesOpen ? 0 : -1}
                     >
-                      <span
-                        className="text-base opacity-70 mt-0.5 flex-shrink-0"
-                        aria-hidden="true"
-                      >
+                      <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
                         {icon}
                       </span>
                       <div className="flex-1 min-w-0">
@@ -917,19 +1078,81 @@ export default function Navbar({
               </div>
             </div>
 
-            <Link
-              href="/iletisim"
-              onClick={() => setMobileOpen(false)}
-              className={`
-                flex items-center gap-3 py-3.5 px-4 text-neutral-900 font-bold text-[15px] rounded-xl
-                hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 border border-transparent
-                hover:border-blue-200 transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
-              `}
-              aria-current={active("/iletisim") ? "page" : undefined}
-            >
-              <span className="text-lg" aria-hidden="true">📞</span>
-              İletişim
-            </Link>
+            {/* Mobile "Bizi Araştırın" accordion */}
+            <div className="py-1">
+              <button
+                id="mobile-about-button"
+                type="button"
+                onClick={() => setMobileAboutOpen((s) => !s)}
+                aria-expanded={mobileAboutOpen ? "true" : "false"}
+                aria-controls="mobile-about-list"
+                className={`
+                  w-full flex items-center justify-between gap-3 py-3.5 px-4 text-[15px] font-bold
+                  text-neutral-900 rounded-xl hover:bg-blue-50 hover:text-blue-700
+                  transition-all duration-200 border border-transparent hover:border-blue-200
+                  min-h-[44px] transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
+                `}
+              >
+                <span className="flex items-center gap-3">
+                  <span className="text-lg" aria-hidden="true">🔎</span>
+                  <span>Bizi Araştırın</span>
+                </span>
+                <svg
+                  className={`w-5 h-5 shrink-0 text-neutral-700 transition-transform duration-200 ${
+                    mobileAboutOpen ? "rotate-180" : ""
+                  }`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+
+              <div
+                id="mobile-about-list"
+                role="region"
+                aria-labelledby="mobile-about-button"
+                aria-hidden={!mobileAboutOpen}
+                data-inert={mobileAboutOpen ? undefined : true}
+                className={`
+                  overflow-hidden transition-all duration-300 ease-in-out
+                  ${mobileAboutOpen ? "max-h-[520px] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}
+                `}
+              >
+                <div className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1">
+                  {ABOUT_LINKS.map(({ href, label, icon, description }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`
+                        flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
+                        hover:bg-blue-50 hover:text-blue-700 rounded-md
+                        transition-all duration-200 w-full transform hover:scale-[1.01]
+                        ${FOCUS_RING_CLASS}
+                      `}
+                      aria-current={active(href) ? "page" : undefined}
+                      tabIndex={mobileAboutOpen ? 0 : -1}
+                    >
+                      <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
+                        {icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-neutral-900">{label}</div>
+                        <div className="text-xs text-neutral-600 mt-0.5 font-medium">
+                          {description}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             <div className="mt-4 rounded-2xl border border-green-700/20 bg-gradient-to-r from-emerald-700 to-green-600 p-4 shadow-xl">
               <div className="flex items-start gap-3">
@@ -966,6 +1189,7 @@ export default function Navbar({
         onClick={() => {
           setMobileOpen(false);
           setMobileServicesOpen(false);
+          setMobileAboutOpen(false);
         }}
         aria-hidden={!mobileOpen}
         data-open={mobileOpen ? "true" : undefined}
