@@ -600,7 +600,7 @@ export default function Navbar({
                   `}
                   aria-haspopup="menu"
                   aria-expanded={servicesOpen ? "true" : "false"}
-                  aria-controls={servicesMenuId}
+                  aria-controls={servicesOpen ? servicesMenuId : undefined}
                   onClick={() => {
                     // ✅ Çakışma çözümü: About kapat, sonra Services toggle
                     setAboutOpen(false);
@@ -783,7 +783,7 @@ export default function Navbar({
                   `}
                   aria-haspopup="menu"
                   aria-expanded={aboutOpen ? "true" : "false"}
-                  aria-controls={aboutMenuId}
+                  aria-controls={aboutOpen ? aboutMenuId : undefined}
                   onClick={() => {
                     // ✅ Çakışma çözümü: Services kapat, sonra About toggle
                     setServicesOpen(false);
