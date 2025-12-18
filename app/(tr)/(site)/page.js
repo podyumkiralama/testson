@@ -13,8 +13,6 @@ import {
 } from "@/components/DeferredSections.client";
 
 import { HOME_PAGE_TITLE, getOgImageUrl } from "@/lib/seo/seoConfig";
-import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
-import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 /* -------------------
    Below-the-fold: content-visibility (perf)
