@@ -13,12 +13,15 @@ import {
 } from "@/components/DeferredSections.client";
 
 import { HOME_PAGE_TITLE, getOgImageUrl } from "@/lib/seo/seoConfig";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds";
 
 /* -------------------
    Below-the-fold: content-visibility (perf)
 ------------------- */
 const BELOW_THE_FOLD_VISIBILITY_STYLE = {
   contentVisibility: "auto",
+  containIntrinsicSize: "1px 1200px",
 };
 
 /* --------------------
@@ -379,11 +382,11 @@ export default function HomePage() {
         <h2 id="hizmetler-title" className="sr-only">
           Hizmetler
         </h2>
-        <ServicesTabsDeferred idleTimeout={2400} rootMargin="160px" />
+        <ServicesTabsDeferred idleTimeout={1800} rootMargin="260px" />
       </section>
 
       {/* 4) PROJELER */}
-      <ProjectsGalleryDeferred idleTimeout={3600} rootMargin="220px" />
+      <ProjectsGalleryDeferred idleTimeout={3200} rootMargin="360px" />
 
       {/* 5) TECH CAPABILITIES (below-the-fold) */}
       <div className="bg-slate-900 py-16" style={BELOW_THE_FOLD_VISIBILITY_STYLE}>
