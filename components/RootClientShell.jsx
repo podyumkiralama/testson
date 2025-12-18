@@ -1,46 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const DocumentDirection = dynamic(
-  () => import("@/components/i18n/DocumentDirection.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const NewTabAccessibility = dynamic(
-  () => import("@/components/NewTabAccessibility.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const StickyVideoRailclient = dynamic(
-  () => import("@/components/StickyVideoRail.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const DeferredSpeedInsights = dynamic(
-  () => import("@/components/DeferredSpeedInsights.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const AnalyticsConsentWrapper = dynamic(
-  () => import("@/components/AnalyticsConsentWrapper.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
+import DocumentDirection from "@/components/i18n/DocumentDirection.client";
+import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 
 export default function RootClientShell({ lang, dir }) {
   return (
