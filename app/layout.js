@@ -12,8 +12,6 @@ import Footer from "@/components/Footer";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 import UtilityBar from "@/components/UtilityBar.client";
 
-import Script from "next/script";
-
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { inter } from "@/app/fonts";
@@ -32,11 +30,19 @@ export const viewport = {
 /* ================== METADATA ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
+
+  title: {
+    default: HOME_PAGE_TITLE,
+    template: "%s | Sahneva",
+  },
+
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
+
   applicationName: "Sahneva Organizasyon",
+
   manifest: "/manifest.json",
+
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -46,6 +52,7 @@ export const metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
+
   openGraph: {
     type: "website",
     url: SITE_URL,
@@ -62,6 +69,7 @@ export const metadata = {
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
@@ -70,8 +78,6 @@ export const metadata = {
     images: [getOgImageUrl()],
   },
 };
-
-
 
 /* ================== ROOT LAYOUT ================== */
 export default function RootLayout({ children }) {
@@ -89,21 +95,15 @@ export default function RootLayout({ children }) {
 
         <NonCriticalStylesheet />
 
-        {/* JSON-LD: afterInteractive */}
-        <Script
-          id="global-jsonld"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: globalJsonLdString }}
-        />
-
         <header
           id="_main_header"
           aria-label="Sahneva site başlığı ve ana gezinme"
           className="w-full relative z-50"
         >
           <Navbar />
-          {process.env.NODE_ENV === "production" ? <StickyVideoRailclient /> : null}
+          {process.env.NODE_ENV === "production" ? (
+            <StickyVideoRailclient />
+          ) : null}
         </header>
 
         <main
@@ -117,7 +117,7 @@ export default function RootLayout({ children }) {
 
         <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
 
-        {/* ✅ UtilityBar en sonda (header’dan çıktı) */}
+        {/* Header’dan çıkarıldı → TBT / INP düşer */}
         <UtilityBar />
 
         <DeferredSpeedInsights />
