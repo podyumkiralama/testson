@@ -36,7 +36,6 @@ function StructuredData() {
   const CATALOG_ID = `${HOME_URL}#catalog`;
   const FAQ_ID = `${HOME_URL}#sss`;
 
-  // Görseller
   const HERO_IMAGE_ID = `${HOME_URL}#hero-image`;
   const OG_IMAGE_ID = `${HOME_URL}#og-image`;
 
@@ -49,7 +48,6 @@ function StructuredData() {
   const data = {
     "@context": "https://schema.org",
     "@graph": [
-      /* ---------------- WebPage ---------------- */
       {
         "@type": "WebPage",
         "@id": WEBPAGE_ID,
@@ -63,7 +61,6 @@ function StructuredData() {
         primaryImageOfPage: { "@id": HERO_IMAGE_ID },
       },
 
-      /* ---------------- Images ---------------- */
       {
         "@type": "ImageObject",
         "@id": HERO_IMAGE_ID,
@@ -79,7 +76,6 @@ function StructuredData() {
         height: 630,
       },
 
-      /* ---------------- OfferCatalog ---------------- */
       {
         "@type": "OfferCatalog",
         "@id": CATALOG_ID,
@@ -139,8 +135,6 @@ function StructuredData() {
               "@type": "Service",
               name: "Çadır Kiralama",
               url: `${BASE_SITE_URL}/cadir-kiralama`,
-              // Çadır için hizmet görselin varsa burayı güncelleyebilirsin:
-              // image: `${BASE_SITE_URL}/img/hizmet-cadir.webp`,
               provider: { "@id": ORGANIZATION_ID },
               areaServed: { "@type": "Country", name: "Türkiye" },
             },
@@ -218,7 +212,6 @@ function StructuredData() {
               "@type": "Service",
               name: "Ses-Işık Sistemleri",
               url: `${BASE_SITE_URL}/ses-isik-sistemleri`,
-              // image: `${BASE_SITE_URL}/img/hizmet-ses-isik.webp`, // varsa ekle
               provider: { "@id": ORGANIZATION_ID },
               areaServed: { "@type": "Country", name: "Türkiye" },
             },
@@ -252,7 +245,6 @@ function StructuredData() {
         ],
       },
 
-      /* ---------------- Primary Service ---------------- */
       {
         "@type": "Service",
         "@id": SERVICE_ID,
@@ -266,28 +258,24 @@ function StructuredData() {
         serviceType: "Event Production",
       },
 
-      /* ---------------- VideoObject ---------------- */
-{
-  "@type": "VideoObject",
-  "@id": VIDEO_ID,
-  name: "Sahneva – Sahne, Podyum ve LED Ekran Kiralama Tanıtım Videosu",
-  description:
-    "Sahneva’nın sahne, podyum, LED ekran, ses ve ışık sistemleriyle gerçekleştirdiği profesyonel etkinlik kurulumlarından kısa bir tanıtım videosu.",
-  thumbnailUrl: [
-    "https://img.youtube.com/vi/173gBurWSRQ/hqdefault.jpg"
-  ],
-  uploadDate: "2025-11-17T10:30:00+03:00",
-  duration: "PT1M30S",
-  inLanguage: "tr-TR",
-  isFamilyFriendly: true,
-  publisher: { "@id": ORGANIZATION_ID },
-  contentUrl: "https://www.youtube.com/watch?v=173gBurWSRQ",
-  embedUrl: "https://www.youtube.com/embed/173gBurWSRQ",
-  isPartOf: { "@id": WEBPAGE_ID },
-  about: { "@id": SERVICE_ID }
-},
+      {
+        "@type": "VideoObject",
+        "@id": VIDEO_ID,
+        name: "Sahneva – Sahne, Podyum ve LED Ekran Kiralama Tanıtım Videosu",
+        description:
+          "Sahneva’nın sahne, podyum, LED ekran, ses ve ışık sistemleriyle gerçekleştirdiği profesyonel etkinlik kurulumlarından kısa bir tanıtım videosu.",
+        thumbnailUrl: ["https://img.youtube.com/vi/173gBurWSRQ/hqdefault.jpg"],
+        uploadDate: "2025-11-17T10:30:00+03:00",
+        duration: "PT1M30S",
+        inLanguage: "tr-TR",
+        isFamilyFriendly: true,
+        publisher: { "@id": ORGANIZATION_ID },
+        contentUrl: "https://www.youtube.com/watch?v=173gBurWSRQ",
+        embedUrl: "https://www.youtube.com/embed/173gBurWSRQ",
+        isPartOf: { "@id": WEBPAGE_ID },
+        about: { "@id": SERVICE_ID },
+      },
 
-      /* ---------------- FAQPage ---------------- */
       {
         "@type": "FAQPage",
         "@id": FAQ_ID,
@@ -353,7 +341,6 @@ export default function HomePage() {
   const baseUrl = BASE_SITE_URL;
   const breadcrumbItems = [{ name: "Ana Sayfa", url: `${baseUrl}/` }];
 
-  // SEO lists used in TechCapabilities
   const SEO_TECH_FEATURES = [
     {
       title: "LED Ekran Kurulum & Teknik Operasyon",
@@ -377,12 +364,12 @@ export default function HomePage() {
 
   return (
     <div className="overflow-x-hidden bg-black">
-      {/* Home Rich Snippets */}
+      {/* 1) HERO (LCP için en iyisi: en önde) */}
+      <HeroSection />
+
+      {/* ✅ SEO scriptleri: hero render ettikten sonra (bozmaz, hızlandırır) */}
       <StructuredData />
       <BreadcrumbJsonLd items={breadcrumbItems} />
-
-      {/* 1) HERO (statik kalsın: LCP için en iyisi) */}
-      <HeroSection />
 
       {/* 2) HERO ALTI */}
       <HeroBelow />
