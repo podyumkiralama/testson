@@ -19,7 +19,6 @@ import { HOME_PAGE_TITLE, getOgImageUrl } from "@/lib/seo/seoConfig";
 ------------------- */
 const BELOW_THE_FOLD_VISIBILITY_STYLE = {
   contentVisibility: "auto",
-  containIntrinsicSize: "1px 1200px",
 };
 
 /* --------------------
