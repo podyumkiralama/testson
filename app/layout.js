@@ -2,7 +2,6 @@
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
 import RootClientShell from "@/components/RootClientShell";
 
 import Navbar from "@/components/Navbar";
