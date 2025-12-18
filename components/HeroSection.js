@@ -112,22 +112,31 @@ function CTAGroup() {
   );
 }
 
-function HeroBackgroundImage({ alt = HERO_IMAGE_ALT, ariaHidden = false }) {
+function HeroBackgroundImage({ ariaHidden = true }) {
   return (
-    <Image
-      src={heroImg}
-      alt={ariaHidden ? "" : alt}
-      fill
-      priority
-      fetchPriority="high"
-      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
-      quality={42}
-      placeholder="blur"
-      className="absolute inset-0 h-full w-full object-cover object-center"
-      aria-hidden={ariaHidden}
-    />
+    <picture aria-hidden={ariaHidden}>
+      {/* Mobil kaynak (<= 768px) */}
+      <source
+        media="(max-width: 768px)"
+        srcSet="/img/hero-bg-mobile.webp"
+        type="image/webp"
+      />
+
+      {/* Desktop / default */}
+      <source srcSet="/img/hero-bg.webp" type="image/webp" />
+
+      {/* Fallback img */}
+      <img
+        src="/img/hero-bg.webp"
+        alt=""
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      />
+    </picture>
   );
 }
+
 
 export default function HeroSection() {
   return (
