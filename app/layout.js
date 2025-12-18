@@ -5,7 +5,6 @@ import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
-import UtilityBar from "@/components/UtilityBar.client";
 import Navbar from "@/components/Navbar";
 import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
@@ -21,7 +20,7 @@ import {
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
-
+import UtilityBar from "@/components/UtilityBar.client";
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
