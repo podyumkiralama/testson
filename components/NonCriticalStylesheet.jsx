@@ -9,7 +9,19 @@ const HREF = "/css/non-critical.css";
 
 export default function NonCriticalStylesheet() {
   useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const existingLink = document.getElementById("non-critical-css");
+    if (existingLink) {
+      if (process.env.NODE_ENV !== "production") {
+        // Helps surface accidental duplicate renders in development.
+        console.warn("non-critical.css is already loaded; skipping duplicate injection");
+      }
+      return;
+    }
+
     const link = document.createElement("link");
+    link.id = "non-critical-css";
     link.rel = "stylesheet";
     link.href = HREF;
     link.media = "print";
@@ -26,7 +38,6 @@ export default function NonCriticalStylesheet() {
 
     return () => {
       link.removeEventListener("load", enableStylesheet);
-      link.remove();
     };
   }, []);
 
