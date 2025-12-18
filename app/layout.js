@@ -11,30 +11,39 @@ import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
+/* ================== METADATA ================== */
 export const metadata = {
-  applicationName: "Sahneva Organizasyon",
-  title: {
-    default: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
-    template: "%s | Sahneva Organizasyon",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   description:
-    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri.",
-
+    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
+  applicationName: "Sahneva Organizasyon",
   manifest: "/manifest.json",
-
-  icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    description:
+      "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
+    siteName: "Sahneva Organizasyon",
+    images: [
+      {
+        url: getOgImageUrl(),
+        width: 1200,
+        height: 630,
+        alt: "Sahneva profesyonel açık hava sahne, LED ekran ve ışık kurulumu",
+      },
     ],
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
   },
-
-  // ❌ Bilerek YOK:
-  // themeColor
-  // viewport (Next otomatik yönetir)
+  twitter: {
+    card: "summary_large_image",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    description:
+      "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
+    images: [getOgImageUrl()],
+  },
 };
+
 
 export default function RootLayout({ children }) {
   return (
