@@ -70,6 +70,7 @@ export default function HeroBelow() {
     <section
       className="py-10 bg-gradient-to-b from-slate-950 to-slate-900"
       aria-labelledby="hero-supporting-features"
+      role="region"
     >
       <h2 id="hero-supporting-features" className="sr-only">
         Hızlı öne çıkan özellikler ve ücretsiz danışmanlık bağlantısı

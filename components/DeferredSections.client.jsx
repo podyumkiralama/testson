@@ -80,7 +80,7 @@ export function ServicesTabsDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <ServicesTabs {...props} />
       ) : (
@@ -90,7 +90,7 @@ export function ServicesTabsDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -105,7 +105,7 @@ export function ProjectsGalleryDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <ProjectsGallery {...props} />
       ) : (
@@ -115,7 +115,7 @@ export function ProjectsGalleryDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -130,7 +130,7 @@ export function FaqDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <Faq {...props} />
       ) : (
@@ -140,7 +140,7 @@ export function FaqDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -155,7 +155,7 @@ export function CorporateEventsDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <CorporateEvents {...props} />
       ) : (
@@ -165,7 +165,7 @@ export function CorporateEventsDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -180,7 +180,7 @@ export function CorporateIntroDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <CorporateIntro {...props} />
       ) : (
@@ -190,7 +190,7 @@ export function CorporateIntroDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -205,7 +205,7 @@ export function TechCapabilitiesDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <TechCapabilities {...props} />
       ) : (
@@ -215,7 +215,7 @@ export function TechCapabilitiesDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -230,7 +230,7 @@ export function WhyChooseUsDeferred({
   const [ref, visible] = useDeferredVisible({ rootMargin, threshold, idleTimeout });
 
   return (
-    <div ref={ref} className="w-full min-w-0">
+    <section ref={ref} className="w-full min-w-0">
       {visible ? (
         <WhyChooseUs {...props} />
       ) : (
@@ -240,6 +240,6 @@ export function WhyChooseUsDeferred({
           aria-hidden="true"
         />
       )}
-    </div>
+    </section>
   );
 }
