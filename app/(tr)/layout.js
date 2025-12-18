@@ -1,9 +1,11 @@
 // app/(tr)/(site)/layout.jsx
-import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
+
 import {
   HOME_PAGE_TITLE,
   buildAlternateLanguages,
   buildCanonical,
+  SITE_URL,
+  getOgImageUrl,
 } from "@/lib/seo/seoConfig";
 
 import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
@@ -14,8 +16,6 @@ import {
   WEBSITE_ID,
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
-
-const content = LOCALE_CONTENT.tr;
 
 /* ================== JSON-LD: GLOBAL GRAPH (TR) ================== */
 const globalJsonLd = {
@@ -87,24 +87,55 @@ const globalJsonLd = {
   ],
 };
 
-/* ================== METADATA (TR) ================== */
+/* ================== METADATA (TR FULL) ================== */
 export const metadata = {
   title: {
     default: HOME_PAGE_TITLE,
     template: "%s | Sahneva",
   },
-  description: content.meta.description,
+
+  description:
+    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
+
   alternates: {
     canonical: buildCanonical("/"),
     languages: buildAlternateLanguages("/"),
   },
+
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    description:
+      "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
+    siteName: "Sahneva Organizasyon",
+    locale: "tr_TR",
+    images: [
+      {
+        url: getOgImageUrl(),
+        width: 1200,
+        height: 630,
+        alt: "Sahneva profesyonel açık hava sahne, LED ekran ve ışık kurulumu",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
+    description:
+      "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
+    images: [getOgImageUrl()],
+  },
 };
 
+/* ================== TR LAYOUT ================== */
 export default function TurkishLayout({ children }) {
   return (
     <>
-      {/* JSON-LD: global graph */}
+      {/* JSON-LD: global graph (TR segment) */}
       <DeferredJsonLd id="global-schema" data={globalJsonLd} />
+
       {children}
     </>
   );
