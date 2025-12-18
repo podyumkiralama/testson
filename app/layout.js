@@ -8,6 +8,7 @@ import RootClientShell from "@/components/RootClientShell";
 import UtilityBar from "@/components/UtilityBar.client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
@@ -98,6 +99,7 @@ export default function RootLayout({ children }) {
         </main>
 
         <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
+        <DeferredSpeedInsights />
       </body>
     </html>
   );
