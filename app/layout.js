@@ -5,7 +5,7 @@ import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
 import RootClientShell from "@/components/RootClientShell";
-import UtilityBar from "@/components/UtilityBar.client";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
           aria-label="Sahneva site başlığı ve ana gezinme"
           className="w-full relative z-50"
         >
-          <UtilityBar />
+         
           <Navbar />
         </header>
 
