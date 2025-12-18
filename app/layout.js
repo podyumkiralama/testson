@@ -11,6 +11,7 @@ import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client
 
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 
+/* ================== METADATA ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
@@ -25,23 +26,39 @@ export const metadata = {
   twitter: { card: "summary_large_image", images: [getOgImageUrl()] },
 };
 
+/* ================== ROOT LAYOUT ================== */
 export default function RootLayout({ children }) {
   return (
     <html lang="tr" dir="ltr" suppressHydrationWarning>
       <body className="min-h-[100svh] flex flex-col bg-white text-neutral-900 antialiased">
+        {/* Skip links */}
         <SkipLinks />
+
+        {/* A11y helpers */}
         <NewTabAccessibility />
 
-        <header className="relative z-50">
+        {/* Header */}
+        <header id="_main_header" className="relative z-50">
           <Navbar />
           <StickyVideoRailclient />
         </header>
 
-        <main id="_main_content" tabIndex={-1} className="flex-1 pt-16 lg:pt-20 focus:outline-none">
+        {/* Main */}
+        <main
+          id="_main_content"
+          tabIndex={-1}
+          className="flex-1 pt-16 lg:pt-20 focus:outline-none scroll-mt-24"
+          aria-label="Sahneva ana içerik"
+        >
           {children}
         </main>
 
-        <Footer />
+        {/* Footer */}
+        <div id="_main_footer">
+          <Footer />
+        </div>
+
+        {/* Perf / Consent */}
         <DeferredSpeedInsights />
         <AnalyticsConsentWrapper />
       </body>
