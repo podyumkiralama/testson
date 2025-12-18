@@ -1,11 +1,10 @@
 // app/layout.jsx
 import "../styles/globals.css";
 
-import dynamic from "next/dynamic";
-
 import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
+import RootClientShell from "@/components/RootClientShell";
 import UtilityBar from "@/components/UtilityBar.client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,46 +18,6 @@ import {
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 import { inter } from "@/app/fonts";
-
-const DocumentDirection = dynamic(
-  () => import("@/components/i18n/DocumentDirection.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const NewTabAccessibility = dynamic(
-  () => import("@/components/NewTabAccessibility.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const StickyVideoRailclient = dynamic(
-  () => import("@/components/StickyVideoRail.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const DeferredSpeedInsights = dynamic(
-  () => import("@/components/DeferredSpeedInsights.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
-
-const AnalyticsConsentWrapper = dynamic(
-  () => import("@/components/AnalyticsConsentWrapper.client"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
 
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
@@ -195,8 +154,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-[100svh] min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         <SkipLinks />
-        <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
-        <NewTabAccessibility />
+        <RootClientShell lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
 
         <NonCriticalStylesheet />
 
@@ -210,7 +168,6 @@ export default function RootLayout({ children }) {
         >
           <UtilityBar />
           <Navbar />
-          {process.env.NODE_ENV === "production" ? <StickyVideoRailclient /> : null}
         </header>
 
         <main
@@ -223,9 +180,6 @@ export default function RootLayout({ children }) {
         </main>
 
         <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
-
-        <DeferredSpeedInsights />
-        <AnalyticsConsentWrapper />
       </body>
     </html>
   );
