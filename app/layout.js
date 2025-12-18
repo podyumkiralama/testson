@@ -23,12 +23,6 @@ const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
 
-/* ================== VIEWPORT ================== */
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#6d28d9",
-};
 
 /* ================== METADATA ================== */
 export const metadata = {
