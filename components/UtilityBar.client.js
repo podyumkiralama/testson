@@ -13,43 +13,47 @@ export default function UtilityBarClient() {
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined" || shouldRender) return;
+    if (shouldRender) return;
 
     let idleId = null;
     let timeoutId = null;
     let listenerAttached = false;
 
+    const listenerOpts = { passive: true };
     const activate = () => setShouldRender(true);
 
-    const events = ["scroll", "pointerdown", "keydown", "touchstart"];
+    // Daha kontrollü: touchstart kaldırıldı (çok erken tetikliyor)
+    const events = ["scroll", "pointerdown", "keydown"];
 
-    const handleFirstInteraction = () => {
+    const cleanup = () => {
+      if (listenerAttached) {
+        events.forEach((event) =>
+          window.removeEventListener(event, onFirstInteraction, listenerOpts)
+        );
+        listenerAttached = false;
+      }
+      if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+
+    function onFirstInteraction() {
       activate();
       cleanup();
-    };
+    }
 
     const attachListeners = () => {
       if (listenerAttached) return;
       listenerAttached = true;
 
       events.forEach((event) =>
-        window.addEventListener(event, handleFirstInteraction, { passive: true })
+        window.addEventListener(event, onFirstInteraction, listenerOpts)
       );
 
+      // Fallback: kullanıcı hiç dokunmasa bile 5sn sonra yükle
       timeoutId = window.setTimeout(() => {
         activate();
         cleanup();
       }, 5000);
-    };
-
-    const cleanup = () => {
-      if (listenerAttached) {
-        events.forEach((event) =>
-          window.removeEventListener(event, handleFirstInteraction)
-        );
-      }
-      if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
-      if (timeoutId) window.clearTimeout(timeoutId);
     };
 
     if ("requestIdleCallback" in window) {
@@ -61,13 +65,12 @@ export default function UtilityBarClient() {
     return cleanup;
   }, [shouldRender]);
 
-  // ✅ CLS FIX: UtilityBar gelmeden önce bile fixed slot'u render et
-  // Not: Bu slot, DevTools'taki "fixed left-4 bottom-6 z-50" ile aynı konumu rezerve eder.
   return (
     <div
       className="fixed left-4 bottom-6 z-50"
       style={{ width: 56, height: 56 }}
       aria-hidden={!shouldRender}
+      {...(!shouldRender ? { inert: "" } : {})}
     >
       {shouldRender ? <UtilityBar /> : null}
     </div>
