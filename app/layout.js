@@ -1,45 +1,25 @@
 // app/layout.jsx
+
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
-import Navbar from "@/components/Navbar";
-import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
+import UtilityBarClient from "@/components/UtilityBar.client";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
-import UtilityBar from "@/components/UtilityBar.client";
 
-import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
-import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
-import { inter } from "@/app/fonts";
-
-const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
-const DEFAULT_LANG = "tr";
-const DEFAULT_DIR = DEFAULT_LOCALE.direction;
-
-/* ================== VIEWPORT ================== */
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#6d28d9",
-};
-
-/* ================== METADATA ================== */
 export const metadata = {
-  metadataBase: new URL(SITE_URL),
-
-  title: {
-    default: HOME_PAGE_TITLE,
-    template: "%s | Sahneva",
-  },
-
-  description:
-    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
-
   applicationName: "Sahneva Organizasyon",
+  title: {
+    default: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    template: "%s | Sahneva Organizasyon",
+  },
+  description:
+    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri.",
 
   manifest: "/manifest.json",
 
@@ -47,59 +27,25 @@ export const metadata = {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
 
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
-    description:
-      "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
-    siteName: "Sahneva Organizasyon",
-    images: [
-      {
-        url: getOgImageUrl(),
-        width: 1200,
-        height: 630,
-        alt: "Sahneva profesyonel açık hava sahne, LED ekran ve ışık kurulumu",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
-    description:
-      "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
-    images: [getOgImageUrl()],
-  },
+  // ❌ Bilerek YOK:
+  // themeColor
+  // viewport (Next otomatik yönetir)
 };
 
-/* ================== ROOT LAYOUT ================== */
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang={DEFAULT_LANG}
-      dir={DEFAULT_DIR}
-      className={inter.className}
-      suppressHydrationWarning
-    >
-      <body className="min-h-[100svh] min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
+    <html lang="tr" suppressHydrationWarning>
+      <body className="min-h-[100svh] flex flex-col bg-white text-neutral-900 antialiased">
         <SkipLinks />
-        <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
+        <DocumentDirection />
         <NewTabAccessibility />
 
-        <NonCriticalStylesheet />
-
-        <header
-          id="_main_header"
-          aria-label="Sahneva site başlığı ve ana gezinme"
-          className="w-full relative z-50"
-        >
+        <header className="relative z-50">
           <Navbar />
           {process.env.NODE_ENV === "production" ? (
             <StickyVideoRailclient />
@@ -108,17 +54,16 @@ export default function RootLayout({ children }) {
 
         <main
           id="_main_content"
-          aria-label="Sahneva ana içerik"
           tabIndex={-1}
-          className="flex-1 pt-16 lg:pt-20 focus:outline-none scroll-mt-24"
+          className="flex-1 pt-16 lg:pt-20 focus:outline-none"
         >
-          <div className="overflow-x-hidden">{children}</div>
+          {children}
         </main>
 
-        <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
+        <Footer />
 
-        {/* Header’dan çıkarıldı → TBT / INP düşer */}
-        <UtilityBar />
+        {/* ⬇️ SABİT: EN SON, SCROLL / IDLE GATE ARKASINDA */}
+        <UtilityBarClient />
 
         <DeferredSpeedInsights />
         <AnalyticsConsentWrapper />
