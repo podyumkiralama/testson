@@ -1,13 +1,6 @@
 // components/HeroSection.js
-import Image from "next/image";
-import heroImg from "@/public/img/hero-bg.webp";
-
-const FOCUS_RING_CLASS =
-  "focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white";
+import { FOCUS_RING_CLASS } from "@/lib/ui/focusRing";
 const MOTION_SAFE = "motion-reduce:transition-none motion-reduce:transform-none";
-
-const HERO_IMAGE_ALT =
-  "LED ekran, truss çatı ve ışık sistemi içeren Sahneva sahne kurulumunu gösteren arka plan görseli";
 
 const HERO_KEYWORDS = [
   { text: "Sahne Kiralama", gradient: "text-blue-300" },
@@ -114,26 +107,28 @@ function CTAGroup() {
 
 function HeroBackgroundImage({ ariaHidden = true }) {
   return (
-    <picture aria-hidden={ariaHidden}>
-      {/* Mobil kaynak (<= 768px) */}
-      <source
-        media="(max-width: 768px)"
-        srcSet="/img/hero-bg-mobile.webp"
-        type="image/webp"
-      />
+    <div aria-hidden={ariaHidden}>
+      <picture>
+        {/* Mobil kaynak (<= 768px) */}
+        <source
+          media="(max-width: 768px)"
+          srcSet="/img/hero-bg-mobile.webp"
+          type="image/webp"
+        />
 
-      {/* Desktop / default */}
-      <source srcSet="/img/hero-bg.webp" type="image/webp" />
+        {/* Desktop / default */}
+        <source srcSet="/img/hero-bg.webp" type="image/webp" />
 
-      {/* Fallback img */}
-      <img
-        src="/img/hero-bg.webp"
-        alt=""
-        fetchPriority="high"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      />
-    </picture>
+        {/* Fallback img */}
+        <img
+          src="/img/hero-bg.webp"
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+      </picture>
+    </div>
   );
 }
 
