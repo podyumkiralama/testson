@@ -1,30 +1,15 @@
 // app/layout.jsx
+
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
-import UtilityBar from "@/components/UtilityBar.client";
-import Navbar from "@/components/Navbar";
-import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
-
-import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
-import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
-import {
-  BASE_SITE_URL,
-  ORGANIZATION_ID,
-  WEBSITE_ID,
-  LOCAL_BUSINESS_ID,
-} from "@/lib/seo/schemaIds";
-import { inter } from "@/app/fonts";
-
-const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
-const DEFAULT_LANG = "tr";
-const DEFAULT_DIR = DEFAULT_LOCALE.direction;
 
 export const metadata = {
   applicationName: "Sahneva Organizasyon",
@@ -77,7 +62,7 @@ export default function RootLayout({ children }) {
         <Footer />
 
         {/* ⬇️ SABİT: EN SON, SCROLL / IDLE GATE ARKASINDA */}
-        <UtilityBarClient />
+       
 
         <DeferredSpeedInsights />
         <AnalyticsConsentWrapper />
