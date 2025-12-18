@@ -10,6 +10,8 @@ import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 const FOCUS_RING_CLASS =
   "focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white";
 
+const MOTION_SAFE = "motion-reduce:transition-none motion-reduce:transform-none";
+
 const MOBILE_MENU_HEADING_ID = "navbar-mobile-menu-heading";
 const MOBILE_MENU_DESCRIPTION_ID = "navbar-mobile-menu-description";
 
@@ -19,7 +21,6 @@ const NAVBAR_WHATSAPP_MESSAGE = encodeURIComponent(
 
 /**
  * Hizmet linkleri (mega menü + mobil menü)
- * Not: Kurumsal Organizasyon burada olmalı.
  */
 const SERVICE_LINKS = [
   {
@@ -145,7 +146,6 @@ export default function Navbar({
   const mobileMenuRef = useRef(null);
   const toggleButtonRef = useRef(null);
   const servicesButtonRef = useRef(null);
-
   const aboutButtonRef = useRef(null);
 
   const firstServiceItemRef = useRef(null);
@@ -173,7 +173,7 @@ export default function Navbar({
       `ml-2 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-white text-sm font-bold
        bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
        transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
-       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
+       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS} ${MOTION_SAFE}`,
     []
   );
 
@@ -182,12 +182,14 @@ export default function Navbar({
       `inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-white text-sm font-bold
        bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700
        transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105
-       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS}`,
+       min-h-[44px] border border-green-700/20 ${FOCUS_RING_CLASS} ${MOTION_SAFE}`,
     []
   );
 
+  // ✅ Hover ile Hizmetler açılırken About kapanır (çakışma çözümü)
   const openNow = useCallback(() => {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setAboutOpen(false);
     if (!servicesOpen) setServicesOpen(true);
   }, [servicesOpen]);
 
@@ -218,6 +220,8 @@ export default function Navbar({
         case "Enter":
         case " ":
           event.preventDefault();
+          // ✅ keyboard ile açarken de About kapat
+          setAboutOpen(false);
           setServicesOpen((prev) => {
             const next = !prev;
             if (next) requestAnimationFrame(() => focusServiceItem(0));
@@ -226,10 +230,12 @@ export default function Navbar({
           break;
         case "ArrowDown":
           event.preventDefault();
+          setAboutOpen(false);
           servicesOpen ? focusServiceItem(0) : openServicesMenuAndFocus(0);
           break;
         case "ArrowUp":
           event.preventDefault();
+          setAboutOpen(false);
           servicesOpen
             ? focusServiceItem(SERVICE_LINKS.length - 1)
             : openServicesMenuAndFocus(SERVICE_LINKS.length - 1);
@@ -279,7 +285,6 @@ export default function Navbar({
     [focusServiceItem]
   );
 
-  // When servicesOpen -> focus first item
   useEffect(() => {
     if (!servicesOpen) return;
     requestAnimationFrame(() => {
@@ -448,7 +453,7 @@ export default function Navbar({
       <Link
         href={href}
         className={`
-          relative text-[15px] font-bold transition-all duration-200 px-4 py-2.5 rounded-xl
+          relative text-[15px] font-bold transition-all duration-200 px-4 py-2.5 rounded-xl ${MOTION_SAFE}
           ${
             active(href)
               ? "text-blue-700 bg-blue-50 border border-blue-200"
@@ -475,7 +480,7 @@ export default function Navbar({
         className={`
           group flex items-start gap-3 rounded-xl px-5 py-3.5
           text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
-          transition-all duration-200 border border-transparent hover:border-blue-200
+          transition-all duration-200 border border-transparent hover:border-blue-200 ${MOTION_SAFE}
           ${FOCUS_RING_CLASS}
         `}
         onClick={() => setServicesOpen(false)}
@@ -520,15 +525,11 @@ export default function Navbar({
       },
       {
         title: "Alan & Donanım",
-        items: [
-          byHref("/cadir-kiralama"),
-          byHref("/masa-sandalye-kiralama"),
-        ].filter(Boolean),
+        items: [byHref("/cadir-kiralama"), byHref("/masa-sandalye-kiralama")].filter(Boolean),
       },
     ];
   }, []);
 
-  // "Kurumsal Organizasyon" özel blok (güvenli)
   const kurumsal = useMemo(
     () => SERVICE_LINKS.find((s) => s.href === "/kurumsal-organizasyon") || null,
     []
@@ -573,7 +574,7 @@ export default function Navbar({
                 height={40}
                 priority={pathname === "/"}
                 sizes="(max-width: 768px) 120px, 160px"
-                className="h-8 lg:h-10 w-auto transition-transform duration-200 group-hover:scale-105"
+                className={`h-8 lg:h-10 w-auto transition-transform duration-200 group-hover:scale-105 ${MOTION_SAFE}`}
               />
             </Link>
 
@@ -591,7 +592,7 @@ export default function Navbar({
                   id={servicesBtnId}
                   type="button"
                   className={`
-                    relative text-[15px] font-bold px-4 py-2.5 rounded-xl transition-all duration-200 group border
+                    relative text-[15px] font-bold px-4 py-2.5 rounded-xl transition-all duration-200 group border ${MOTION_SAFE}
                     ${
                       servicesOpen
                         ? "text-blue-700 bg-blue-50 border-blue-200"
@@ -602,20 +603,22 @@ export default function Navbar({
                   aria-haspopup="menu"
                   aria-expanded={servicesOpen ? "true" : "false"}
                   aria-controls={servicesMenuId}
-                  onClick={() =>
+                  onClick={() => {
+                    // ✅ Çakışma çözümü: About kapat, sonra Services toggle
+                    setAboutOpen(false);
                     setServicesOpen((s) => {
                       const next = !s;
                       if (next) requestAnimationFrame(() => focusServiceItem(0));
                       return next;
-                    })
-                  }
+                    });
+                  }}
                   onKeyDown={handleServicesButtonKeyDown}
                   ref={servicesButtonRef}
                 >
                   <span className="flex items-center gap-2">
                     Hizmetler
                     <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${
+                      className={`w-4 h-4 transition-transform duration-200 ${MOTION_SAFE} ${
                         servicesOpen ? "rotate-180" : ""
                       }`}
                       fill="none"
@@ -640,7 +643,6 @@ export default function Navbar({
                   onMouseEnter={openNow}
                 />
 
-                {/* Mega panel (kapalıyken DOM’da yok) */}
                 {servicesOpen && (
                   <div
                     id={servicesPanelId}
@@ -650,7 +652,6 @@ export default function Navbar({
                   >
                     <div className="mx-auto max-w-7xl px-4">
                       <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden max-h-[calc(100vh-120px)] overflow-y-auto">
-                        {/* Üst bar */}
                         <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-neutral-200">
                           <div className="flex items-center gap-3">
                             <span className="text-sm font-extrabold text-neutral-900">
@@ -664,16 +665,14 @@ export default function Navbar({
                           <button
                             type="button"
                             onClick={() => setServicesOpen(false)}
-                            className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 ${FOCUS_RING_CLASS}`}
+                            className={`rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm font-bold text-neutral-900 hover:bg-neutral-50 transition-all duration-200 ${MOTION_SAFE} ${FOCUS_RING_CLASS}`}
                             aria-label="Mega menüyü kapat"
                           >
                             ✕
                           </button>
                         </div>
 
-                        {/* İçerik */}
                         <div className="grid gap-6 p-6 lg:grid-cols-[460px_1fr] items-stretch">
-                          {/* Sol görsel (boşluk yok + ortalı) */}
                           <Link
                             href="/hizmetler"
                             onClick={() => setServicesOpen(false)}
@@ -685,7 +684,7 @@ export default function Navbar({
                                 alt="Sahneva hizmetleri: sahne, podyum, LED ekran, ses-ışık ve daha fazlası"
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 460px"
-                                className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                                className={`object-cover object-center transition-transform duration-500 group-hover:scale-[1.03] ${MOTION_SAFE}`}
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
                             </div>
@@ -700,7 +699,6 @@ export default function Navbar({
                             </div>
                           </Link>
 
-                          {/* Sağ kolonlar: ARIA MENU */}
                           <div
                             id={servicesMenuId}
                             role="menu"
@@ -725,7 +723,6 @@ export default function Navbar({
                                     {col.title}
                                   </div>
 
-                                  {/* 🔥 Kurumsal Organizasyon – Teknik Altyapı üstüne blok */}
                                   {isTechnical && kurumsal && kurumsalIndex >= 0 && (
                                     <div className="mt-2 mb-3">
                                       <ServiceLink
@@ -765,8 +762,6 @@ export default function Navbar({
                             })}
                           </div>
                         </div>
-
-                        {/* alt bar intentionally removed */}
                       </div>
                     </div>
                   </div>
@@ -780,7 +775,7 @@ export default function Navbar({
                   type="button"
                   ref={aboutButtonRef}
                   className={`
-                    relative text-[15px] font-bold px-4 py-2.5 rounded-xl transition-all duration-200 group border
+                    relative text-[15px] font-bold px-4 py-2.5 rounded-xl transition-all duration-200 group border ${MOTION_SAFE}
                     ${
                       aboutOpen
                         ? "text-blue-700 bg-blue-50 border-blue-200"
@@ -791,12 +786,16 @@ export default function Navbar({
                   aria-haspopup="menu"
                   aria-expanded={aboutOpen ? "true" : "false"}
                   aria-controls={aboutMenuId}
-                  onClick={() => setAboutOpen((s) => !s)}
+                  onClick={() => {
+                    // ✅ Çakışma çözümü: Services kapat, sonra About toggle
+                    setServicesOpen(false);
+                    setAboutOpen((s) => !s);
+                  }}
                 >
                   <span className="flex items-center gap-2">
                     Bizi Araştırın
                     <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${
+                      className={`w-4 h-4 transition-transform duration-200 ${MOTION_SAFE} ${
                         aboutOpen ? "rotate-180" : ""
                       }`}
                       fill="none"
@@ -818,8 +817,7 @@ export default function Navbar({
                   <div
                     id={aboutPanelId}
                     className="absolute right-0 top-full mt-3 z-[80] w-[340px]"
-                    role="menu"
-                    aria-label="Bizi Araştırın menüsü"
+                    aria-label="Bizi Araştırın paneli"
                   >
                     <div className="rounded-3xl border border-neutral-200 bg-white shadow-2xl overflow-hidden">
                       <div className="px-6 py-4 border-b border-neutral-200">
@@ -831,44 +829,51 @@ export default function Navbar({
                         </div>
                       </div>
 
-                      <div id={aboutMenuId} className="p-3 space-y-2">
+                      {/* ✅ Semantik liste + menu roller */}
+                      <ul
+                        id={aboutMenuId}
+                        className="p-3 space-y-2"
+                        role="menu"
+                        aria-label="Bizi Araştırın menüsü"
+                      >
                         {ABOUT_LINKS.map(({ href, label, icon, description }) => (
-                          <Link
-                            key={href}
-                            href={href}
-                            role="menuitem"
-                            className={`
-                              group flex items-start gap-3 rounded-xl px-4 py-3
-                              text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
-                              transition-all duration-200 border border-transparent hover:border-blue-200
-                              ${FOCUS_RING_CLASS}
-                            `}
-                            onClick={() => setAboutOpen(false)}
-                            aria-current={active(href) ? "page" : undefined}
-                          >
-                            <span
-                              className="mt-0.5 text-lg opacity-80 group-hover:opacity-100"
-                              aria-hidden="true"
+                          <li key={href} role="none">
+                            <Link
+                              href={href}
+                              role="menuitem"
+                              className={`
+                                group flex items-start gap-3 rounded-xl px-4 py-3
+                                text-sm text-neutral-700 hover:bg-blue-50 hover:text-blue-700
+                                transition-all duration-200 border border-transparent hover:border-blue-200 ${MOTION_SAFE}
+                                ${FOCUS_RING_CLASS}
+                              `}
+                              onClick={() => setAboutOpen(false)}
+                              aria-current={active(href) ? "page" : undefined}
                             >
-                              {icon}
-                            </span>
-                            <div className="min-w-0 flex-1">
-                              <div className="font-extrabold text-neutral-900 group-hover:text-blue-700">
-                                {label}
+                              <span
+                                className="mt-0.5 text-lg opacity-80 group-hover:opacity-100"
+                                aria-hidden="true"
+                              >
+                                {icon}
+                              </span>
+                              <div className="min-w-0 flex-1">
+                                <div className="font-extrabold text-neutral-900 group-hover:text-blue-700">
+                                  {label}
+                                </div>
+                                <div className="mt-0.5 text-xs font-medium text-neutral-600">
+                                  {description}
+                                </div>
                               </div>
-                              <div className="mt-0.5 text-xs font-medium text-neutral-600">
-                                {description}
-                              </div>
-                            </div>
-                            <span
-                              className="ml-2 text-neutral-400 group-hover:text-blue-600"
-                              aria-hidden="true"
-                            >
-                              ›
-                            </span>
-                          </Link>
+                              <span
+                                className="ml-2 text-neutral-400 group-hover:text-blue-600"
+                                aria-hidden="true"
+                              >
+                                ›
+                              </span>
+                            </Link>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
                   </div>
                 )}
@@ -903,8 +908,9 @@ export default function Navbar({
               }
               className={`
                 lg:hidden inline-flex items-center justify-center p-3 rounded-xl bg-white border
-                border-neutral-200 hover:bg-neutral-50 transition-all duration-200
-                min-h-[44px] min-w-[44px] transform hover:scale-105 ${FOCUS_RING_CLASS}
+                border-neutral-200 hover:bg-neutral-50 transition-all duration-200 ${MOTION_SAFE}
+                min-h-[44px] min-w-[44px] transform hover:scale-105
+                ${FOCUS_RING_CLASS}
               `}
               aria-label={
                 mobileOpen
@@ -919,17 +925,17 @@ export default function Navbar({
                 aria-hidden="true"
               >
                 <span
-                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 origin-center ${
+                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 origin-center ${MOTION_SAFE} ${
                     mobileOpen ? "rotate-45 translate-y-2" : ""
                   }`}
                 />
                 <span
-                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 ${
+                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 ${MOTION_SAFE} ${
                     mobileOpen ? "opacity-0" : "opacity-100"
                   }`}
                 />
                 <span
-                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 origin-center ${
+                  className={`w-5 h-0.5 bg-neutral-900 rounded-full transition-all duration-300 origin-center ${MOTION_SAFE} ${
                     mobileOpen ? "-rotate-45 -translate-y-2" : ""
                   }`}
                 />
@@ -951,7 +957,7 @@ export default function Navbar({
         data-open={mobileOpen ? "true" : undefined}
         className={`
           lg:hidden fixed z-50 left-0 right-0 top-16 bg-white border-t border-neutral-200
-          shadow-2xl overflow-hidden transition-all duration-300 ease-in-out
+          shadow-2xl overflow-hidden transition-all duration-300 ease-in-out ${MOTION_SAFE}
           ${
             mobileOpen
               ? "max-h-[85vh] opacity-100 pointer-events-auto visible"
@@ -979,8 +985,9 @@ export default function Navbar({
               onClick={() => setMobileOpen(false)}
               className={`
                 flex items-center gap-3 py-3.5 px-4 text-neutral-900 font-bold text-[15px] rounded-xl
-                hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 border border-transparent
-                hover:border-blue-200 transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
+                hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 ${MOTION_SAFE}
+                border border-transparent hover:border-blue-200 transform hover:scale-[1.02]
+                ${FOCUS_RING_CLASS}
               `}
               aria-current={active("/hakkimizda") ? "page" : undefined}
             >
@@ -993,8 +1000,9 @@ export default function Navbar({
               onClick={() => setMobileOpen(false)}
               className={`
                 flex items-center gap-3 py-3.5 px-4 text-neutral-900 font-bold text-[15px] rounded-xl
-                hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 border border-transparent
-                hover:border-blue-200 transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
+                hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 ${MOTION_SAFE}
+                border border-transparent hover:border-blue-200 transform hover:scale-[1.02]
+                ${FOCUS_RING_CLASS}
               `}
               aria-current={active("/blog") ? "page" : undefined}
             >
@@ -1007,14 +1015,21 @@ export default function Navbar({
               <button
                 id="mobile-services-button"
                 type="button"
-                onClick={() => setMobileServicesOpen((s) => !s)}
+                onClick={() =>
+                  setMobileServicesOpen((s) => {
+                    const next = !s;
+                    if (next) setMobileAboutOpen(false); // ✅ çakışma çözümü (mobil)
+                    return next;
+                  })
+                }
                 aria-expanded={mobileServicesOpen ? "true" : "false"}
                 aria-controls="mobile-services-list"
                 className={`
                   w-full flex items-center justify-between gap-3 py-3.5 px-4 text-[15px] font-bold
                   text-neutral-900 rounded-xl hover:bg-blue-50 hover:text-blue-700
-                  transition-all duration-200 border border-transparent hover:border-blue-200
-                  min-h-[44px] transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
+                  transition-all duration-200 border border-transparent hover:border-blue-200 ${MOTION_SAFE}
+                  min-h-[44px] transform hover:scale-[1.02]
+                  ${FOCUS_RING_CLASS}
                 `}
               >
                 <span className="flex items-center gap-3">
@@ -1022,7 +1037,7 @@ export default function Navbar({
                   <span>Hizmetler</span>
                 </span>
                 <svg
-                  className={`w-5 h-5 shrink-0 text-neutral-700 transition-transform duration-200 ${
+                  className={`w-5 h-5 shrink-0 text-neutral-700 transition-transform duration-200 ${MOTION_SAFE} ${
                     mobileServicesOpen ? "rotate-180" : ""
                   }`}
                   viewBox="0 0 24 24"
@@ -1042,39 +1057,40 @@ export default function Navbar({
                 role="region"
                 aria-labelledby="mobile-services-button"
                 aria-hidden={!mobileServicesOpen}
-                data-inert={mobileServicesOpen ? undefined : true}
+                inert={mobileServicesOpen ? undefined : ""} // ✅ gerçek inert
                 className={`
-                  overflow-hidden transition-all duration-300 ease-in-out
+                  overflow-hidden transition-all duration-300 ease-in-out ${MOTION_SAFE}
                   ${mobileServicesOpen ? "max-h-[700px] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}
                 `}
               >
-                <div className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1">
+                <ul className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1" aria-label="Hizmetler listesi">
                   {SERVICE_LINKS.map(({ href, label, icon, description }) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`
-                        flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
-                        hover:bg-blue-50 hover:text-blue-700 rounded-md
-                        transition-all duration-200 w-full transform hover:scale-[1.01]
-                        ${FOCUS_RING_CLASS}
-                      `}
-                      aria-current={active(href) ? "page" : undefined}
-                      tabIndex={mobileServicesOpen ? 0 : -1}
-                    >
-                      <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
-                        {icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-bold text-neutral-900">{label}</div>
-                        <div className="text-xs text-neutral-600 mt-0.5 font-medium">
-                          {description}
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`
+                          flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
+                          hover:bg-blue-50 hover:text-blue-700 rounded-md
+                          transition-all duration-200 w-full transform hover:scale-[1.01] ${MOTION_SAFE}
+                          ${FOCUS_RING_CLASS}
+                        `}
+                        aria-current={active(href) ? "page" : undefined}
+                        tabIndex={mobileServicesOpen ? 0 : -1}
+                      >
+                        <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
+                          {icon}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-neutral-900">{label}</div>
+                          <div className="text-xs text-neutral-600 mt-0.5 font-medium">
+                            {description}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
 
@@ -1083,14 +1099,21 @@ export default function Navbar({
               <button
                 id="mobile-about-button"
                 type="button"
-                onClick={() => setMobileAboutOpen((s) => !s)}
+                onClick={() =>
+                  setMobileAboutOpen((s) => {
+                    const next = !s;
+                    if (next) setMobileServicesOpen(false); // ✅ çakışma çözümü (mobil)
+                    return next;
+                  })
+                }
                 aria-expanded={mobileAboutOpen ? "true" : "false"}
                 aria-controls="mobile-about-list"
                 className={`
                   w-full flex items-center justify-between gap-3 py-3.5 px-4 text-[15px] font-bold
                   text-neutral-900 rounded-xl hover:bg-blue-50 hover:text-blue-700
-                  transition-all duration-200 border border-transparent hover:border-blue-200
-                  min-h-[44px] transform hover:scale-[1.02] ${FOCUS_RING_CLASS}
+                  transition-all duration-200 border border-transparent hover:border-blue-200 ${MOTION_SAFE}
+                  min-h-[44px] transform hover:scale-[1.02]
+                  ${FOCUS_RING_CLASS}
                 `}
               >
                 <span className="flex items-center gap-3">
@@ -1098,7 +1121,7 @@ export default function Navbar({
                   <span>Bizi Araştırın</span>
                 </span>
                 <svg
-                  className={`w-5 h-5 shrink-0 text-neutral-700 transition-transform duration-200 ${
+                  className={`w-5 h-5 shrink-0 text-neutral-700 transition-transform duration-200 ${MOTION_SAFE} ${
                     mobileAboutOpen ? "rotate-180" : ""
                   }`}
                   viewBox="0 0 24 24"
@@ -1118,39 +1141,40 @@ export default function Navbar({
                 role="region"
                 aria-labelledby="mobile-about-button"
                 aria-hidden={!mobileAboutOpen}
-                data-inert={mobileAboutOpen ? undefined : true}
+                inert={mobileAboutOpen ? undefined : ""} // ✅ gerçek inert
                 className={`
-                  overflow-hidden transition-all duration-300 ease-in-out
+                  overflow-hidden transition-all duration-300 ease-in-out ${MOTION_SAFE}
                   ${mobileAboutOpen ? "max-h-[520px] opacity-100 py-2" : "max-h-0 opacity-0 py-0"}
                 `}
               >
-                <div className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1">
+                <ul className="ml-4 rounded-lg border border-neutral-200 bg-white p-2 space-y-1" aria-label="Bizi Araştırın listesi">
                   {ABOUT_LINKS.map(({ href, label, icon, description }) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`
-                        flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
-                        hover:bg-blue-50 hover:text-blue-700 rounded-md
-                        transition-all duration-200 w-full transform hover:scale-[1.01]
-                        ${FOCUS_RING_CLASS}
-                      `}
-                      aria-current={active(href) ? "page" : undefined}
-                      tabIndex={mobileAboutOpen ? 0 : -1}
-                    >
-                      <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
-                        {icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-bold text-neutral-900">{label}</div>
-                        <div className="text-xs text-neutral-600 mt-0.5 font-medium">
-                          {description}
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`
+                          flex items-start gap-3 px-3 py-2 text-sm text-neutral-700
+                          hover:bg-blue-50 hover:text-blue-700 rounded-md
+                          transition-all duration-200 w-full transform hover:scale-[1.01] ${MOTION_SAFE}
+                          ${FOCUS_RING_CLASS}
+                        `}
+                        aria-current={active(href) ? "page" : undefined}
+                        tabIndex={mobileAboutOpen ? 0 : -1}
+                      >
+                        <span className="text-base opacity-70 mt-0.5 flex-shrink-0" aria-hidden="true">
+                          {icon}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-neutral-900">{label}</div>
+                          <div className="text-xs text-neutral-600 mt-0.5 font-medium">
+                            {description}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
 
@@ -1183,7 +1207,7 @@ export default function Navbar({
       {/* Mobile Backdrop */}
       <div
         className={`
-          lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300
+          lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${MOTION_SAFE}
           ${mobileOpen ? "opacity-100 pointer-events-auto visible" : "opacity-0 pointer-events-none invisible"}
         `}
         onClick={() => {
