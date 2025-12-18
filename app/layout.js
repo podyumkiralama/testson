@@ -11,7 +11,6 @@ import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
-import { globalJsonLd } from "@/lib/seo/globalJsonLd";
 import { inter } from "@/app/fonts";
 
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
@@ -68,9 +67,7 @@ export default function RootLayout({ children }) {
 
         
 
-        {/* JSON-LD (single script) */}
-        <DeferredJsonLd id="global-schema" data={globalJsonLd} />
-
+    
         <header
           id="_main_header"
           aria-label="Sahneva site başlığı ve ana gezinme"
