@@ -6,11 +6,12 @@ import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
 import Navbar from "@/components/Navbar";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Footer from "@/components/Footer";
 import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
+import UtilityBar from "@/components/UtilityBar.client";
 
-import dynamic from "next/dynamic";
 import Script from "next/script";
 
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
@@ -26,15 +27,6 @@ import { inter } from "@/app/fonts";
 const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
 const DEFAULT_LANG = "tr";
 const DEFAULT_DIR = DEFAULT_LOCALE.direction;
-
-/* ✅ Heavy client components: SSR kapalı + geç yük */
-const UtilityBar = dynamic(() => import("@/components/UtilityBar.client"), {
-  ssr: false,
-});
-const StickyVideoRailclient = dynamic(
-  () => import("@/components/StickyVideoRail.client"),
-  { ssr: false }
-);
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
@@ -152,7 +144,6 @@ const globalJsonLd = {
   ],
 };
 
-/* ✅ Stringify tek sefer (component dışında) */
 const globalJsonLdString = JSON.stringify(globalJsonLd).replace(/</g, "\\u003c");
 
 /* ================== ROOT LAYOUT ================== */
@@ -164,14 +155,14 @@ export default function RootLayout({ children }) {
       className={inter.className}
       suppressHydrationWarning
     >
-      <body className="min-h-[100svh] bg-white text-neutral-900 antialiased flex flex-col font-sans">
+      <body className="min-h-[100svh] min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         <SkipLinks />
         <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
         <NewTabAccessibility />
 
         <NonCriticalStylesheet />
 
-        {/* ✅ JSON-LD: afterInteractive (ilk boyamayı hafifletir) */}
+        {/* JSON-LD: afterInteractive */}
         <Script
           id="global-jsonld"
           type="application/ld+json"
@@ -199,7 +190,7 @@ export default function RootLayout({ children }) {
 
         <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
 
-        {/* ✅ UtilityBar en sona */}
+        {/* ✅ UtilityBar en sonda (header’dan çıktı) */}
         <UtilityBar />
 
         <DeferredSpeedInsights />
