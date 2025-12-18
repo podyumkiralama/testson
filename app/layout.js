@@ -2,7 +2,6 @@
 import "../styles/globals.css";
 
 import SkipLinks from "@/components/SkipLinks";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredJsonLd from "@/components/seo/DeferredJsonLd";
 import RootClientShell from "@/components/RootClientShell";
 
@@ -67,7 +66,7 @@ export default function RootLayout({ children }) {
         <SkipLinks />
         <RootClientShell lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
 
-        <NonCriticalStylesheet />
+        
 
         {/* JSON-LD (single script) */}
         <DeferredJsonLd id="global-schema" data={globalJsonLd} />
