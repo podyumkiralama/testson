@@ -1,6 +1,7 @@
 // app/layout.jsx
 
-import "./globals.css";
+import "./styles/globals.css";
+
 
 import SkipLinks from "@/components/SkipLinks";
 import DocumentDirection from "@/components/i18n/DocumentDirection.client";
