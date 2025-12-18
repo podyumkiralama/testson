@@ -21,7 +21,7 @@ import { BASE_SITE_URL, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/seo/schemaIds"
 ------------------- */
 const BELOW_THE_FOLD_VISIBILITY_STYLE = {
   contentVisibility: "auto",
-  containIntrinsicSize: "1px 1200px",
+  minHeight: "1200px",
 };
 
 /* --------------------

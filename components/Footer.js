@@ -130,11 +130,11 @@ export default function Footer({
   const computedDescriptionId =
     ariaDescribedby ?? descriptionIdProp ?? `site-footer-desc-${instanceId}`;
   const hasAccessibleName = Boolean(ariaLabel || computedHeadingId);
-  const computedRole = roleOverride ?? (hasAccessibleName ? "contentinfo" : undefined);
+  const computedRole = roleOverride ?? "contentinfo";
   const ariaLabelledbyValue = ariaLabel ? undefined : computedHeadingId;
 
   return (
-    <footer
+    <div
       className="
         relative w-full flex-shrink-0
         bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]
@@ -484,6 +484,6 @@ export default function Footer({
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }
