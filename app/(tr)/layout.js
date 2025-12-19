@@ -25,33 +25,33 @@ export const viewport = {
   themeColor: "#6d28d9",
 };
 
-/* ================== METADATA (TR DEFAULT) ================== */
+/* ================== METADATA (TR) ================== */
 export const metadata = {
-  applicationName: "Sahneva Organizasyon",
+  applicationName: "Sahneva",
 
   title: {
-    default: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
-    template: "%s | Sahneva Organizasyon",
+    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
+    template: "%s | Sahneva",
   },
 
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, truss, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri. Kurulum, test ve söküm dahil hızlı teklif alın.",
 
   alternates: {
-  canonical: `${SITE}/`,
-  languages: {
-    "tr-TR": `${SITE}/`,
-    "en": `${SITE}/en`,
-    "ar": `${SITE}/ar`,
-    "x-default": `${SITE}/`,
+    canonical: PAGE_URL,
+    languages: {
+      "tr-TR": PAGE_URL,
+      "en": `${SITE}/en`,
+      "ar": `${SITE}/ar`,
+      "x-default": PAGE_URL,
+    },
   },
-},
 
   openGraph: {
     type: "website",
     url: PAGE_URL,
-    siteName: "Sahneva Organizasyon",
-    title: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    siteName: "Sahneva",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
     description:
       "Sahne, podyum, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
     images: [
@@ -59,7 +59,7 @@ export const metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Sahneva Organizasyon – Etkinlik Prodüksiyon Hizmetleri",
+        alt: "Sahneva – Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
       },
     ],
     locale: "tr_TR",
@@ -67,9 +67,9 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
     description:
-      "Sahne, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
+      "Sahne, podyum, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
     images: [OG_IMAGE],
   },
 
@@ -111,12 +111,11 @@ function TrSiteJsonLd() {
           availableLanguage: ["Turkish"],
         },
       },
-
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
         url: SITE,
-        name: "Sahneva Organizasyon",
+        name: "Sahneva",
         publisher: { "@id": ORGANIZATION_ID },
         inLanguage: "tr-TR",
         potentialAction: {
@@ -125,7 +124,6 @@ function TrSiteJsonLd() {
           "query-input": "required name=search_term_string",
         },
       },
-
       {
         "@type": "LocalBusiness",
         "@id": LOCAL_BUSINESS_ID,
@@ -134,8 +132,14 @@ function TrSiteJsonLd() {
         parentOrganization: { "@id": ORGANIZATION_ID },
         image: OG_IMAGE,
         telephone: "+90-545-304-86-71",
-        address: { "@type": "PostalAddress", addressCountry: "TR" },
-        areaServed: { "@type": "Country", name: "Türkiye" },
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "TR",
+        },
+        areaServed: {
+          "@type": "Country",
+          name: "Türkiye",
+        },
       },
     ],
   };
