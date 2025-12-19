@@ -6,7 +6,7 @@ import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
-
+import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 import { SITE_URL } from "@/lib/seo/seoConfig";
 import {
   ORGANIZATION_ID,
