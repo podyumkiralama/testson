@@ -25,69 +25,39 @@ export const viewport = {
   themeColor: "#6d28d9",
   };
 
-
-/* ================== METADATA (TR) ================== */
+/* ================== METADATA ================== */
 export const metadata = {
-  applicationName: "Sahneva",
-
-  title: {
-    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva",
-    template: "%s | Sahneva",
-  },
-
+  metadataBase: new URL(SITE_URL),
+  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   description:
-    "Türkiye genelinde sahne, podyum, LED ekran, truss, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri. Kurulum, test ve söküm dahil hızlı teklif alın.",
-
-  alternates: {
-    canonical: PAGE_URL,
-    languages: {
-      "tr-TR": PAGE_URL,
-      "en": `${SITE}/en`,
-      "ar": `${SITE}/ar`,
-      "x-default": PAGE_URL,
-    },
-  },
-
-  openGraph: {
+    "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
+  applicationName: "Sahneva Organizasyon",
+  manifest: "/manifest.json",
+   openGraph: {
     type: "website",
-    url: PAGE_URL,
-    siteName: "Sahneva",
-    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
+    url: SITE_URL,
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
-      "Sahne, podyum, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
+      "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
+    siteName: "Sahneva Organizasyon",
     images: [
       {
-        url: OG_IMAGE,
+        url: getOgImageUrl(),
         width: 1200,
         height: 630,
-        alt: "Sahneva – Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
+        alt: "Sahneva profesyonel açık hava sahne, LED ekran ve ışık kurulumu",
       },
     ],
-    locale: "tr_TR",
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
-      "Sahne, podyum, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
-    images: [OG_IMAGE],
+      "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
+    images: [getOgImageUrl()],
   },
-
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-
-  metadataBase: new URL(SITE),
 };
+
 
 /* ================== JSON-LD (SITE LEVEL – TR) ================== */
 function TrSiteJsonLd() {
