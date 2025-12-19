@@ -29,7 +29,7 @@ export const metadata = {
   applicationName: "Sahneva",
 
   title: {
-    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama",
+    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva",
     template: "%s | Sahneva",
   },
 
