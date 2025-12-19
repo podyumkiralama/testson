@@ -5,6 +5,7 @@ import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 
 import { SITE_URL } from "@/lib/seo/seoConfig";
 import {
@@ -28,7 +29,10 @@ export const viewport = {
 /* ================== METADATA ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
+  title: {
+    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva",
+    template: "%s | Sahneva",
+  },
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
   applicationName: "Sahneva Organizasyon",
