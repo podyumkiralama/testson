@@ -158,7 +158,8 @@ export default function TrLayout({ children }) {
     <>
       <SkipLinks />
 
-      <NonCriticalStylesheet />
+      {/* <NonCriticalStylesheet /> */}
+
       <DeferredSpeedInsights />
       <NewTabAccessibility />
 
