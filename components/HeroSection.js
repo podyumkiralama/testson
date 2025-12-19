@@ -1,5 +1,5 @@
 // components/HeroSection.js
-import heroImg from "@/public/img/hero-bg-mobile.webp";
+import head  from "@/public/components/head";
 import Image from "next/image";
 const FOCUS_RING_CLASS =
   "focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white";
