@@ -1,202 +1,188 @@
 // app/layout.jsx
 import "../styles/globals.css";
-import Script from "next/script";
-import { Inter } from "next/font/google";
+
 import SkipLinks from "@/components/SkipLinks";
-// UtilityBar ve StickyVideoRail buradan kaldırıldı (TurkishLayout'a taşındı)
+import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
+import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
+import DocumentDirection from "@/components/i18n/DocumentDirection.client";
+import UtilityBar from "@/components/UtilityBar.client";
+import Navbar from "@/components/Navbar";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
+import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import Footer from "@/components/Footer";
+import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
 
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  preload: true,
-  display: "swap",
-  adjustFontFallback: false,
-});
+import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
+import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
+import {
+  BASE_SITE_URL,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+  LOCAL_BUSINESS_ID,
+} from "@/lib/seo/schemaIds";
+import { inter } from "@/app/fonts";
 
+const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
+const DEFAULT_LANG = "tr";
+const DEFAULT_DIR = DEFAULT_LOCALE.direction;
 
-/* ===================== META: VIEWPORT ===================== */
+/* ================== VIEWPORT ================== */
 export const viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#6d28d9",
 };
 
-/* ===================== META: DEFAULT ===================== */
+/* ================== METADATA ================== */
 export const metadata = {
-  metadataBase: new URL("https://www.sahneva.com"),
-  title: {
-    default: "Sahne, Podyum, LED Ekran & Ses-Işık Kiralama | Sahneva",
-    template: "%s | Sahneva",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
-  manifest: "/site.webmanifest",
-  alternates: {
-    canonical: "https://www.sahneva.com",
-    languages: {
-      "tr-TR": "https://www.sahneva.com",
-      en: "https://www.sahneva.com/en",
-      ar: "https://www.sahneva.com/ar",
-      "x-default": "https://www.sahneva.com",
-    },
+  applicationName: "Sahneva Organizasyon",
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
-    title: "Sahneva – Etkinlik Prodüksiyon & Organizasyon",
+    type: "website",
+    url: SITE_URL,
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
-      "Sahne, podyum, LED ekran, ses-ışık ve kurulum hizmetleri. Türkiye geneli.",
-    url: "https://www.sahneva.com",
-    siteName: "Sahneva",
+      "Kurumsal etkinlikler, konserler, festivaller ve lansmanlar için sahne, podyum, LED ekran, ses-ışık ve çadır kiralama çözümleri.",
+    siteName: "Sahneva Organizasyon",
     images: [
       {
-        url: "/img/og.jpg",
+        url: getOgImageUrl(),
         width: 1200,
         height: 630,
-        alt: "Sahneva Etkinlik Prodüksiyon",
+        alt: "Sahneva profesyonel açık hava sahne, LED ekran ve ışık kurulumu",
       },
     ],
-    type: "website",
-    locale: "tr_TR",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sahneva – Etkinlik Prodüksiyon & Organizasyon",
+    title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
     description:
-      "Sahne, podyum, LED ekran, ses-ışık ve kurulum hizmetleri. Türkiye geneli.",
-    images: ["/img/og.jpg"],
-    creator: "@sahneva",
-  },
-  verification: {
-    google: "H9p1RO-W1U3JDTjp0mM32blFkYABaTHNFnxVKKFfo08",
-  },
-  category: "event services",
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+      "Profesyonel etkinlik prodüksiyon çözümleri. Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama.",
+    images: [getOgImageUrl()],
   },
 };
 
-/* ===================== CRITICAL CSS ===================== */
-const criticalCSS = `
-.pt-16{padding-top:4rem}
-@media (min-width:768px){.md\\:pt-20{padding-top:5rem}}
-.full-bleed{position:relative;margin:0 calc(50% - 50vw);width:100vw;min-height:60vh;overflow-x:clip}
-@media (min-width:768px){.full-bleed{min-height:70vh}}
-.object-cover{object-fit:cover}
-.container{max-width:1280px;margin:0 auto;padding:0 1rem}
-`;
+/* ================== JSON-LD: GLOBAL GRAPH ================== */
+const globalJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      logo: `${BASE_SITE_URL}/img/logo.png`,
+      description:
+        "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+90-545-304-8671",
+        contactType: "customer service",
+        areaServed: ["TR"],
+        availableLanguage: ["tr", "en", "ar"],
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": LOCAL_BUSINESS_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      image: `${BASE_SITE_URL}/img/logo.png`,
+      telephone: "+90-545-304-8671",
+      priceRange: "₺₺₺",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
+        addressLocality: "İstanbul",
+        addressRegion: "TR34",
+        postalCode: "34400",
+        addressCountry: "TR",
+      },
+      areaServed: { "@type": "AdministrativeArea", name: "Türkiye" },
+      parentOrganization: { "@id": ORGANIZATION_ID },
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: BASE_SITE_URL,
+      name: "Sahneva Organizasyon",
+      description:
+        "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
+      inLanguage: "tr-TR",
+      publisher: { "@id": ORGANIZATION_ID },
+    },
+  ],
+};
 
-const DEFAULT_GA_MEASUREMENT_ID = "G-J5YK10YLLC";
-const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_ID?.trim() || DEFAULT_GA_MEASUREMENT_ID;
-const isProd = process.env.NODE_ENV === "production";
-
+/* ================== ROOT LAYOUT ================== */
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="tr"
-      dir="ltr"
-      className={inter.className}
+      lang={DEFAULT_LANG}
+      dir={DEFAULT_DIR}
+      className={`${inter.className} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Critical CSS */}
-        <style
-          id="critical-css"
-          dangerouslySetInnerHTML={{ __html: criticalCSS }}
-        />
-
-        {/* DNS Prefetch & Preconnect (GA) */}
-        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-
-        {/* Global Structured Data */}
-        <script
-          id="ld-org"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
-        <script
-          id="ld-local"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessJsonLd),
-          }}
-        />
-        <script
-          id="ld-website"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteJsonLd),
-          }}
-        />
-      </head>
-      <body className="min-h-screen bg-white text-neutral-900 antialiased scroll-smooth flex flex-col">
-        {/* SkipLinks erişilebilirlik için en tepede kalmalı */}
+      <body className="min-h-screen bg-white text-neutral-900 antialiased flex flex-col font-sans">
         <SkipLinks />
+        <DocumentDirection lang={DEFAULT_LANG} dir={DEFAULT_DIR} />
+        <NewTabAccessibility />
 
-        {/* NOT: UI Elementleri (Navbar vb.) buradan kaldırıldı.
-            Çünkü bu layout children'ı render edecek, children ise
-            TurkishLayout olacak ve Navbar orada zaten var.
-        */}
-        {children}
+        <NonCriticalStylesheet />
 
-        {/* GA4 (sadece production ve ID varsa) */}
-        {isProd && GA_MEASUREMENT_ID && (
-          <>
-            <Script
-              id="gtag-lib"
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}', {
-                  page_title: document.title,
-                  page_location: location.href,
-                  transport_type: 'beacon'
-                });
-              `}
-            </Script>
-          </>
-        )}
+        {/* JSON-LD (single script) */}
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(globalJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
 
-        {/* Performans observer */}
-        {isProd && (
-          <Script id="performance-observer" strategy="afterInteractive">
-            {`
-              if ('PerformanceObserver' in window) {
-                const observer = new PerformanceObserver((list) => {
-                  list.getEntries().forEach((entry) => {
-                    if (entry.hadRecentInput) return;
-                  });
-                });
-                observer.observe({ entryTypes: ['layout-shift', 'first-input'] });
-              }
-            `}
-          </Script>
-        )}
+        <header
+          id="_main_header"
+          aria-label="Sahneva site başlığı ve ana gezinme"
+          className="w-full relative z-50"
+        >
+          <UtilityBar />
+          <Navbar />
+          {process.env.NODE_ENV === "production" ? <StickyVideoRailclient /> : null}
+        </header>
+
+        <main
+          id="_main_content"
+          aria-label="Sahneva ana içerik"
+          tabIndex={-1}
+          className="flex-1 pt-16 lg:pt-20 focus:outline-none scroll-mt-24"
+        >
+          <div className="overflow-x-hidden">{children}</div>
+        </main>
+
+        <Footer ariaLabel="Sahneva site altbilgi" descriptionId="_main_footer" />
+
+        <DeferredSpeedInsights />
+        <AnalyticsConsentWrapper />
       </body>
     </html>
   );
