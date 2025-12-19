@@ -1,42 +1,56 @@
-// app/(tr)/layout.js
+// app/layout.jsx
+import "../styles/globals.css";
+
 import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
 import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
-import NewTabAccessibility from "@/components/NewTabAccessibility.client";
+import DocumentDirection from "@/components/i18n/DocumentDirection.client";
+import UtilityBar from "@/components/UtilityBar.client";
 import Navbar from "@/components/Navbar";
+import StickyVideoRailclient from "@/components/StickyVideoRail.client";
+import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Footer from "@/components/Footer";
+import AnalyticsConsentWrapper from "@/components/AnalyticsConsentWrapper.client";
+
 import { LOCALE_CONTENT } from "@/lib/i18n/localeContent";
 import { HOME_PAGE_TITLE, SITE_URL, getOgImageUrl } from "@/lib/seo/seoConfig";
 import {
+  BASE_SITE_URL,
   ORGANIZATION_ID,
   WEBSITE_ID,
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
+import { inter } from "@/app/fonts";
 
-/* ================== CONSTANTS ================== */
-const SITE = String(SITE_URL || "https://www.sahneva.com").replace(/\/$/, "");
-const PAGE_URL = `${SITE}/`;
-const OG_IMAGE = `${SITE}/img/og/og-default.webp`;
+const DEFAULT_LOCALE = LOCALE_CONTENT.tr;
+const DEFAULT_LANG = "tr";
+const DEFAULT_DIR = DEFAULT_LOCALE.direction;
 
 /* ================== VIEWPORT ================== */
 export const viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#6d28d9",
-  };
+};
 
 /* ================== METADATA ================== */
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva",
-    template: "%s | Sahneva",
-  },
+  title: { default: HOME_PAGE_TITLE, template: "%s | Sahneva" },
   description:
     "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık sistemleri ve çadır kiralama. Hızlı kurulum, profesyonel teknik ekip, uygun fiyat. Hemen teklif alın!",
   applicationName: "Sahneva Organizasyon",
   manifest: "/manifest.json",
-   openGraph: {
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  openGraph: {
     type: "website",
     url: SITE_URL,
     title: "Sahne, Podyum, LED Ekran & Ses Işık Kiralama | Sahneva Organizasyon",
@@ -61,70 +75,75 @@ export const metadata = {
   },
 };
 
+/* ================== JSON-LD: GLOBAL GRAPH ================== */
+const globalJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      logo: `${BASE_SITE_URL}/img/logo.png`,
+      description:
+        "Türkiye genelinde sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri sunan profesyonel etkinlik prodüksiyon markası.",
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+90-545-304-8671",
+        contactType: "customer service",
+        areaServed: ["TR"],
+        availableLanguage: ["tr", "en", "ar"],
+      },
+    },
 
-/* ================== JSON-LD (SITE LEVEL – TR) ================== */
-function TrSiteJsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": ORGANIZATION_ID,
-        name: "Sahneva Organizasyon",
-        url: SITE,
-        logo: `${SITE}/img/logo/sahneva-logo.webp`,
-        sameAs: [
-          "https://www.instagram.com/sahnevaorganizasyon",
-          "https://www.youtube.com/@sahnevaorganizasyon",
-        ],
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+90-545-304-86-71",
-          contactType: "customer service",
-          areaServed: "TR",
-          availableLanguage: ["Turkish"],
-        },
-      },
-      {
-        "@type": "WebSite",
-        "@id": WEBSITE_ID,
-        url: SITE,
-        name: "Sahneva",
-        publisher: { "@id": ORGANIZATION_ID },
-        inLanguage: "tr-TR",
-        potentialAction: {
-          "@type": "SearchAction",
-          target: `${SITE}/arama?q={search_term_string}`,
-          "query-input": "required name=search_term_string",
-        },
-      },
-      {
-        "@type": "LocalBusiness",
-        "@id": LOCAL_BUSINESS_ID,
-        name: "Sahneva Organizasyon",
-        url: SITE,
-        parentOrganization: { "@id": ORGANIZATION_ID },
-        image: OG_IMAGE,
-        telephone: "+90-545-304-86-71",
-        address: {
-          "@type": "PostalAddress",
-          addressCountry: "TR",
-        },
-        areaServed: {
-          "@type": "Country",
-          name: "Türkiye",
-        },
-      },
-    ],
-  };
+    {
+      "@type": "Organization",
+      "@id": `${BASE_SITE_URL}/#editor`,
+      name: "Sahneva Editör",
+      url: BASE_SITE_URL,
+      parentOrganization: { "@id": ORGANIZATION_ID },
+    },
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
-}
+    {
+      "@type": "LocalBusiness",
+      "@id": LOCAL_BUSINESS_ID,
+      name: "Sahneva Organizasyon",
+      url: BASE_SITE_URL,
+      image: `${BASE_SITE_URL}/img/logo.png`,
+      telephone: "+90-545-304-8671",
+      priceRange: "₺₺₺",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Anadolu Caddesi No:61A, Hamidiye Mahallesi",
+        addressLocality: "İstanbul",
+        addressRegion: "TR34",
+        postalCode: "34400",
+        addressCountry: "TR",
+      },
+      areaServed: { "@type": "AdministrativeArea", name: "Türkiye" },
+      parentOrganization: { "@id": ORGANIZATION_ID },
+      sameAs: [
+        "https://www.instagram.com/sahnevaorganizasyon",
+        "https://www.youtube.com/@sahneva",
+      ],
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: BASE_SITE_URL,
+      name: "Sahneva Organizasyon",
+      description:
+        "Sahne, podyum, LED ekran, ses-ışık ve çadır kiralama hizmetleri için profesyonel etkinlik prodüksiyon çözümleri.",
+      inLanguage: "tr-TR",
+      publisher: { "@id": ORGANIZATION_ID },
+    },
+  ],
+};
 
 /* ================== TR LAYOUT ================== */
 export default function TrLayout({ children }) {
@@ -141,6 +160,7 @@ export default function TrLayout({ children }) {
 
       <Navbar />
       <main id="_main_content">{children}</main>
+    <StickyVideoRailclient />
       <Footer />
     </>
   );
