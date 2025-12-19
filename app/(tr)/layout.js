@@ -13,10 +13,83 @@ import {
   LOCAL_BUSINESS_ID,
 } from "@/lib/seo/schemaIds";
 
+/* ================== CONSTANTS ================== */
+const SITE = String(SITE_URL || "https://www.sahneva.com").replace(/\/$/, "");
+const PAGE_URL = `${SITE}/`;
+const OG_IMAGE = `${SITE}/img/og/og-default.webp`;
+
+/* ================== VIEWPORT ================== */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#6d28d9",
+};
+
+/* ================== METADATA (TR DEFAULT) ================== */
+export const metadata = {
+  applicationName: "Sahneva Organizasyon",
+
+  title: {
+    default: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    template: "%s | Sahneva Organizasyon",
+  },
+
+  description:
+    "Türkiye genelinde sahne, podyum, LED ekran, truss, ses-ışık sistemleri ve etkinlik prodüksiyon hizmetleri. Kurulum, test ve söküm dahil hızlı teklif alın.",
+
+  alternates: {
+  canonical: `${SITE}/`,
+  languages: {
+    "tr-TR": `${SITE}/`,
+    "en": `${SITE}/en`,
+    "ar": `${SITE}/ar`,
+    "x-default": `${SITE}/`,
+  },
+},
+
+  openGraph: {
+    type: "website",
+    url: PAGE_URL,
+    siteName: "Sahneva Organizasyon",
+    title: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    description:
+      "Sahne, podyum, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Sahneva Organizasyon – Etkinlik Prodüksiyon Hizmetleri",
+      },
+    ],
+    locale: "tr_TR",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Sahneva | Sahne, LED Ekran & Etkinlik Prodüksiyon",
+    description:
+      "Sahne, LED ekran, truss ve ses-ışık sistemleri kiralama. Türkiye geneli kurulum ve teknik ekip.",
+    images: [OG_IMAGE],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  metadataBase: new URL(SITE),
+};
+
 /* ================== JSON-LD (SITE LEVEL – TR) ================== */
 function TrSiteJsonLd() {
-  const site = String(SITE_URL || "https://www.sahneva.com").replace(/\/$/, "");
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -24,8 +97,8 @@ function TrSiteJsonLd() {
         "@type": "Organization",
         "@id": ORGANIZATION_ID,
         name: "Sahneva Organizasyon",
-        url: site,
-        logo: `${site}/img/logo/sahneva-logo.webp`,
+        url: SITE,
+        logo: `${SITE}/img/logo/sahneva-logo.webp`,
         sameAs: [
           "https://www.instagram.com/sahnevaorganizasyon",
           "https://www.youtube.com/@sahnevaorganizasyon",
@@ -42,13 +115,13 @@ function TrSiteJsonLd() {
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
-        url: site,
+        url: SITE,
         name: "Sahneva Organizasyon",
         publisher: { "@id": ORGANIZATION_ID },
         inLanguage: "tr-TR",
         potentialAction: {
           "@type": "SearchAction",
-          target: `${site}/arama?q={search_term_string}`,
+          target: `${SITE}/arama?q={search_term_string}`,
           "query-input": "required name=search_term_string",
         },
       },
@@ -57,18 +130,12 @@ function TrSiteJsonLd() {
         "@type": "LocalBusiness",
         "@id": LOCAL_BUSINESS_ID,
         name: "Sahneva Organizasyon",
-        url: site,
+        url: SITE,
         parentOrganization: { "@id": ORGANIZATION_ID },
-        image: `${site}/img/og/og-default.webp`,
+        image: OG_IMAGE,
         telephone: "+90-545-304-86-71",
-        address: {
-          "@type": "PostalAddress",
-          addressCountry: "TR",
-        },
-        areaServed: {
-          "@type": "Country",
-          name: "Türkiye",
-        },
+        address: { "@type": "PostalAddress", addressCountry: "TR" },
+        areaServed: { "@type": "Country", name: "Türkiye" },
       },
     ],
   };
@@ -91,13 +158,10 @@ export default function TrLayout({ children }) {
       <DeferredSpeedInsights />
       <NewTabAccessibility />
 
-      {/* ✅ JSON-LD – HEAD KULLANMADAN */}
       <TrSiteJsonLd />
 
       <Navbar />
-
       <main id="_main_content">{children}</main>
-
       <Footer />
     </>
   );
