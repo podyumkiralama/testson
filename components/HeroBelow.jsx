@@ -1,5 +1,4 @@
 // components/HeroBelow.jsx
-import React from "react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { HERO_FEATURES_TR } from "@/lib/heroFeatures";
 
