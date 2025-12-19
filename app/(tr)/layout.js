@@ -1,7 +1,6 @@
 // app/(tr)/layout.js
 import SkipLinks from "@/components/SkipLinks";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-import DeferredSpeedInsights from "@/components/DeferredSpeedInsights.client";
+
 import NewTabAccessibility from "@/components/NewTabAccessibility.client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -158,9 +157,7 @@ export default function TrLayout({ children }) {
     <>
       <SkipLinks />
 
-      <NonCriticalStylesheet />
-
-       {/* <DeferredSpeedInsights />*/}
+  
       <NewTabAccessibility />
 
       <TrSiteJsonLd />
