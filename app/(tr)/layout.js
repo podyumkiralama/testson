@@ -1,5 +1,5 @@
-// app/layout.jsx
-import "../styles/globals.css";
+//app/tr/layout.jsx
+
 
 import SkipLinks from "@/components/SkipLinks";
 import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
