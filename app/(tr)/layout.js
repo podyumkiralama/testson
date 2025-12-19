@@ -145,6 +145,17 @@ const globalJsonLd = {
   ],
 };
 
+function TrSiteJsonLd() {
+  const serialized = JSON.stringify(globalJsonLd);
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: serialized }}
+    />
+  );
+}
+
 /* ================== TR LAYOUT ================== */
 export default function TrLayout({ children }) {
   return (
