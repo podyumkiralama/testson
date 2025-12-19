@@ -1,8 +1,6 @@
 import "../styles/globals.css";
 
 import CriticalAssets from "@/components/CriticalAssets";
-import NonCriticalStylesheet from "@/components/NonCriticalStylesheet";
-
 import { inter } from "./fonts";
 
 export default function RootLayout({ children }) {
@@ -12,8 +10,7 @@ export default function RootLayout({ children }) {
         <CriticalAssets />
       </head>
       <body>
-        <NonCriticalStylesheet />
-        {children}
+      {children}
       </body>
     </html>
   );
