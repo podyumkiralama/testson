@@ -1,4 +1,4 @@
-// app/podyum-kiralama/page.jsx
+// app/(tr)/podyum-kiralama/page.js
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";

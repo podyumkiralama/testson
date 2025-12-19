@@ -1,5 +1,5 @@
-// app/(tr)/bolgesel-kiralama/page.jsx
-import RegionalRentalClient from "./RegionalRentalClient.client";
+// app/(tr)/bolgesel-kiralama/page.js
+import RegionalRentalClient from "./RegionalRentalClient";
 
 const SITE =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://www.sahneva.com";

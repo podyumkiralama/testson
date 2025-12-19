@@ -1,4 +1,4 @@
-// app/blog/page.jsx
+// app/(tr)/blog/page.js
 import Link from "next/link";
 import Image from "next/image";
 import { readdir } from "fs/promises";

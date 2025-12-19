@@ -327,7 +327,7 @@ export default function Navbar({
       setMobileServicesOpen(false);
       setMobileAboutOpen(false);
     }
-  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   // body scroll lock for mobile
   useEffect(() => {

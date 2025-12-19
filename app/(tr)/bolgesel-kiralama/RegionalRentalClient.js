@@ -97,24 +97,6 @@ function Reveal({ children }) {
   );
 }
 
-function ImgFrame({ src, alt, priority = false }) {
-  return (
-    <SoftCard className="overflow-hidden">
-      <div className="relative aspect-[21/10] w-full">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes="(max-width: 768px) 100vw, 560px"
-          className="object-cover transition-transform duration-500 will-change-transform hover:scale-[1.03]"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
-      </div>
-    </SoftCard>
-  );
-}
-
 function InlineLink({ href, children }) {
   return (
     <Link

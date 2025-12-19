@@ -129,7 +129,6 @@ export default function Footer({
     ariaLabelledby ?? headingIdProp ?? `site-footer-heading-${instanceId}`;
   const computedDescriptionId =
     ariaDescribedby ?? descriptionIdProp ?? `site-footer-desc-${instanceId}`;
-  const hasAccessibleName = Boolean(ariaLabel || computedHeadingId);
   const computedRole = roleOverride ?? "contentinfo";
   const ariaLabelledbyValue = ariaLabel ? undefined : computedHeadingId;
 
