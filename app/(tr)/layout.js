@@ -22,6 +22,7 @@ const OG_IMAGE = `${SITE}/img/og/og-default.webp`;
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#6d28d9",
   };
 
 
