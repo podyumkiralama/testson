@@ -18,12 +18,7 @@ const SITE = String(SITE_URL || "https://www.sahneva.com").replace(/\/$/, "");
 const PAGE_URL = `${SITE}/`;
 const OG_IMAGE = `${SITE}/img/og/og-default.webp`;
 
-/* ================== VIEWPORT ================== */
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#6d28d9",
-};
+
 
 
 /* ================== METADATA (TR) ================== */
